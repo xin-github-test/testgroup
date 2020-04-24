@@ -34,7 +34,7 @@
       <file leaf-file-name="Demo1.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../hibernate/src/com/itheima/test2/Demo1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
+            <state relative-caret-position="4256">
               <caret line="156" column="61" selection-start-line="156" selection-start-column="61" selection-end-line="156" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -142,9 +142,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -193,6 +192,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -691,6 +691,7 @@
       <workItem from="1587532674508" duration="13341000" />
       <workItem from="1587609057318" duration="1453000" />
       <workItem from="1587629150646" duration="8426000" />
+      <workItem from="1587694155690" duration="598000" />
     </task>
     <servers />
   </component>
@@ -727,10 +728,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235417000" />
+    <option name="totallyTimeSpent" value="236015000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="522" y="22" width="828" height="788" extended-state="0" />
+    <frame x="521" y="21" width="828" height="788" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -747,7 +749,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32819724" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.64387465" visible="true" weight="0.26103896" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.64387465" visible="true" weight="0.26753247" />
       <window_info id="Web" order="6" sideWeight="0.35612535" side_tool="true" weight="0.16487935" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -1168,7 +1170,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../hibernate/src/com/itheima/test2/Demo1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
+        <state relative-caret-position="4256">
           <caret line="156" column="61" selection-start-line="156" selection-start-column="61" selection-end-line="156" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
