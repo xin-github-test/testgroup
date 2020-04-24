@@ -1,0 +1,309 @@
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+using namespace std;
+typedef struct stu
+{
+char name[20];
+long int number;
+int snum;
+char sex[20];
+char add[30] ;
+char time[20];
+char tel[20];
+struct stu *next;
+}stu,*student;
+int init(student &s);
+void insert(student &s);
+void print(student &s);
+int delete(student &s);
+void find (student &s);
+void findname(student &s);
+void findnum(student &s);
+void modifay(student &s);
+void putfile(student &s);
+void getfile(student &s);
+void main()
+{
+student s;
+init(s);
+cout<<"欢迎使用学生管理系统."<<endl;
+cout<<" "<<endl;
+cout<<endl;
+while(1)
+{
+int i;
+mainint:
+cout<<"请选择相关操作:"<<endl<<"1.建立学生资料文件."<<endl<<"2.浏览."<<endl<<"3.删除."<<endl;
+cout<<"4.查询."<<endl<<"5.修改."<<endl<<"6.打开学生文件."<<endl<<"7.退出管理系统." <<endl<<"请选择:";
+cin>>i;
+if(i<0||i>7)
+{
+cout<<"输入了错误的数字,Again!"<<endl<<endl;
+goto mainint;
+}
+switch(i)
+{
+case 1: insert(s);break;
+case 2: print(s);
+putfile(s);
+break;
+case 3: ldelete(s);break;
+case 4: find(s);break;
+case 5: modifay(s);
+break;
+case 6: getfile(s);break;
+case 7: exit(0);
+}
+}
+}
+int init(student &s)
+{
+s=(student)malloc(sizeof(stu));
+if (s)
+{
+s->next=NULL;
+return 0;
+}
+else return -1;
+}
+void insert(student &s) //insert
+{
+cout<<endl;
+student p,q;
+p=(student)malloc(sizeof(stu));
+cout<<"请输入学生信息："<<endl;
+cout<<"姓名:";
+cin>>p->name;
+cout<<endl;
+cout<<"学号:";
+cin>>p->number;
+cout<<endl;
+cout<<"性别:";
+cin>>p->sex;
+cout<<endl;
+cout<<"家庭住址:" ;
+cin>>p->add;
+cout<<endl;
+cout<<"出生年月:" ;
+cin>>p->time;
+cout<<endl;
+cout<<"宿舍号:";
+cin>>p->snum;
+cout<<endl;
+cout<<"宿舍号码:";
+cin>>p->tel;
+q=s;
+while(!(q->next==NULL)&&(q->next->number<p->number))
+q=q->next;
+p->next=q->next;
+q->next=p;
+//if()p->next=NULL;
+//free(p);
+}
+int ldelete(student &s) //delete
+{
+cout<<endl;
+student p,a;
+p=s ;
+cout<<"请输入删除的学号:";
+long int number;
+cin>>number;
+while(p)
+{ if (p->number==number)
+{
+a->next=p->next;
+free(p); return(0);}
+else
+{ a=p;
+p=p->next;} }
+cout<<"没有找到你要删除的选项!"<<endl<<endl;return(-1);
+}
+void print(student &s)
+{
+int a;
+a=0;
+student p;
+p=s->next;
+cout<<"姓名 "<<"学号 " <<"性别 "<<"家庭住址 "<<"出生年月 "<<"宿舍号"<<"宿舍号码"<<endl;
+while(p)
+{
+a++;
+cout<<p->name<<" "<<p->number<<" "<<p->sex<<" "<<p->add<<" "<<p->time<<" "<<p->snum<<" "<<p->tel<<" "<<endl;
+p=p->next;
+}
+cout<<endl;
+if (a==0)
+cout<<"还没有学生信息!"<<endl<<endl ;
+}
+void find (student &s) //find
+{
+findl:
+cout<<"请选择查找方法:"<<endl<<"1.按姓名查找."<<endl<<"2.按学号查找."<<endl;
+cout<<"请选择:";
+int k;
+cin>>k;
+if(k<0||k>3)
+{
+cout<<"输了入错误数字,Again!"<<endl<<endl;
+goto findl;
+}
+switch(k)
+{
+case 1: findname(s);break;
+case 2: findnum(s);break;
+}
+}
+void findname(student &s) //find by name
+{
+student p;
+p=s->next;
+cout<<"请输入姓名：";
+char name[20];
+int j;
+j=0;
+cin>>name;
+cout<<"你要查找的资料是:"<<endl;
+cout<<"姓名 "<<"学号 " <<"性别 "<<"家庭住址 "<<"出生日期 "<<"宿舍号 "<<"宿舍号码"<<endl;
+while(p)
+{
+if (strcmp(p->name,name)==0)
+{
+cout<<p->name<<" "<<p->number<<" "<<p->sex<<" "<<p->add<<" "<<p->time<<" "<<p->snum<<" "<<p->tel<<" "<<endl;
+j++;
+}
+p=p->next;
+}
+cout<<endl;
+if(j==0)
+cout<<"对不起,没找到你要的信息!"<<endl<<endl ;
+}
+void findnum(student &s) //find by number
+{
+student p;
+p=s->next;
+cout<<"请输入学号：";
+long int number;
+int j;
+j=0;
+cin>>number;
+cout<<"你要查找的资料是:"<<endl;
+cout<<"姓名 "<<"学号 "<<"性别 "<<"家庭住址 "<<"出生日期 "<<"宿舍号 "<<"宿舍电话"<<endl;
+while(p)
+{
+if (p->number==number)
+{
+cout<<p->name<<" "<<p->number<<" "<<p->sex<<" "<<p->add<<" "<<p->time<<" "<<p->snum<<" "<<p->tel<<" "<<endl;
+j++;
+}
+p=p->next;
+}
+cout<<endl;
+if(j==0)
+cout<<"对不起,没找到你要的信息"<<endl<<endl ;
+}
+void modifay(student &s) //modifay
+{
+student q,p,l,m;
+int j;
+j=0;
+q=s->next;
+l=s;
+m=s;
+cout<<"请输入要修改的学号:" ;
+long int num;
+cin>>num;
+cout<<"姓名 "<<"学号 "<<"性别 "<<"家庭住址 "<<"入学时间 "<<"宿舍号 "<<"电话号码"<<endl;
+while(q)
+{
+if (q->number==num)
+{
+cout<<"你要修改的信息是:"<<endl;
+cout<<q->name<<" "<<q->number<<" "<<q->sex<<" "<<q->add<<" "<<q->time<<" "<<q->snum<<" "<<q->tel<<" "<<endl;
+j++;
+p=(student)malloc(sizeof(stu));
+cout<<"请输入新的学生信息:"<<endl;
+cout<<"姓名:";
+cin>>p->name;
+cout<<endl;
+cout<<"学号:";
+cin>>p->number;
+cout<<endl;
+cout<<"年龄:";
+cin>>p->age;
+cout<<endl;
+cout<<"性别:";
+cin>>p->sex;
+cout<<endl;
+cout<<"家庭住址:" ;
+cin>>p->add;
+cout<<endl;
+cout<<"入学时间:" ;
+cin>>p->time;
+cout<<endl;
+cout<<"电话号码:";
+cin>>p->tel;
+l->next=q->next;
+free(q);
+goto tt;
+}
+else
+{
+l=q;
+q=q->next;
+}
+}
+cout<<endl;
+if (j==0) cout<<"没找到你要的数据!"<<endl<<endl ;
+tt:
+while(!(m->next==NULL)&&(m->next->number<p->number))
+m=m->next;
+p->next=m->next;
+m->next=p;
+}
+void putfile(student &s)
+{
+student p;
+p=s->next;
+FILE *fp;
+if((fp=fopen("information.txt","w"))==NULL)
+{
+cout<<"打不开文件"<<endl<<endl;
+exit(0);
+}
+while(p)
+{
+if(fwrite(p,sizeof(struct stu),1,fp)!=1 )
+{
+cout<<"文件写入错误"<<endl<<endl;
+return;
+}
+p=p->next;
+}
+fclose(fp) ;
+}
+void getfile(student &s)
+{
+student p,q;
+q=s;
+FILE *fp1 ;
+if((fp1=fopen("information.txt","r"))==NULL)
+{
+cout<<"打不开文件"<<endl;
+exit(0);
+}
+cout<<"姓名 "<<"学号 "<<"性别 "<<"家庭住址 "<<"入学时间 "<<"宿舍号 "<<"电话号码"<<endl;
+p=(student)malloc(sizeof(stu));
+while(fread(p,sizeof(struct stu),1,fp1)!=0)
+{
+cout<<p->name<<" "<<p->number<<" "<<p->sex<<" "<<p->add<<" "<<p->time<<" "<<p->age<<" "<<p->tel<<endl;
+while(!(q->next==NULL)&&(q->next->number<p->number))
+q=q->next;
+p->next=q->next;
+q->next=p;
+p=(student)malloc(sizeof(stu));
+}
+fclose(fp1);
+cout<<endl;
+}

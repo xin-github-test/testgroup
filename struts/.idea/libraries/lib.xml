@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../goover/web/WEB-INF/lib/commons-beanutils-1.8.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../goover/web/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../goover/web/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

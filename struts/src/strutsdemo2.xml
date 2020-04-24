@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+ <struts>
+
+
+    <constant name="struts.devMode" value="true"/>
+     <!-- 配置struts2的默认消息资源包，此处是全局的-->
+    <constant name="struts.custom.i18n.resources" value="test.message"/>
+    <package name="p1" extends="struts-default">
+        <action name="register" class="com.itheima.web.Action1.UserAction" method="register">
+            <result type="redirect">/success.jsp</result>  <!-- 成功后进入的页面-->
+            <result name="exists">/message.jsp</result><!-- 失败后进入的页面-->
+            <result name="input">/register1.jsp</result>
+        </action>
+        <action name="findAll" class="com.itheima.web.Action1.UserAction" method="findAll">
+            <result>/findall.jsp</result>
+        </action>
+         <!-- 声明式验证案例的动作类配置-->
+        <action name="addStudent" class="demo2.web.action.StudentAction" method="addStudent">
+            <result name="input">/demo2/student.jsp</result>
+        </action>
+        <action name="action1" class="test.test1Action">
+            <result>/test/success.jsp</result>
+        </action>
+    </package>
+</struts>

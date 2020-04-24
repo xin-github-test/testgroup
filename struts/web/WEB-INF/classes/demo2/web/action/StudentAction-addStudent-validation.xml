@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+    <field name="username">
+        <field-validator type="requiredstring">
+            <message>请输入用户名</message>
+        </field-validator>
+    </field>
+    <field name="age">
+        <field-validator type="int">
+            <!-- 使用注入的方式设置最大值和最小值-->
+            <param name="min">18</param>
+            <param name="max">100</param>
+            <message>请输入18到100之间的整数</message>
+        </field-validator>
+    </field>
+    <field name="email">
+        <field-validator type="email">
+
+            <message>请输入正确的邮箱格式！</message>
+        </field-validator>
+    </field>
+    <field name="password">
+        <field-validator type="requiredstring">
+            <!-- 是否去除空格-->
+            <param name="trim">false</param>
+            <message>请输入密码</message>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="minLength">3</param>
+            <param name="maxLength">8</param>
+            <message>密码长度是3~8位的</message>
+        </field-validator>
+    </field>
+    <!--确认密码和密码必须保持一致，是2个字段的事，所以要基于验证器的声明方式-->
+    <validator type="expression">
+        <param name="expression">
+           <![CDATA[ password == repassword]]>
+        </param>
+        <message>确认俩次密码必须一致</message>  <!--密码不一致是动作错误，需要再jsp页面加上<s:actionerror/>s -->
+    </validator>
+    <field name="score">
+        <field-validator type="regex">
+            <param name="regex">
+                \d+
+            </param>
+            <message>请输入正确的成绩</message>
+        </field-validator>
+    </field>
+    <field name="url">
+        <field-validator type="url">
+
+            <message>请输入正确的url</message>
+        </field-validator>
+    </field>
+    <field name="gender">
+        <!-- 只验证是否null的内置验证器，不会去空格-->
+        <field-validator type="required">
+
+            <message>请选择性别！</message>
+        </field-validator>
+    </field>
+</validators>

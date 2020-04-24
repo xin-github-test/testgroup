@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listenerandfilter</title>
+</head>
+<body>
+监听机制
+ 事件：就是一件事情
+ 事件源：产生事件的源头
+ 监听器：用于监听指定事件的对象
+ 注册监听：要让监听器能监听事件必须对其进行注册
+
+1.监听域对象的创建与销毁
+ 监听ServletContext创建与销毁  ServletContextListener
+ 监听HttpSession创建与销毁  HttpSessionListener
+ 监听HttpServletRequest创建与销毁 ServletRequestListener
+2.监听域对象的属性的变化
+监听ServletContext属性的变化  ServletContextAttributeListener
+监听HttpSession属性的变化  HttpSessionAttributeListener
+监听HttpServletRequest属性的变化 ServletRequestAttributeListener
+3.监听域对象绑定javaBean （注意：需要javaBean去实现HttpSessionBindingListener类，而且不需要注册监听）
+ 他是用于监听javaBean是否绑定到了session域
+HttpSessionBindingListener: 他是用于监听javaBean对象的活化与钝化 HttpSessionActivationListener
+
+一、监听器的快速入门
+关于创建一个监听器的步骤
+  1.创建一个类，实现指定的监听接口
+  2.重写接口中的方法
+  3.在web.xml文件中对监听器进行注册
+</body>
+</html>

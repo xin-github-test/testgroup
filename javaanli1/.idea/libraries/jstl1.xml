@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jstl1">
+    <CLASSES>
+      <root url="jar://E:/jakarta-taglibs-standard-1.1.2/jstl.jar!/" />
+      <root url="jar://E:/jakarta-taglibs-standard-1.1.2/standard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+
+</root>
+  <!--
+    XPATh：专用于查询(定位位置的)
+       *定义了一种规则      *使用方法
+         *slectSingleNode();
+         *slectNodes();
+       使用步骤:
+           1.注意导包  jaxen...jar
+           2.创建解析器
+              SAXReader reader =new SAXReader ()
+              3.解析xml获得document对象
+              Document document=reader.read(url);
+
+
+
+
+
+
+
+
+   -->

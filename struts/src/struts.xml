@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+ <struts>
+   <constant name="struts.devMode" value="true">
+   </constant>
+    <!-- 配置全局消息资源包-->
+    <!--<constant name="struts.custom.i18n.resources" value="fileupload.fileupload_message"></constant>-->
+      <!--文件上传的大小的限制（最大值）默认为2M 第一种方式 -->
+    <constant name="struts.multipart.maxSize" value="8242880"></constant>
+ <package name="p1" extends="struts-default">
+     <action name="upload" class="fileupload.UploadAction" method="upload">
+       <!-- 第二种方式 通过给fileupload的拦截器注入参数的形式 ，控制上传文件的大小(该方式不起作用，还是使用第一种方式）-->
+         <!--<interceptor-ref name="defaultStack">-->
+             <!--<param name="fileUpload.maximumSize"></param>-->
+         <!--</interceptor-ref>-->
+         <!--<interceptor-ref name="defaultStack">-->
+             <!--&lt;!&ndash;&lt;!&ndash;限制文件上传的扩展名，如果有多个就用逗号隔开  &ndash;&gt;&ndash;&gt;-->
+             <!--<param name="fileUpload.allowedExtensions">jpg,png,bmp</param>-->
+             <!--&lt;!&ndash; 对上传文件的MIME类型进行限制&ndash;&gt;-->
+             <!--<param name="fileUpload.allowedTypes">image/jpg,image/pjpeg,image/png</param>-->
+         <!--</interceptor-ref>-->
+         <result name="input" >/fileupload/upload1.jsp</result>
+     </action>
+     <action name="upload2" class="fileupload.UploadAction2" method="upload">
+
+         <result name="input" >/fileupload/upload2.jsp</result>
+     </action>
+     <action name="download" class="download.DownloadAction" method="download">
+          <!-- 文件的下载，通过stream的方式来处理，只需注入几个参数就行-->
+         <result name="success" type="stream" >
+             <!--给一个stream类型的结果视图注入一个参数：Content-Type -->
+             <param name="contentType">application/octet-stream</param>
+             <!--告知客户浏览器以下载的方式打开：问题：文件名写死了，不能动态改变 :注意：必须将该表达式用${}括起来-->
+             <param name="contentDisposition">attachment;filename=${@java.net.URLEncoder@encode(filename,"UTF-8")}</param>
+             <!--注入字节输入流:取值要写动作类中的属性名称 -->
+             <param name="inputName">inputStream</param>
+         </result>
+     </action>
+     <action name="action1" class="ActionContext.Demo1Action" >
+         <result>
+             /ActionContext/demo1.jsp
+         </result>
+
+     </action>
+     <action name="action2" class="ActionContext.Demo2Action" >
+         <result>
+             /ActionContext/demo2.jsp
+         </result>
+
+     </action>
+     <action name="action3" class="ActionContext.Demo3Action" >
+         <result>
+             /ActionContext/demo3.jsp
+         </result>
+
+     </action>
+     <action name="action4" class="ActionContext.Demo4Action" method="findAll">
+         <result>
+             /ActionContext/demo4.jsp
+         </result>
+
+     </action>
+     <action name="action5" class="ActionContext.Demo5Action" >
+         <result>
+             /ActionContext/demo5.jsp
+         </result>
+
+     </action>
+     <action name="action6" class="ActionContext.Demo6Action" >
+         <result>
+             /ActionContext/demo6.jsp
+         </result>
+
+     </action>
+     <action name="save" class="ActionContext.Demo6Action" method="save">
+
+     </action>
+     <action name="saveCustomer" class="ActionContext.Demo7Action" method="save">
+
+     </action>
+
+   <action name="login" class="ActionContext.Demo8Action" method="login">
+       <!--使用struts2提供的一个令牌拦截器：token -->
+       <!-- 由于默认的拦截器栈中没有令牌拦截器，所以还需要将默认的拦截器配上-->
+       <interceptor-ref name="defaultStack"></interceptor-ref>
+       <interceptor-ref name="token"></interceptor-ref>
+       <result type="redirect">/ActionContext/success.jsp</result>
+       <result name="invalid.token">/ActionContext/message.jsp</result>
+   </action>
+     <action name="login1" class="ActionContext.Demo9Action" method="login">
+       <!--使用struts2提供的一个拦截器：tokensession -->
+       <!-- 由于默认的拦截器栈中没有该拦截器，所以还需要将默认的拦截器配上-->
+       <interceptor-ref name="defaultStack"></interceptor-ref>
+       <interceptor-ref name="tokenSession"></interceptor-ref>
+       <result type="redirect">/ActionContext/success.jsp</result>
+       <result name="invalid.token">/ActionContext/message.jsp</result>
+   </action>
+ </package>
+   
+</struts>

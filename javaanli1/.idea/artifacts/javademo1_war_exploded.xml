@@ -1,0 +1,38 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="javademo1:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/javademo1_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="javademo1" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="JUnit4" module-name="javademo1" />
+          <element id="file-copy" path="E:/javaweb视频/dom4j-1.6.1/dom4j-1.6.1.jar" />
+          <element id="file-copy" path="E:/javaweb视频/dom4j-1.6.1/jaxen-1.1-beta-6.jar" />
+          <element id="file-copy" path="E:/javaweb视频/02、第二阶段Java web/day06_JDBC/资料/mysql-connector-java-5.0.8-bin.jar" />
+          <element id="file-copy" path="E:/javaweb视频/02、第二阶段Java web/day09_reques&amp;response/资料/commons-beanutils-1.8.3.jar" />
+          <element id="file-copy" path="E:/javaweb视频/02、第二阶段Java web/day09_reques&amp;response/资料/commons-logging-1.1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../javademo1/web/WEB-INF/lib/ValidateCode.jar" />
+          <element id="library" level="project" name="jstl" />
+          <element id="library" level="project" name="commons-beanutils-1.8.3" />
+          <element id="library" level="project" name="commons-logging-1.1.1" />
+          <element id="library" level="project" name="commons-dbutils-1.4" />
+          <element id="library" level="project" name="commons-collections-3.2.2" />
+          <element id="library" level="project" name="jstl1" />
+          <element id="library" level="application" name="dom4j-1.6.1" />
+          <element id="library" level="project" name="commons-dbcp-1.4" />
+          <element id="library" level="project" name="commons-pool-1.5.6" />
+          <element id="library" level="project" name="c3p0-0.9.1.2" />
+          <element id="library" level="application" name="commons-dbutils-1.4" />
+          <element id="library" level="project" name="ezmorph-1.0.6" />
+          <element id="library" level="project" name="json-lib-2.4-jdk15" />
+          <element id="library" level="project" name="commons-lang-2.6" />
+          <element id="library" level="project" name="commons-fileupload-1.2.2" />
+          <element id="library" level="project" name="commons-io-2.2" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="javademo1/web/Web" />
+    </root>
+  </artifact>
+</component>

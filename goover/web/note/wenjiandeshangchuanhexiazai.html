@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件的上传和下载</title>
+</head>
+<body>
+1.文件的上传和下载的原理分析：
+  1.1文件上传的必要前提：
+    a.提供form表单，必须是post提交
+    b.form表单的enctype必须是multipart/form-data
+    c.提供input type="file"类的上传输入域
+   1.2enctype属性
+    作用：告知服务器请求正文的MIME类型（请求消息头：Content-Type作用是一致的）
+       可选值：
+         * application/x-www-form-urlencoded(默认）
+          正文：name=admin&password=123
+           服务器获取数据：String name=request.getParameter("name");
+         * multipart/form-data;
+          正文：
+一、文件上传可以借助第三方软件实现 fileupload
+用于解析request.getInputSteam()
+
+  jar包：
+  commons-fileload.jar(核心包)
+  commons-io.jar
+二、fileupload的简单应用
+  1.创建工厂类DiskFileItemFactory对象
+DiskFileItemFactory df=new DiskFileItemFactory()
+  2.使用工厂创建解析器对象
+ ServletFileUpload fileUpload=new ServletFileUpload(df)
+  3.使用解析器来解析request对象
+ List<Fileitem> list=fileUpload.parseRequest(request)
+</body>
+</html>

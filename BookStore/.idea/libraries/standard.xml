@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="standard">
+    <CLASSES>
+      <root url="jar://E:/视频转换/jakarta-taglibs-standard-1.1.2/standard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

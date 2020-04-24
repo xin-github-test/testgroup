@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注册页面</title>
+  <style media=" ">
+    *{
+    
+    margin:0px;
+    padding :0px;
+    box-sizing:border-box; 
+    }
+    body{
+    background:url("image/780.jpg"); <!--为body标签设置背景-->
+    }
+    .rg_layout
+    {  width:900px;
+       height:500px;
+       border:8px solid #EEEEEE;   
+       background: url("image/4.jpg");
+       
+       margin:auto;         
+       margin-top:15px   <--将该div下移-->
+    }
+    
+    .rg_left
+    {
+      float:left;
+      margin:15px;
+    }
+    .rg_center
+    {
+    float:left;
+    width:450px;
+    }
+    .rg_right
+    {
+    float:right;
+     margin:15px;
+    }
+    .rg_left>p:first-child
+    {color:#FFD026;
+    font-size:20px;
+    }
+  .rg_left>p:last-child
+    {color:#A6A6A6 ;
+      font-size:20px;
+    }
+  .rg_right>p:last-child
+    {
+      font-size:15px;
+    }
+    .rg_right p a
+    {color:pink;
+    }
+    .td-left
+    { width:100px;
+      text-align:right;
+      height:45px;
+    
+    }
+    .td-right
+    { padding-left:50px;
+    
+    }
+    #usename,#password,#email,#name,#number,#date
+    {width:251px;
+     height:32px;
+     border:1px solid #A6A6A6;
+     
+     border-radius:5px; 
+     padding-left:10px;
+    
+    }
+    #yam
+    {width:110px;
+     height:32px;
+     border:1px solid #A6A6A6;
+     
+     border-radius:5px; 
+     padding-left:10px
+    
+    }
+    #td-sub
+    {width:150px;
+     height:40px;
+     background-color:yellow;
+     border:1px solid yellow;
+    }
+    
+  </style>
+</head>
+<body>
+ <div class="rg_layout">
+ 
+    <div  class="rg_left">
+      <p>新用户注册</p>
+      <p>USER_REGISTER</p>
+    
+     </div>
+     
+     
+     
+     <div  class="rg_center">
+     <div class="rg_from">
+     <form action="#" method="post">
+ <table >
+    <tr>
+      <td class="td-left"><label for="usename">用户名</label></td>
+      <td size="20%" class="td-right"><input type="usename" name="usename" id="usename" placeholder="请输入账号"> </td>
+    </tr>
+    
+    <tr>
+    <td class="td-left"><label for="password">密码</label></td>
+    <td class="td-right"><input type="password" name="password" id="password" placeholder="请输入密码"></td>
+    </tr>
+    
+    <tr>
+    <td class="td-left"><label for="email">Email</label></td>
+    <td class="td-right"><input type="email" name="email" id="email" placeholder="请输入Email"></td>
+    </tr>
+    
+    <tr>
+    <td class="td-left"><label for="name">姓名</label></td>
+    <td class="td-right"><input type="text" name="name" id="name" placeholder="请输入真实姓名"></td>
+    </tr>
+    
+    <tr>
+    <td class="td-left"><label for="number">手机号</label></td>
+    <td class="td-right"><input type="text" name="number" id="number"  placeholder="请输入号码"></td>
+    </tr>
+    
+    <tr>
+    <td class="td-left">性别</td>
+    <td class="td-right"><input type="radio" name="gender" value="male">男<input type="radio" name="gender" value="femal"  >女</td>
+    </tr>
+    
+    <tr>
+    <td class="td-left">出身日期</td>
+    <td class="td-right"><input type="date" name="date" id="date"></td>
+    </tr>
+    
+    <tr>
+    <td class="td-left"><label for="yam">验证码</label></td>
+    <td class="td-right"><input type="text" name="yzm" id="yam"  placeholder="请输入验证码"></td>
+    </tr>
+    
+    
+    
+    <tr>
+    <td colspan="2" align="center"><input type="submit" id="td-sub" name="submit" value="注册" align="middle"></td>
+    </tr>
+ 
+ 
+ 
+ 
+ 
+ 
+ </table>
+</form>
+      </div>
+    
+     </div>
+     
+     
+     <div  class="rg_right">
+     <P>已有账号？<a href="#">立即登陆</a></P>
+    
+     </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </div>
+
+</body>
+</html>

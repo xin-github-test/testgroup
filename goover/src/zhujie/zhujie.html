@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注解</title>
+</head>
+<body>
+元注解：
+ 只能用在注解上的注解叫做元注解（用于修饰注解的注解）
+1.@Retention :作用：改变自定义的注解的存活范围（自定义注解的范围默认是class级别：三个级别：.java->.class->加载进内存（Runtime)）
+2.Target:指定该注解能用在什么地方
+下面的了解：
+  3.@Documented:作用:使用了@MyTest的注解的类，如果@MyTest注解上面有@Documnet注解，那么使用了@MyTest的注解的类的Api文档中会出现@MyTest的身影
+  4.@Inherited:作用，说明该注解可以被继承下去
+</body>
+</html>

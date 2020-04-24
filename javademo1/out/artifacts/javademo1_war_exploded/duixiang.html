@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Function 函数</title>
+<script>
+      /*
+      
+      
+      var fun=neww Function("a","b","alert(a);")
+      
+      
+      */
+
+/*function fun(a,b)//方法相同会被覆盖，可以不用写var ，且传参可以1个俩个三个，不会报错，即方法的调用值和方法名有关，和参数无关
+{
+alert(a+b);
+
+}
+fun(3,4);
+alert(fun.length);*/
+//求任意个数的和
+//function add(){     //函数里面有一个内置的隐藏的对象 ，是一个数组arguments，函数将参数都传进数组
+//alert (arguments[0]);
+
+//}
+/*array数组对象
+
+
+
+
+
+
+ 
+*/
+/*var date=new Date();
+document.write(date);document.write("<br>");
+document.write(date.toLocaleString());
+document.write(date.getTime());//获取当前对像描述的时间到1970年0点的毫秒差值*/
+/*math对象直接用 math.
+ceil（X）:对数进行上舍入，即3.14取4
+floor(x):对数进行下舍入，即3.14取3
+round(x):取最接近该数的整数,即3.14取3*/
+//document.write(Math.PI);
+//document.write(Math.random());//随机产生0到1之间的数且含0不含1
+
+
+/*regexp   正则表达式
+ 1.正则表达式的组成规则
+   1.单个字符：[]
+    如 ：[a] [ab]表示a或b  [a-z]表示a到z之间的所有字母   [a-zA-Z0-9_]代表的是大写字母，小写字母和下划线
+    2.特殊字符代表的意思
+     \d:代表数字字符0到9
+     \w:代表单词自符 [a-zA-Z0-9_]
+     3.量词符号
+      * 表示出现0次或多次
+      ? 表示出现0次或一次
+      + 出现一次或多次
+      {m.n} 表示m<=数量<=n
+         (m如果缺省：{，n}:最多n 次) 
+          n如果缺省：{m,}:最少m次)
+      
+      例：\w*表示该字符出现0次或多次
+  三、正则对象  
+   1.创建
+     1.var reg =new RegExp("正则表达式");
+     2.var reg=/正则表达式/*/
+     
+    /* var reg1=new RegExp("^\\w{6,12}$"); //字符串定义需要写俩个\
+     var reg2=/^\w{6,12}$/  //开始符号^结束符号$
+
+  var username ="zhangsan"
+  var flag=reg2.test(username); //test用于测试指定的字符串是否符合正则的定义的范围
+   alert(flag);*/
+
+//4.Globle
+ //特点：全局对象，这个对象中封装的方法不需要对象就可以直接调用，方法名()
+  //方法：
+   //encodeURI():url编码
+   //decodeURI():url解码
+   
+   
+  // encodeURIComponent():url编码
+   //decodeURIComponent():url解码   俩种方法是一样的，区别就是下面这种可以编码的字符更多
+//url编码：
+//传智播客=%E4%BC%A0%E6%99%BA%E6%92%AD%E5%AE%A2
+/*
+parseInt():将字符转换为数字   逐一判断每一个字符是否为数字，直到不是数字为止，将前边的数字全转为number
+isNaN():判断一个值是否NAN，（NaN参与的一切"=="结果都为false,甚至连  NAN==NaN 这个表达式都为false)
+eval():将javascript字符串转为脚本代码，并把它作为脚本代码来执行
+
+
+*/
+var str="http://www.baidu.com?wd=传智播客";
+var  encode =encodeURI(str);
+document.write(encode);
+var str1="%E4%BC%A0%E6%99%BA%E6%92%AD%E5%AE%A2";
+var  decode =decodeURI(str1);
+document.write(decode);
+document.write("<br>");
+var str2="http://www.baidu.com?wd=传智播客";
+var  encode =encodeURIComponent(str2);
+document.write(encode);
+var str3="%E4%BC%A0%E6%99%BA%E6%92%AD%E5%AE%A2";
+var  decode =decodeURIComponent(str3);
+document.write(decode);
+
+var s="alert(123)";
+eval(s);  //将该字符串转为js的脚本代码并执行
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

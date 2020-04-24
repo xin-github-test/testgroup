@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!-- 修改默认的结尾 .action(也可以在放在文件中：新建一个defaule.properties，也可以在web.xml中修改  ）-->
+<!-- 文件的执行顺序，strutsdemo.xml,struts.properties,web.xml.后面执行的会将前面执行的参数覆盖掉 -->
+<!--<constant name="struts.action.extension" value="do"/>-->
+<!--  name:包的名称唯(在配置文件中）
+      extends属性：指定当前包的父包。按照面向对象的思想管理的体现
+      abstract属性:把包声明为一个抽象包，抽象包就是用来继承的.只有没有action元素的包，才能被定义为抽象包
+      namespace属性：名称空间，当指定了名称空间之后，访问路径就变成了：
+         访问路径=名称空间+动作名称  当不指定的时候，默认是"",不是“/”
+    名称空间的所搜顺序：
+       第一步：先去找对应的名称空间，找到了就执行第二部
+              没找到：按照名称空间结构向上追溯，一直到根名称空间，只要在任何一级找到了就执行第二步
+       第二步：找动作名称
+         现在指定的名称空间下，找到对应的动作名称，找到了就执行动作类的动作方法
+         在指定的名称空间下没有找到对应的动作名称，前往默认的名称空间下，找动作名称，注意：它只找动作名称
+
+-->
+<!--result元素：配置结果视图
+ name属性：结果视图的名称；与动作方法的返回值对应，当一致时，前往指定的jsp（此时是请求转发）
+ type属性:解雇视图的类型，不写的时候有默认值，默认值是dispatcher
+            常用的取值：
+               dispatcher:请求转发，默认
+               redirect:重定向
+               chain:转发到另一个动作
+                 转发到同包（同名称空间）下的另一个动作
+                 转发到不同包（不同名称空间）下的另一个动作
+               redirectAction:重定向到另一个动作
+                 重定向到同包（同名称空间）下的另一个动作
+                 重定向到不同包（不同名称空间）下的另一个动作
+
+ -->
+ <struts>
+
+  <!-- 修改struts2中defaule.properties的常量值,修改代码后不用重启服务器-->
+    <!--<constant name="struts.devMode" value="true"/>-->
+
+    <!--<package name="p1" extends="struts-default" >-->
+
+        <!--<action name="action" class="com.itheima.web.action.Demo1Action" method="sayHello">-->
+              <!--<result name="success">/success.jsp</result>-->
+          <!--</action>-->
+        <!--&lt;!&ndash; 转发到同包的另一个动作方法 &ndash;&gt;-->
+        <!--<action name="action1">-->
+            <!--<result name="success" type="chain">action</result>-->
+        <!--</action>-->
+        <!--&lt;!&ndash; 重定向到同包的另一个动作方法 &ndash;&gt;-->
+        <!--<action name="action2">-->
+            <!--<result name="success" type="redirectAction">action</result>-->
+        <!--</action>-->
+        <!--&lt;!&ndash; 重定向到不同包的另一个动作方法 &ndash;&gt;-->
+        <!--<action name="action46">-->
+            <!--<result name="success" type="redirectAction">-->
+                <!--&lt;!&ndash;使用的是注入的思想（缺什么传什么值），在执行重定向之前，会先获取这俩个参数的值-->
+                  <!--调用的是setNamespace和setActionName&ndash;&gt;-->
+                <!--<param name="namespace">/n2</param>-->
+                <!--<param name="actionName">action45</param>-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <!--&lt;!&ndash;-->
+        <!--action元素：用于定义动作名称，动作类和东顾总方法的映射，以及当出现不同情况时前往指定的结果视图-->
+        <!--name属性 :动作的名称，和jsp页面上的请求url中的名称对应起来，注意：此处不用写.action（这个是给过滤器识别的）-->
+        <!--class属性：指定动作类-->
+        <!--method属性：指定要执行的动作方法-->
+        <!--&ndash;&gt;-->
+        <!--<action name="action1" class="com.itheima.web.action.Demo1Action" method="saveUser">-->
+        <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+        <!--<action name="action2" class="com.itheima.web.action.Demo1Action" method="=hello">-->
+        <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+        <!--&lt;!&ndash; 第三种方式创建动作类的配置,&ndash;&gt;-->
+        <!--<action name="action3" class="com.itheima.web.action.Demo3Action">-->
+            <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+        <!--&lt;!&ndash;访问默认的动作类（连类都可以不用指定，事先就定义好的类(一般就是ActionSupport类） &ndash;&gt;-->
+        <!--<action name="defaultAction">-->
+            <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+
+        <!--&lt;!&ndash; 修改默认的动作类,但我们一般不改&ndash;&gt;-->
+        <!--&lt;!&ndash;<default-class-ref class="">自己的动作类</default-class-ref>&ndash;&gt;-->
+     <!--&lt;!&ndash; 调用用户的动作方法&ndash;&gt;-->
+        <!--<action name="addUser" class="com.itheima.web.action.UserAction1" method="addUser">-->
+            <!--<result name="success" >/success.jsp</result>-->
+        <!--</action>-->
+        <!--&lt;!&ndash; 使用通配符，配置动作方法&ndash;&gt;-->
+        <!--<action name="*" class="com.itheima.web.action.UserAction1" method="{1}">-->
+            <!--<result name="success">/{1}.jsp</result>-->
+        <!--</action>-->
+        <!--<action name="action66" class="com.itheima.web.action.Demo4Action">-->
+            <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+    <!--</package>-->
+    <!--<package name="p2" extends="struts-default" namespace="/n2">-->
+        <!--<action name="action45">-->
+            <!--<result name="success">/success.jsp</result>-->
+        <!--</action>-->
+    <!--</package>-->
+    <!--配置一个抽象的包，让接下来的包继承该包，使得在这个包里的变量可以在多个包中共享 -->
+    <!--<package name="mydefault" extends="struts-default" abstract="true">-->
+        <!--<result-types>-->
+            <!--<result-type   name="zidingyi" class="com.itheima.web.action.CAPTCHAResult"></result-type>-->
+        <!--</result-types>-->
+        <!--&lt;!&ndash;配置全局的结果视图，其中有一个搜索的顺序,先找动作类中的结果视图，在找全局结果视图&ndash;&gt;-->
+        <!--<global-results>-->
+            <!--<result name="success" type="zidingyi">-->
+                <!--<param name="width">200</param>-->
+                <!--<param name="height">40</param>-->
+            <!--</result>-->
+
+        <!--</global-results>-->
+    <!--</package>-->
+    <!--<package name="p45" extends="mydefault">-->
+        <!--&lt;!&ndash; 自定义结果视图配置文件:包中配置的结果视图只能当前包或其子包访问&ndash;&gt;-->
+
+        <!--<action name="zi" class="com.itheima.web.action.ziding" >-->
+            <!--&lt;!&ndash; action内部的结果试图只能在当前的动作类使用，可以配置全局变量&ndash;&gt;-->
+
+
+        <!--</action>-->
+    <!--</package>-->
+    <!--<package name="pp" extends="struts-default">-->
+        <!--<action name="Demo1" class="com.itheima.web.ServletAPI.Demo1Action">-->
+
+        <!--</action>-->
+    <!--</package>-->
+
+<!--<constant name="struts.devMode" value="true"/>-->
+    <!--<package name="p1" extends="struts-default">-->
+        <!--<action name="action1" class="com.itheima.web.demo2.Demo1Action" method="addUser">-->
+          <!--&lt;!&ndash; 静态封装是直接在这里通过param给值-->
+               <!--静态封装实际是一个默认的拦截器在工作，在执行动作方法之前会先执行拦截器，将下列参数注入到动作类中，在我们不写任何的拦截器的时候，默认的会工作-->
+                <!--但是只要我们写了一个拦截器，则默认的拦截器都不起作用&ndash;&gt;-->
+            <!--<param name="username">cat</param>-->
+            <!--<param name="age">22</param>-->
+        <!--</action>-->
+         <!--&lt;!&ndash;动态参数封装的第二种形式的配置 &ndash;&gt;-->
+        <!--<action name="action2" class="com.itheima.web.demo2.Demo2Action" method="addUser">-->
+
+        <!--</action>-->
+        <!--&lt;!&ndash;动态参数封装的第三种形式的配置 &ndash;&gt;-->
+        <!--<action name="action4" class="com.itheima.web.demo2.Demo4Action" method="addUser">-->
+
+        <!--</action>-->
+    <!--</package>-->
+    <constant name="struts.devMode" value="true"/>
+    <package name="p1" extends="struts-default">
+        <action name="register" class="com.itheima.web.Action1.UserAction" method="register">
+            <result name="success">/success.jsp</result>  <!-- 成功后进入的页面-->
+            <result name="input">/message.jsp</result><!-- 失败后进入的页面-->
+        </action>
+    </package>
+</struts>

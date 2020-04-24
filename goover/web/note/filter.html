@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+filterChain
+filterChain是servlet容器为开发人员提供的对象，他提供了对某一资源的已过滤请求调用链的视图，过滤器使用filterChain调用链中的下一个过滤器
+ 如果调用的过滤器是链中的最后一个过滤器，则调用链末尾的资源
+ 问题：怎么形成一个Filter链？
+  只要多个filter对同一个资源进行拦截就可以形成filter链
+问题：怎样确定Filter的执行顺序
+  由<filter-mapping></filter-mapping>来确定
+
+一、Filter的生命周期
+ 1.当服务器启动，会创建Filter对象，并调用init方法，只调用一次
+ 2.当访问资源的时候，路径与Filter的拦截路径匹配，会执行Filter中的doFilter方法
+ ，这个方法是真正拦截的方法
+ 3.当服务器关闭时，会调用Filter的destory()方法来进行销毁操作
+二、FilterConfig
+ 在Filter的init方法上有一个参数，类型就是FilterConfig
+ FilterConfig他是Filter的配置对象，它可以完成下列的功能
+ 1.获取Filter的名称
+ 2.获取Filer初始化的参数
+ 3.获取ServletContext对象
+</body>
+</html>

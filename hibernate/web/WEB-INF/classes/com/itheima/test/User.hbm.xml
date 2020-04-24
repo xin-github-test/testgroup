@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.itheima.test.User" table="t_user">
+        <!-- id ：配置实体与表中的id 相对应
+              name :user对象中标识主键的属性名称
+              column:主键在表中的列名-->
+        <id name="id" column="id">
+            <!-- generate:主键生成策略
+                 native : 由数据库来维护主键（数据库中的配置：主键自增）-->
+            <generator class="native"></generator>
+        </id>
+        <!--property:实体中属性与表中列的对应
+            name:实体中属性的名称
+            column:表中列的名称-->
+        <property name="name" column="name"></property>
+        <property name="password" column="password"></property>
+    </class>
+</hibernate-mapping>

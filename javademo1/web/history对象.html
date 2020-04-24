@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>history对象</title>
+</head>
+<body>
+<h3>History:历史纪录对象</h3>
+1.创建（获取）
+   1.window.history
+   2.直接history
+2.方法
+  *back()  加载history列表中的前一个URL
+  *forward()  加载history列表中的下一个URL
+  *go(参数)     加载history列表中的某个具体页面
+    *参数
+      *正数：前进几个历史纪录
+      *负数：后退几个历史纪录
+3.属性
+  *length   返回当前窗口历史列表中的url的数量
+  
+  <input type="button" id="btn" value="获取历史记录">
+  <a href="https://baidu.com">转页面</a>
+  <input type="button" id="f" value="前进">
+  <input type="button" id="b" value="后退">
+  
+  <script>
+   var btn=document.getElementById("btn");
+    btn.onclick=function()   //绑定事件
+    { 
+    alert(history.length);    //获取history里面的属性并在页面中弹出
+    
+    }
+    var f=document.getElementById("f");
+    f.onclick=function()   //绑定事件
+    { 
+    history.forward();    //获取history里面的属性并在页面中弹出
+    
+    }
+    var b=document.getElementById("b");
+    b.onclick=function()   //绑定事件
+    { 
+    history.back();    //获取history里面的属性并在页面中弹出
+    
+    }
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test测试</title>
+</head>
+<body>
+    一、Test测试
+      功能测试：（黑盒）        对单个的方法进行测试
+      流程测试：（白盒）
+         对一系列组成流程的方法进行测试
+      压力测试：
+       前提：功能测试和流程测试都没问题
+         压力测试就是测试高并发访问的问题
+
+       解决并发访问的问题：
+         1.优化代码
+         2.解决物理服务器
+         3.Nginx服务器
+
+二、虚拟目录的创建（一开始就已经讲过）
+ 方式一：(不建议使用，因为需要重启服务器）
+     真实目录 D:\MyApp
+     虚拟目录：http://localhost:8080/myApp
+ 在tomcat的conf目录下加上 <Context path="myApp" docBase="d:\MyApp"/>
+
+ 方式二：
+  新建myApp.xml文件，文件名就代表应用的虚拟目录
+  将文件放在tomcat/conf/Catalina/localhost/下
+    <xml version="1.0" encoding="utf-8"/>
+  使用ngingx集群的时候有问题：session在不同服务器下的共享需要我们解决
+ 解决方法：只需配置就行  （此方法不是很靠谱）推荐以后学的几种方法会比较好
+
+  </body>
+
+</html>

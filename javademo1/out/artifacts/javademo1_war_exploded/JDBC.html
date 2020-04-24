@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+JDBC：
+  JDBC是一种操作数据库的规范不是一种语言
+  JDBC与数据库驱动的关系：接口与实现的关系
+
+JDBC规范（掌握四个核心对象）
+  DriverManager:用于注册驱动
+Connection:表示与数据库创建的连接
+ Statement:操作数据库sql语句的对象
+ResultSet:结果集或一张虚拟表
+
+前提：添加驱动（jar包）
+
+一、实现JDBC的操作
+  1.注册驱动
+  2.创建连接
+  3.得到执行sql语句的statement对象
+  4.执行sql语句并返回结果
+  5.处理结果
+  6.关闭资源
+
+一、java.sql.Drivermanager类：创建连接
+   a.注册驱动
+      Drivermanager.registerDriver(new com.mysql.jdbc.Driver());不建议使用
+     原因：导致驱动被注册俩次，且强烈依赖数据库的驱动jar
+       解决：Class.forName("com.mysql.jdbc.Driver");（加载驱动）
+   b.与数据库建立连接
+     数据库获得连接的方法getConnection()有三种重载
+   第一种三个参数见jdbcdemo1
+   第二种两个参数见jdbcdemo1
+   第三种一个参数见jdbcdemo1
+
+二、java.sql.Connection接口：一个连接（该接口的实现在驱动里面）
+接口的实现在数据库驱动中，所有与数据库交互都是基于连接对象的
+ Statement createStatement();//创建操作sql语句的对象
+三、java,sql.Statement接口：操作sql语句，并返回相应结果的对象（该接口的实现在驱动里面）
+ 用于执行静态的sql语句，并返回他所生成结果的对象
+ ResultSet executeQuery(String sql) 根据查询语句返回结果集，只能执行select语句
+ int executeUpdate(String sql) 根据执行的DML语句返回受影响的行数
+boolean execute(String sql) 此方法可以执行任意的sql语句，返回boolean值，表示是否返回ResultSet结果集。仅当执行select语句，且有返回结果时返回为ture,其他语句都返回false
+
+四、java.sql.ResultSet接口：结果集（客户端存表数据的对象）
+a.封装结果集的
+  提供一个游标，默认游标指向结果集第一行之前
+  调用一次next(),游标向下移动一行
+  提供了一些get方法
+
+  封装数据的方法
+   Object getObject(int columnIndex);根据序号取值，索引从1开始
+   Object getObject(String  column);根据列名取值（通过列名值来获取该列的数据）
+b.可移动游标的方法
+ boolean  next() 将光标从当前行向前移动一行
+ boolean previous() 将光标移动到此ResultSet对象的上一行
+ boolean absolute(int row) 参数为当前的索引，从1开始
+  根据行的索引定位移动的指定索引行
+void afterLast() 将光标移动到末尾，正好位于最后一行之后
+void beforeFirst() 将光标移动到开头，正好位于第一行之前
+
+五、资源的释放 ：资源有限要及时释放
+</body>
+</html>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jstl">
+    <CLASSES>
+      <root url="jar://E:/视频转换/jakarta-taglibs-standard-1.1.2/jstl.jar!/" />
+      <root url="jar://E:/视频转换/jakarta-taglibs-standard-1.1.2/standard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

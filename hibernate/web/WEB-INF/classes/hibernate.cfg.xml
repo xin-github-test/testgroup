@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory >
+		<!--数据库的基本信息 -->
+		<!--property 元素用于配置Hibernate中的属性
+		     键：值-->
+		<!--数据库连接的驱动-->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<!--连接数据库的用户名 -->
+		<property name="hibernate.connection.username">root</property>
+		<!--连接数据库的密码 -->
+		<property name="hibernate.connection.password">root</property>
+		<!--连接数据库的地址，路径 -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/day1</property>
+        <!--hibernate.connection.autocommit:事务自动提交 -->
+		<property name="hibernate.connection.autocommit">true</property>
+
+		<!--show_sql：操作数据库时，会向控制台输出sql语句-->
+		<property name="show_sql">true</property>
+		<!--format_sql:打印sql语句前，会将sql语句先格式化 -->
+		<property name="format_sql">true</property>
+		<!--hbm2ddl.auto :是否自动生成表结构-->
+		<property name="hbm2ddl.auto">update</property>
+        <!-- 将线程与线程绑定——》只有配置了该配置才能使用getCurrentSession-->
+		<property name="hibernate.current_session_context_class">thread</property>
+		<mapping resource="com/itheima/test/User.hbm.xml"/>
+		<!--<class-cache-->
+			<!--class="org.hibernate.test.legacy.Simple"-->
+			<!--region="Simple"-->
+			<!--usage="read-write"/>-->
+	</session-factory>
+</hibernate-configuration>

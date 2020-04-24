@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DBUtils介绍</title>
+</head>
+<body>
+什么是DBUtils，他的作用：
+  DBUtils是java编程中的数据库操作实用工具，小巧简单实用
+  DBUtils封装了对JDBC的操作，简化了JDBC的操作，可以少写代码
+    1.对于数据表的读操作，它可以把结果转换成List,Array,Set等java集合，便于程序员操作
+    2.对于数据的写操作，也可以变得很简单（只需要写sql语句）
+    3.可以使用数据源，使用JNDI，数据库连接池等技术来优化性能———重用已经构建好的数据库连接对象
+二、DBUtils的三个核心对象
+1.QueryRunner类
+2.ResultSetHandler接口
+3.DBUtils类
+其中 对于QueryRunner类
+QueryRunner中提供对sql语句操作的API
+ 他主要有三个方法（不止三个方法）
+  query()用于执行select
+  update()用于执行 insert update delete
+  batch()批处理
+ResultSetHandler接口
+ 用于定义select操作后，怎么封装结果集
+DBUtils类
+他就是一个工具类，定义了关闭资源和事务处理的方法
+三、DBUtils快速入门
+ 1.导入jar包
+ 2.创建QueryRunner对象
+ 3.使用query方法执行select语句
+ 4.使用ResultSetHandler封装结果集
+ 5.使用DbUtils类释放资源
+Dbutils 快速入门实现步骤
+
+ThreadLocal：永远返回当前线程存入（存入在Map集合中，key为当前线程）的变量值，
+
+</body>
+</html>

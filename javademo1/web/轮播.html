@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>案例，轮播图</title>
+ <script>
+  var num=1;
+function fun()  //修改图片的src
+{  
+   num++;
+   if(num>3)
+   {
+   num=1;
+   }
+ var ima=document.getElementById("image");  //获取图片的对象
+  if(num%3==1)              //控制num的数值来决定图片的src的值，实现轮播
+   { ima.src="image/0.jpg";}
+    if(num%3==2)
+    { ima.src="image/780.jpg";}
+    if(num%3==0)
+    { ima.src="image/4.jpg";
+    }
+}
+var id1=setInterval(fun,3000);//设置定时器
+
+  //这段代码可以写在这里，不用担心因这段代码写在body前面因而获取不到图片的对象，获取对象的代码写在fun函数里面，而函数由定时器控制，定时长为3秒，3秒后系统已经能将body里面的图片加载出来了
+  //但最好还是写在下面，毕竟当对象多起来，可能时间就不够加载所有的对象了，写下面就不用担心这种情况了
+  
+
+
+</script>
+
+</head>
+<body>
+ <img id="image" src="image/0.jpg" width="100%" >
+
+</body>
+</html>

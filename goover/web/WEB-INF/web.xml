@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--<filter>
+        <filter-name>myfilter</filter-name>
+        <filter-class>Filter.myfilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>myfilter</filter-name>
+        <url-pattern>/*</url-pattern>   &lt;!&ndash;此处时要过滤哪些servlet,直接用通配符表示拦截所有的servlet&ndash;&gt;
+    </filter-mapping>-->
+   <!-- <listener>
+        &lt;!&ndash;注册监听&ndash;&gt;
+        <listener-class>Listenerdemo.MyServletContextListener</listener-class>
+
+    </listener>
+    <listener>
+        <listener-class>Timerdemo.myServletcontextListener</listener-class>
+    </listener> <listener>
+        <listener-class>Timerdemo.SessionsListener</listener-class>
+    </listener>-->
+
+</web-app>

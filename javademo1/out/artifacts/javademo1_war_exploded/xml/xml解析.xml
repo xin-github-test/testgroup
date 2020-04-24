@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root></root>
+<!-- 
+ XML解析:
+   *xml解析可以做
+     *作为配置文件：读取
+     *作为传输文件：写  读
+*xml的解析思想（最重要的）
+      *DOM：将文档加载进内存，形成一颗dom树（document对象),将文档的各个组成部分封装为一些对象。
+      *优点：因为在内存中会形成dom树，可以对dom树进行增删改查
+      *缺点：dom树非常占内存，解析速度慢
+      
+      Document
+      Element
+      Text
+      Attribute
+      Comment
+      
+      *SAX:逐行读取，基于时间驱动
+         *优点：不占内存，速度块
+         *缺点：只能读取，不能回写
+         
+      *xml常用的解析器
+         *JAXP：sun公司提供的解析，支持dom和sax
+         *JDOM
+         *DOM4J：do for java 民间方式，但是是事实方式，非常好,支持dom
+             1.导入jar包  dom4j.jar
+             2.创建解析器
+                 SAXReader reader=new SAXReader()
+             3.解析xml获得document对象
+               Document document=reader.read(url)
+
+Xpath:
+   nodename  选取此节点
+    /        从根节点选取
+     //      从匹配选择的当前节点选择的文档中的节点，而不考虑它们的文职
+     ..       选取当前节点的父节点
+     @        选取属性
+     [@属性名] 属性过滤
+     [标签名]  子元素过滤
+
+
+
+
+
+
+ -->

@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="java_anlidemo1:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_anlidemo1_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="java_anlidemo1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="java_anlidemo1/web/Web" />
+    </root>
+  </artifact>
+</component>

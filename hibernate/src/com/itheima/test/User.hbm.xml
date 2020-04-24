@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!--ORM数据元：表对象关系映射文件
+
+package属性：配置文件中类所在的包
+-->
+<hibernate-mapping package="com.itheima.test">
+
+    <!--配置了package后，这里就可以使用简单类名
+      这里的name 和 table 属性是配置类与表的对应
+      dynamic-insert属性：动态插入 默认值是false:代表:如果一个字段值为null,还是参与insert语句
+                                          true:代表：如果一个字段值为null,则不参与insert语句
+      dynamic-update属性：动态更新 默认值 false :没改动过的属性也会生成到update语句中
+                                          true:没改动过的属性不会生成到update语句中
+
+                                         -->
+    <class name="User" table="t_user" dynamic-insert="true" dynamic-update="true">
+        <!-- id ：配置实体与表中的id 相对应
+              name :user对象中标识主键的属性名称
+              column:主键在表中的列名
+              length：指定列的数据长度
+              unsaved-value（不常用）：指定主键为什么值的时候，将其当做null处理（因为一般都是用数据基本类型的包装类型，所以没取的值就是null，不需要另外指定）
+              access（强烈推荐不要用）：如果取值为 field ,那么在操作属性的时候，会直接操作对应的字段，而不是get,set方法-->
+        <id name="id" column="id" length="9" >
+            <!-- generate:主键生成策略（重点）
+                 1.incremnet:数据库自己生成主键，先从数据库中查询最大的ID值，将ID直增加1作为新的主键
+                 2.identity: 依赖于数据库中的主键自增功能
+                 3.sequence: 序列，依赖于数据库中的序列功能（该功能在Oracle中才有，mysql中没有）
+                 4.hilo（纯了解，永远用不到):Hibernate 自己实现序列的算法，自己生成主键，这个算法就叫做hilo算法
+                 5.native:自动根据数据库判断，三选一：identity|sequence|hilo
+                 6.uuid:  生成32位不重复随机字符串当作主键（此时User类中的id需要改成String 类型)
+                 7.assigned:自己指定主键值，表的主键为自然主键）
+
+
+                 -->
+            <generator class="native"></generator>
+        </id>
+        <!--property:实体中属性与表中列的对应
+            name:实体中属性的名称
+            column:表中列的名称
+            length:数据长度
+            precision:指定数据的精度，小数点后保留几位
+            scale:数据的长度是几位，包括小数点后面的数字
+            insert（一般不会用到） :该属性是否加入insert 语句
+            not-null :指定属性的约束是否使用非空
+            unique:指定属性的约束是否使用唯一
+            update(一般不用):该属性是否加入update 语句
+
+            type:表达该属性的类型
+            可以用三种方式指定属性：
+             java类型：java.lang.String，数据库类型 varchar，Hibernate类型:string
+            -->
+        <property name="name" column="name"></property>
+        <property name="password" column="password"></property>
+    </class>
+</hibernate-mapping>

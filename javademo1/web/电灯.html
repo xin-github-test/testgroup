@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>案例灯泡亮暗</title>
+  
+
+
+</head>
+<body>
+  <img id="light"  src="image/deng1_WPS图片.jpg">
+
+
+<script>
+//获取图片的对象
+var light =document.getElementById("light");
+ var flag=false;
+light.onclick=function(){
+if(flag)
+   {light.src="image/deng1_WPS图片.jpg";
+    flag=false;}
+else
+   
+   {light.src="image/timg_WPS图片.jpg";
+   flag=true;}
+}
+
+</script>
+
+</body>
+</html>

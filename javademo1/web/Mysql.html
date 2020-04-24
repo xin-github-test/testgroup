@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>数据库</title>
+</head>
+<body>
+  其中 
+   列：字段
+    行:一条记录
+    
+  sql的分类、
+    DDL 数据定义语言 :用来定义数据库对象：库、表、列等
+       CREATE　ALTER  DROP
+    DML 数据操作语言，用来定义数据库记录（数据）
+       INSERT  UPDATE  DELETE
+    DCL 数据控制语言，用来定义访问权限和安全级别
+    DQL 数据查询语言，用来查询记录（数据）
+      SELECT
+     *注意:sql语句以;结尾
+     
+     语句：
+      create database 数据库名字  (character set 字符集（utf8、gbk等) //创建数据库的语句（不区分大小写）
+练习：
+  1.创建一个名称为 mydb1的数据库
+   语句：CREATE DATABANSE mydb1;  (显示用 show databases; (查看所有的数据库))
+   2.创建以一个使用gbk字符集的mtdb2的数据库
+    语句：CREATE DATABASE mydb2 CHARACTER SET gbk;(显示详细的可以用 show create database mydb2;（查看创建的数据库）)
+  3.创建一个使用gbk字符集，并带校对规则的mydb3的数据库  
+    语句： create database mydb3 character set utf8 collate utf8_general_ci;
+    删除将create改成drop
+     drop database mydb3;
+    
+    修改数据库:
+    
+    练习:
+     将数据库mydb2的字符集改成utf8
+     语句: alter database mydb2 character set utf8 collate utf8_general_ci;
+      
+      使用数据库的语句 : use mydb1;(也可以用来切换数据库)
+      select database();//查看当前使用的数据库
+   例子:
+   
+   创建一个表:
+    先创建一个数据库，然后use 该数据库,最后用语句 在该数据库中创建一个表
+    语句create table emp(
+     id int ,
+     name varchar(50),
+     gender varchar(10),
+    birthday date,
+     entry_date date,
+    job varchar(100),
+    salary double,
+     resume varchar(200)
+     );
+    查看表（前提是有表） 语句：show tables;
+   修改表： 语句: alter table emp add (column) image cblob;  //添加一列,其中column可以不用写，默认添加一列，blob为字节
+   修改具体的某一列：语句：alter table emp modify job varchar(60);  //修改job列的varchar(100)为varchar(60)
+  
+  删除一列:  语句: alter table emp drop imge;  //删除image 那一列
+   修稿表名: 语句 ： rename table emp to user;//将表名由emp改为user
+   显示创建表细节: 语句:
+    show create table user;
+     或者  show create table user\G//显示的更加简单 此处结尾不需要分号
+  修改编码  语句：  alter table user character set GBK;  //将编码方式改为GBK
+  修改列名 语句  ： alter table user change name username varchar(100); //将列name 的名字改为username并且长度改为100（必须后面给长度）
+  删除表 ：语句：  drop table user;  //将表删除
+
+
+DML操作（重要——）
+ ：对数据库的数据进行操作
+注意：
+  字符串类型和日期类型都要用单引号括起来 如：'tom'  '2015-09-04'
+空值：null (不占内存）
+
+1.插入操作 ;insert
+   语法：INSERTINTO 表名(列名1,列名2,..) VALUES(列值1,列值2..)
+注意：列名与列值的类型个数顺序要一一对应，如果插入空值，用null
+插入日期和字符一样需用单引号括起来
+
+DQL练习
+ 1.1查询所有的列
+ select * from 表名;
+ 1.2查询指定的列
+  select 列名,..from 表名;
+2.条件查询  WHERE
+ 其中where中可以使用的关键字有:
+ = !=  <> <  <=  >  >=
+between...and
+in(set)  not in(set)
+is null  is not null
+and
+or
+3.模糊查询
+  关键字 like
+  通配符：
+   _ 任意一个字符
+% ：任意0-n个字符
+4.字段控制查询
+   4.1去除重复数据
+   select distinct 列名 from 表名
+    4.2求俩列数值的和  注意：任何值与null值相加都为null
+     所以有函数 ifnull(comm,0) 滤空函数(括号里面第一个为列名），将null值都转化为数字0;
+    4.2给新增的列起别名(as+别名 )
+    select sal+ifnull(comm,0) as total from emp;
+    4.3排序  order by  asc(升序 默认） desc (降序）
+select * from stu order by age asc;   如果需要加条件则放在order by的前面，且顺序不能换
+    4.4聚合函数 count()：统计计算符，统计指定列不为null的记录行数
+   select count(*) from emp  表示一行中所有列中只要有一列有有效值，就进行计算和
+   MAX():计算指定列的最大值，若为字符串，则使用字符串排序运算
+   MIN():计算指定列的最小值，若为字符串，则如上
+   SUN():计算指定列的数值和，若不是数值类型，那么计算结果为0，且其会自动滤空
+   AVG():计算指定列的平均值，若不是数值类型，那么计算结果为0，且其会自动滤空
+
+分组查询：关键字：group by
+按性别分组 ：select * from 表名 group by gender;
+凡是和聚合函数出现的列名必须出现在group by后面
+即  select deptno count(*) from emp group by deptno;
+
+Having 子句:在分组之后再进行筛选(group by 后面） 而where 出现在from后面且having 后面可以跟聚合函数，where不能
+例：查询工资总和大于9000的部门编号以及工资和
+select deptno ,SUM(sal) from emp group by deptno having sum(sal)>9000;
+
+mysql的方言：特有的
+limit ：
+select * from  emp limit 0,3; 第一个参数：从第几行查询（下标从0开始），第二个参数：查几行
+
+  下面的语法不是sql语句
+int currentPage =1; 当前页
+int pageSize =3; 每页显示的条数 //相当于定义了两个变量，然后将该变量放入limit后面
+select * from emp limit (currentPage-1)*pageSize,pageSize;  和上面的用法一样的
+
+  总结：
+一、数据库： 存储、维护和管理数据的集合
+  DB: 数据库
+  DBMS: 数据库管理系统（软件）
+二、sql语言的分类：
+    DDL：对对象进行操作 （数据库 表 列）
+      create alter drop
+    DML：对表中的数据进行操作
+     insert update delete
+    DQL：数据查询语言
+     select , from, where ,group by  , having , order by  ,limit
+     where 条件使用到的关键字
+     =  !=  <>  >   <   >=   <=
+     in      between and
+     is null     is not null
+  and  or
+   not
+   通配符： _   %    (一般和like一起用）
+
+     DCL：数据操纵语言
+
+DML(重要）
+  insert into 表名 (列名,,,) value( , , )
+ updata 表名 set 列名1=值，列名2=值 where 列名=值and 列名=值
+ delete from 表名 where 列名=值
+
+
+五、数据完整性
+  作用：保证用户输入的数据保存到数据库中是正确的
+  确保数据的正确型=在创建表时给表添加约束
+  完整性的分类
+    1.实体完整性  实体（一行记录）(对行进行约束）
+      实体完整性的作用：标识每一行数据不重复
+        约束：
+          主键约束（primary key)：
+              注：每个表中要有一个主键
+              主键特点：数据唯一，且不能为null
+          例：第一种添加方式
+            CREATE TABLE student(
+              id int primary key,
+               name varchar(50)
+              );
+              第二种添加方式：此方式的优势在于可以创建联合主键
+               联合主键：多个字段（列）组合而成的一个主键，只有当这些字段全部相同时才报错，不全相同正常创建
+           CREATE TABLE student(
+            id int ,
+            name varchar(50),
+            primary key(id)
+          );
+              第三种添加方式
+           CREATE TABLE student(
+           id int primary key,
+            name varchar(50)
+             );//先创建表，然后通过alter 添加约束
+           ALTER TABLE student add CONSTRAINT pk_stu_id primary key(id);
+
+           唯一约束(unique)
+          CREATE TABLE student(
+           id int primary key,
+            name varchar(50)unique  //直接在需要的字段后面加上关键字就行（作用：该字段下的数据不能重复，单可以为null）
+           );
+          自动增长列（auto_increment):该列的值自动增长，但不会停留（即当其增长到3，然后将前两行删掉，然后再加一行，序号不会继续从2开始加，而是接着从4开始增长）
+          且其在mysql里面关键字才为auto_increment，sqlserve里面为identity,oracle里面为：sequence
+    2.域完整性
+         作用：限制此单元格的数据正确，不对照此列的其他的单元格比较
+          域代表当前的单元格
+          域完整性约束：数据类型  非空约束（not null) 默认值约束（default)
+          check约束（mysql不支持） check(sex='男' or sex='女')
+       1.数据类型 ：数值类型，日期类型，字符串类型   限制该列单元格的数据类型
+       2.非空约束： not null(该单元个不允许为null)
+  CREATE TABLE student(
+  id INT ,
+  classid INT,
+  NAME VARCHAR(50) not null
+
+  );
+        3.-- 默认值约束 default 不写就会为默认值，如果写null，值就为null,default不会将主动给的null值覆盖
+  CREATE TABLE student(
+
+  id INT PRIMARY KEY,
+  NAME VARCHAR(50) NOT NULL UNIQUE,
+  address VARCHAR(100)  DEFAULT '北京'
+
+
+  );
+    3.引用完整性 （参照完整性）
+
+ 1.外键约束：(foreign key) (要先有主键在有外键）
+  第一种添加方式
+  alter table score add constraint 别名 foreign key（子表字段） references 表名 （主表字段）;
+  第二种添加方式
+  CREATE TABLE score(
+  stuid VARCHAR(10),
+  score INT,
+  courseid INT,
+  CONSTRAINT fk_stu_sco  FOREIGN KEY(stuid) REFERENCES student(stuid)
+  );
+ 4.表与表之间的关系
+    一对一：分清主从，设计次表的俩种方式
+       1.在从表中添加外键列，并且给外键加上唯一约束
+       2.在从表的主键上添加外键约束，即该字段既是主键也是外键
+
+    一对多（多对一）： 最为常见，一般在多方表（子表）中创建外键
+    多对多： 建立表的时候需要建立第三张关系表来连接该俩张表，使得俩张表通过第三张表而联系起来
+  -- 多对多关系
+  CREATE TABLE teacher(
+  tid INT PRIMARY KEY ,
+  tname VARCHAR(10)
+
+  );
+  CREATE TABLE stu2(
+  sid INT PRIMARY KEY,
+  sname VARCHAR(10)
+  );
+  CREATE TABLE tea_stu_rel(
+  tid INT ,
+  sid INT
+  );
+  ALTER TABLE tea_stu_rel ADD CONSTRAINT fk_teacherid FOREIGN KEY(tid) REFERENCES teacher(tid);
+  ALTER TABLE tea_stu_rel ADD CONSTRAINT fk_stu2id FOREIGN KEY(sid) REFERENCES stu2(sid);
+
+<h3>多表查询（重要）</h3>
+  多表查询有如下几种：
+  1. 合并结果集：union(将俩表做并集）, union all（将俩表结果全部显示出来）,
+  -- 合并结果集union（要求：被合并的两个结果，列数、类型必须相同）
+  SELECT * FROM A
+  UNION
+  SELECT * FROM B;
+  2.连接查询（非常重要）注意：查询和主外键没有直接的关系，上面的约束是保证数据录入数据库中不会出错，查询是将数据导出来
+  -- 笛卡尔积将俩个表连接起来,然后通过主外键的联系去除无用信息
+  SELECT *FROM student,score WHERE student.stuid=score.stuid;
+
+  内连接：[inner] join on （其实上面的语句就是内连接，但他不是SQL标准中的查询方式，下面介绍的才是标准的内连接）
+   select * from emp e inner join dept d on e.deptno=d.deptno; (on相当于上面的where,但on只能用于主外键关联用（如果需要另加条件，继续将where加在后面），其中inner可以省略。mysql中默认为内连接)
+      外连接：outer join on
+         左外连接：left [outer] join：以左边的表为参照，将左边的表的数据全部展示出来，包括null值
+         右外连接：right[outer] join：以右边的表为参照，将右边的表的数据全部展示出来，包括null值
+         全外连接：(nysql不支持) full join：两个表都参照，将左右俩边的数据全部显示出来
+  连接心得：
+     连接不限于两张表，可以是三张，四张 甚至更多的表，
+  但是一般连接查询不会需要整个笛卡尔积，这时就需要去除无用 的数据（一般是通过主外键关系去除）
+  而多张表就会有多个主外键条件
+      自然连接：natural join：
+  连接查询会产生无用的笛卡尔积，通常用主外键关系来去除他们，而自然连接无需给出主外键关系，他会自动找到这一等式
+  3.子查询（非常重要）
+ 一个select 语句中包含另一个完整的select语句
+ 子查询就是嵌套查询，即select语句中包含select，如果一条语句中存在俩个或俩个以上的select，那么就是子查询语句了
+子查询出现的位置
+  1.where后：作为条件为被查询的一部分 且当其出现在where后时还可以出现以下的关键字 any ,all
+  2.from 后：作表
+子查询结果集的形式：
+    1.单行单列（用于条件）
+    2.单行多列（用于条件）
+    3.多行单列（用于条件）
+    4.多行多列（用于表）
+子查询：
+   1.查询与SCOTT同一个部门的员工
+select * from emp where deptno=(
+select deptno from emp where ename='SCOTT');
+   2.查询工资高于JONES的员工
+  select * from emp where salary>(
+  select salary from emp where ename='JONES');
+   3.查询工资高于30号部门所有人的员工信息
+select * from emp where salary>(
+  select MAX(salary) from emp where deptno=30);
+或者（使用all关键字）
+  select * from emp where salary>ALL(
+  select salary from emp where deptno=30);
+  4.查询有俩个以上直接下属的员工信息
+ select * from emp where empno in (
+select mgr from emp group by mgr having count(mgr)>=2);
+出现在from后面 (作表）
+   5.查询员工编号为7788的员工的名称，工资，部门名称，部门地址
+ select e.ename,e.salary,d.dname,d.loc from emp e,(select * from dept) d where e.deptno=d.deptno and empno=7788;
+自连接： 自己连接自己，起别名
+  1.求7369员工的编号，姓名，经理编号和经理姓名
+select e1.empno,e1.ename,e2.empno,e2.ename from emp e1,emp e2 where e1.mgr=e2.empno and e1.empno=7369;
+
+mysql函数：。。
+数据库的备份：
+mysqldump -uroot -ptoot demo1>D:mysql.sql  (命令行输入：注意-u 和-p后面不要加空格 ）
+数据库的恢复：
+ 前提：必须先创建数据库名
+  1.(第一种方式）
+执行sql脚本需要登陆mysql，然后进入指定的数据库才可以执行脚本
+source C:\demo1.sql
+2.（第二种方式）
+ 无需进入数据库
+ mysql -uroot -proot demo1<c:\mydb1.sql
+</body>
+</html>

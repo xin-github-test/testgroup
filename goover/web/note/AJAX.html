@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+</head>
+<body>
+AJAX:Asynchronous(异步的） JavaScript And Xml、
+指：异步javascript及xml
+ 不是一种编程语言，而是一种用于创建更好更快以及交互性更强的Web应用程序的技术，是基于javascript，xml,html,css新的用法
+Ajax:只刷新局部页面的技术
+ 1.javascript:更新局部的网页
+ 2.XML：一般用于请求数据和响应数据的封装
+ 3.XMLHttpRequest对象，发送请求到服务器并获得返回的结果
+ 4.CSS：美化页面样式
+ 5.异步：发送请求后不等返回结果，由回调函数处理结果
+javascript中XMLHttpRequest对象是整个Ajax技术的核心，他提供了异步发送请求的能力
+
+其中该对象中的方法有：
+ open()  “get|post","url?name=tom","true|false"(true为异步）
+ send()  发送请求，可以带参数或null
+ setRequestHeader() 设置请求消息头
+属性：
+readState:类型short:只读
+responseText:类型String:只读
+responseXML:类型Document
+status:类型 short:只读
+事件处理器
+  onreadystatechange
+</body>
+</html>
