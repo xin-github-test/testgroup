@@ -1,0 +1,111 @@
+#include<stdio.h>
+#define maxsize 100
+#define null 0
+typedef int elemtype;
+typedef struct node
+{
+  elemtype list[maxsize];
+  int front,rear;
+  int len;
+} que;
+
+void init (que *q,int n)       //初始化  留一个位置放使rear
+{ q->len=n+1;
+  q->front=q->rear=null;
+}
+
+
+int  isfull(que *q)    //判满 
+{ 
+  if((q->rear+1)%q->len==q->front)
+   return 1;
+ return 0;}
+  int isnull(que *q)   //判空 
+{
+  if(q->rear==q->front)
+ return 1;
+ return 0;
+
+}
+int  outdui(que *q)   //出队，带回数值，并指向下一个
+{  int key;
+  if(isnull(q))
+{
+	printf("队空"); return -1;
+} 
+ 
+ key=q->list[q->front];
+ q->list[q->front]=0;                //将出队的元素赋值为0 
+ q->front=(q->front+1)%(q->len-1);   //防止front进入rear处，造成判定为空表 
+ return key;
+}
+void indui(que *q,int key)        //进队 
+{  if(isfull(q)) 
+  { printf("队满");
+  }
+  else{
+  
+  q->list[q->rear]=key;
+  q->rear=(q->rear+1)%q->len;}
+}
+void display(que *q)          //演示 
+{ int i=q->front;
+ while(i!=q->rear)
+ {
+ 	printf("编号:%d  密码为:%d\n",i+1,q->list[i]);
+ 	 i=(i+1)%q->len;
+ }
+	
+}
+void start(que *q,int n,int m)
+{ int count=n;int i;
+while(count!=0)
+ {
+ 	i=1;
+ 	 while(i!=m)
+ 	 {
+ 	 	q->front=(q->front+1)%(q->len-1);
+ 	 	if(q->list[q->front]!=0)      //将出队的元素赋值为0;在遍历的时候遇到0就跳过； 
+ 	 	{
+ 	 		i++;
+		  }
+	  }
+	  printf("%5d",q->front+1);    //输出出队的编号 
+	  m=outdui(q);            //带回其中的密码m,并出队
+	   count--;
+	   if(count!=0)           //当队为空时不用执行 
+ 	{
+	 while(q->list[q->front]==0)
+ 	{
+ 		q->front=(q->front+1)%(q->len-1);
+	 }
+   }
+ }
+ printf("\n");	
+}
+	  
+int main()
+{ int n,i,key,m,count;
+  que q;
+  printf("约瑟夫问题:\n");
+ printf("请输入参与的人数:\n");
+scanf("%d",&n);
+if(n>maxsize||n<=0)
+{
+	printf("error\n");return 0;
+}
+init(&q,n);
+ printf("请输入每个人持有的密码:\n");
+ for(i=0;i<n;i++)
+ { scanf("%d",&key);
+  indui(&q,key);
+ }
+ printf("每个人的编号及密码为:\n");
+ display(&q);
+ printf("请输入开始的报数上限m:\n");
+ scanf("%d",&m);
+ printf("出队顺序为:"); 
+ start(&q,n,m);
+ 
+return 0;
+}

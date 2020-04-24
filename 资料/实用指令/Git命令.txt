@@ -1,0 +1,72 @@
+一、Git命令操作
+  1.本地库初始化 
+  命令：git init
+ 注意：.git目录中的相关文件不要删除，也不要胡乱修改
+ 2.设置级别：
+  命令：git config （不带参数设置的是项目/仓库级别）
+  设置系统用户级别：git config --global
+  设置用户名（俩个级别设置都一样，但是可以自己做区分）：git config user.name tom
+                      git config user.email goodmorning@qq.com (邮箱可以随便，只是用来表示身份）
+    注意：该信息保存在.git/config文件下（项目级别的）
+              系统用户级别的保存在家目录（~）下的.gitconfig文件下
+ 3.查看状态： 
+  命令： git status
+ 4.将文件放入暂存区
+  git add 文件名  
+  将文件从暂存区删除：git rm --cached 文件名
+  将文件提交到本地库：git commit 文件名（注意：该文件必须在暂存区）
+  注意：提交的时候可以直接用git commit -m "消息" 文件名 命令，可以不用进vim编辑器，而是直接写消息
+ 5.git log 查看版本信息
+  其后面可以带参数：
+  git log --pretty=oneline 或者 git log --oneline或者git reflog
+6.查看以往的版本  
+
+ 1）.（推荐使用）
+  git reset --hard 索引值（索引值就是用git reflog出现的最前面的hash值）
+ 2）.^(git reset --hard HEAD^）表示往回退且只能回退，且后面可以跟多个^,几个就表示会退几步
+ 3）.~（git reset --hard HEAD~3) 表示往回退，后面的数字是几久回退几个
+7.reset命令的三个参数的对比
+     --hard：在本地库移动指针，并且重置暂存区和工作区
+     --soft:仅仅在本地库移动HEAD指针
+     --mixed：在本地库移动指针，并且重置暂存区
+8.删除文件
+ 前提是：删除前，文件存在时的状态要提交到本地库
+ 操作：git reset --hard [指针位置]
+     1.若是删除操作已经提交到本地库，指针位置指向历史记录
+     2.删除操作尚未提交到本地库，指针位置用HEAD
+  注意：删除文件也需要进行放入暂存区和提交到本地库的操作
+9.修改候得文件可以用git diff [文件名] 查看与原文件的差异（直接用是与暂存区的文件进行比较）
+   带参数：git diff HEAD 文件名 ：此处是和本地库的版本进行比较，或者用 git diff HEAD^和历史版本进行比较
+  如果不带文件名则会比较多个文件
+二、分支操作（重）
+ 1.查看分支情况：git branch -v
+ 2.创建分支：git branch 分支名 
+ 3.切换分支：git checkout 分支名
+ 4.合并分支：先要切换到接受合并的分支（注意，在分支上修改后，也要进行add和commit操作），然后执行git merge [提供合并的分支] 就可以了
+ 5.合并分支冲突：将该文件出现的多余的信息删除（冲突后加上的，为了显示冲突的信息），然后git add 文件名，解决冲突，最后用git commit合并就行（注意：此时不能加文件名）
+ 三、远程仓库
+ 1.创建并复制远程仓库的地址，可以直接使用地址访问，也可以用 git remote add 别名 url ,来为地址取一个别名，访问比较方便
+  也可以用 git remote -v 来查看地址的别名
+ 2.推送：
+   使用命令：git push 地址别名 当前分支名称
+ 3.其它目录复制远程仓库中的东西（该目录为新建的，实际就是将远程库复制到本地）
+  使用命令：git clone 地址   （该命令有三个效果：1.完整的将远程库下载到本地 2.自动创建地址的别名 3.初始化本地库）
+   当新建目录修改文件后想要提交到原先的远程仓库这是不能的，必须原先仓库的拥有者将该用户拉入团队才行
+ 4.fetch:当别人对你的远程仓库的文件进行修改后，并且提交上去之后，你如果需要将修改的内容保存到本地库，可以先用git fetch 别名 当前分支名  读取内容（不会改变本地文件的内容）
+  若要看内容则需要用 git checkout origin/master 切换分支，然后查看从远程库中下载下来的文件，之后再用git merge origin/master 和并分支就可以了
+ （注意：当你从远程库中fetch内容之后，该文件会保存到一个 origin/master的副本中（也相当于一个分支）)
+5.pull :相当于fetch和merge的操作，使用：git pull origin master
+四、跨团队协作
+ 当另一个没有加入团队的人想要修改代码，可以将链接复制一份，用自己的身份登陆gihub后，打开链接，点击fork，就可以将他人的资源复制到自己的远程库，然后通过git clone 地址，将远程库中的资源复制到本地库。
+然后再本地库修改资源（修改完成后可以直接commit不用add,提交到本地库）之后push提交到自己的远程库，若想将该修改提交到他人的远程库，可以进行pull request（直接点击pull requests),之后点击new pullrequest,接着点击create pull request,最后输入相关的信息就可以了
+五、SSH登陆
+  步骤：1.进入当前用户的家目录 cd ~
+            2.删除.ssh目录 rm -rvf .ssh
+            3.运行命令生成.ssh密钥目录 ssh-keygen -t rsa -C 注册的邮箱
+            4.进入.ssh目录查看文件列表 cd .ssh    ls -lF
+            5.查看id_rsa.pub 文件的内容  cat id_rsa.pub
+            6.复制id_rsa.pub文件内容，登陆github,点击用户头像-》setting->SSH and GPG keys
+            7.New SSH Key
+            8.输入复制的密钥信息
+            9.回到Git bash 创建远程地址别名
+

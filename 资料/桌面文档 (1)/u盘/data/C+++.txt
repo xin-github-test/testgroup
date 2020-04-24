@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define N 50
+typedef struct arcnode
+{
+	int adjvex;
+	struct arcnode *nextarc;
+	int weight;
+}*ARCNODEPTR;
+
+typedef struct vnode
+{
+	int data;
+	struct arcnode *firstarc;
+}ADJLIST[N];
+
+typedef struct
+{
+	ADJLIST vertices;
+	int vexnum,arcnum;
+	int network;
+	int digraph;
+}ALGRAPH;
+
+#define LEN sizeof(arcnode)
+
+void enter(ALGRAPH *g)
+{
+	int i,j,k,weight;
+	ARCNODEPTR p;
+	printf("请输入图的顶点数和边数\n");
+	scanf("%d,%d",&g->vexnum,&g->arcnum);
+	for(i=0;i<g->vexnum;i++)
+	{
+		g->vertices[i].data=i;
+		g->vertices[i].firstarc=NULL;
+	}
+	printf("选择网(1)还是图(0)? 输入1或0\n");
+	scanf("%d",&g->network);
+	printf("选择有向(1)还是无向(0)? 输入1或0\n");
+	scanf("%d",&g->digraph);
+	for(k=0;k<g->arcnum;k++)
+	{
+		if(!(g->network))
+		{
+			printf("输入一条边或弧的两端点的顶点编号:");
+			scanf("%d,%d",&i,&j);
+		}
+		else
+		{
+			printf("输入边或弧的两端点的顶点编号及权值:");
+			scanf("%d,%d,%d",&i,&j,&weight);
+		}
+		p=(ARCNODEPTR)malloc(LEN);
+		p->adjvex=j;
+		p->nextarc=g->vertices[i].firstarc;
+		g->vertices[i].firstarc=p;
+		if(!(g->network))  p->weight=0;
+		else p->weight=weight;
+		if(!(g->digraph))
+		{
+			p=(ARCNODEPTR)malloc(LEN);
+		    p->adjvex=j;
+			p->nextarc=g->vertices[i].firstarc;
+		    g->vertices[i].firstarc=p;
+			if(!(g->network)) p->weight=0;
+			else p->weight=weight;
+		}
+	}
+}
+int main()
+{
+	ALGRAPH g;
+	enter(&g);
+	return 0;
+}

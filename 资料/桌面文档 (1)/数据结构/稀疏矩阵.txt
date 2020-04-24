@@ -1,0 +1,73 @@
+#define maxsize 100
+typedef int elemtype;
+typedef struct
+{
+  int row,col;
+  elemtype e;
+}triple;
+typedef struct
+{
+  triple list[maxsize+1];
+  int m,n,len;
+}tsmatrix;
+void createTsmatrix(tsmatrix *s)
+{  int i;
+   printf("please input m,n,len");
+   scanf("%d,%d,%d",&s->m,&s->n,&s->len);
+   printf("please input tsmatrix data");
+   for(i=1;i<=s->len;i++)
+    scanf("%d,%d,%d",&s->list[i].row,&s->list[i].col,&s->list[i].e);
+}
+void display(tsmatrix *s)
+{
+   int i,j;
+   elemtype list[maxsize+1][maxsize+1];
+   /*for(i=1;i<=s->len;i++)
+    printf("%5d%5d%5d\n",s->list[i].row,s->list[i].col,s->list[i].e);*/
+    for(i=1;i<=s->m;i++)
+     for(j=1;j<=s->n;j++)
+       list[i][j]=0;
+    for(i=1;i<=s->len;i++)
+       list[s->list[i].row][s->list[i].col]=s->list[i].e;
+    for(i=1;i<=s->m;i++)
+     { for(j=1;j<=s->n;j++)
+        printf("%5d",list[i][j]);  
+       printf("\n");
+      }
+}
+void transposeTsmatrix(tsmatrix *s,tsmatrix *t)
+{
+  int i,j,k;
+  t->m=s->n;t->n=s->m;t->len=s->len;
+  if(t->len)
+  {   k=1;
+      for(i=1;i<=s->n;i++)
+        for(j=1;j<=s->len;j++)
+           if(s->list[j].col==i)
+            {
+              t->list[k].row=s->list[j].col;
+              t->list[k].col=s->list[j].row;
+              t->list[k].e=s->list[j].e;
+              k++;
+            }
+  }
+}
+void fasttransposeTsmatrix(tsmatrix *s,tsmatrix *t)
+{
+   int col,num[maxsize+1],i,cpot[maxsize+1];
+   t->m=s->n;t->n=s->m;t->len=s->len;
+   if(t->len)
+   {
+      for(col=1;col<=s->n;col++)
+         num[col]=0;
+      for(i=1;i<=s->len;i++)
+        num[s->list[i].col]++;
+      cpot[1]=1;
+      for(i=2;i<=s->n;i++)
+        cpot[i]=cpot[i-1]+num[i-1];
+      for(i=1;i<=s->len;i++)
+       t->list[cpot[s->list[i].col]].row=s->list[i].col;
+       t->list[cpot[s->list[i].col]].col=s->list[i].row;t->list[cpot[s->list[i].col]].e=s->list[i].e;
+      cpot[s->list[i].col]++; 
+   }
+}

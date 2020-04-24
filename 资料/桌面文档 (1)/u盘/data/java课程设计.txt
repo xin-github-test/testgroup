@@ -1,0 +1,623 @@
+package yoxi;
+import java.awt.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+public class tanke2 extends JFrame implements MouseListener{
+	JButton jb1=null;
+	Mypanel1 mp=null;
+	static boolean isStart=false;
+	public tanke2()
+	{   
+	   
+		jb1=new JButton("开始");
+		jb1.setBounds(400, 100, 80, 30);
+		jb1.setFocusable(false);
+	    mp=new Mypanel1();
+	    this.add(jb1);
+		Thread t1=new Thread(mp);   //创建重画多线程
+		t1.start();  //启动重画多线程
+		this.add(mp);
+		this.addKeyListener(mp);     //注册监听器 
+		jb1.addMouseListener(this);
+		
+		
+		this.setTitle("坦克大战");
+		this.setSize(550, 330);     //有点问题
+	    //this.setResizable(false);
+		this.setVisible(true);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 
+		
+	}
+	public static void main (String []args)
+	{   
+		tanke2 tk=new tanke2();
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		tanke2.isStart=true;
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}
+
+class Mypanel1 extends Panel implements KeyListener,Runnable
+{    
+	int enemysize=3;
+	Hero hero=null;//定义我的坦克
+	
+	
+     Vector<EnemyTank> vet=new Vector<EnemyTank>();//定义敌人的坦克（用vector集合实现线程安全)
+    //定义一个炸弹的集合
+     Vector<Bomb> vbs=new Vector<>();
+     
+     //定义三张图片
+     Image image0=null;
+     Image image1=null;
+     Image image2=null;
+     Image image3=null;
+     
+   public Mypanel1()
+   
+   { 
+	 hero=new Hero(10,10);     //(设置初始位置)
+     hero.setColor(1);    //设置我的坦克的颜色
+	 hero.setDirect(KeyEvent.VK_UP);//设置初始指向
+     for (int i=0;i<enemysize;i++)//定义敌方坦克
+     { //创建敌人坦克并将其加入到vector集合中
+    	 EnemyTank et=new EnemyTank((i+1)*50,0);
+    	 et.setColor(0);
+    	 et.setDirect(KeyEvent.VK_DOWN);
+    	 Thread threadtanke=new Thread(et);    //创建并启动多线程（敌方坦克可以动）
+    	 threadtanke.start(); 
+    	 Shot s=new Shot(et.x+10,et.y+30,KeyEvent.VK_DOWN);  //给敌人加一颗子弹
+    	 et.es.add(s);    //给敌人加一颗子弹
+    	 Thread threadshot=new Thread(s);     //创建并启动子弹多线程
+    	 threadshot.start();
+         vet.add(et); 
+     } 
+     try {
+		image0=ImageIO.read(new File("dong/beijing1.jpg"));
+		image1=ImageIO.read(new File("dong/1.GIF"));
+		image2=ImageIO.read(new File("dong/2.GIF"));
+		image3=ImageIO.read(new File("dong/3.GIF"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+     //初始化图片  由大到小放三张图片的切换组成一颗炸弹
+     //image1=Toolkit.getDefaultToolkit().getImage("dong/1.GIF");     //不知道为什么不能用panel.class.getresource(地址)
+     //image2=Toolkit.getDefaultToolkit().getImage("dong/2.GIF");
+     //image3=Toolkit.getDefaultToolkit().getImage("dong/3.GIF");
+   }
+   public void paint (Graphics g)    //画图
+	 {
+		 super.paint(g);
+		 //g.fillRect(0, 0, 400, 300);
+		 g.drawImage(image0, 0, 0, 400, 300,this);
+		 if(hero.isLive&&tanke2.isStart)                     //判断我方坦克是否死亡
+		 {
+			 this.drawTank(hero.getX(), hero.getY(), g, hero.getDirect(), hero.getColor());//改变这里的参数就能改变坦克的颜色，种类和方向
+		 }
+		// else {tanke2.isStart=false;this.setFocusable(false);}
+		 //从集合中取出子弹并画出
+		 for(int i=0;i<hero.vs.size();i++)
+		 {   Shot Myshot=hero.vs.get(i);
+		 
+			 if(Myshot!=null&&Myshot.isLive==true)    //判断是否按下j键和子弹是否死亡
+		   {  
+			g.draw3DRect(Myshot.x, Myshot.y, 1, 1, false);
+			
+		    }
+			 if(Myshot.isLive==false)       //判断子弹是否死亡，若死亡则将其从集合中去掉
+			 {
+				 hero.vs.remove(Myshot);   //删除该对象，不能用通过去掉i来删除该对象（会有异常）试过后没发现什么异常
+			 }
+		 }
+		 for(int i=0;i<vbs.size();i++)    //画出炸弹
+		 {   
+			 Bomb b=vbs.get(i);    //取出炸弹
+			 if (b.life>6)
+			 {
+				 g.drawImage(image1, b.x, b.y, 30, 30,this);  //画炸弹
+			 }else if(b.life>3){
+				 g.drawImage(image2, b.x, b.y, 30, 30,this);
+			 }else
+			 {
+				 g.drawImage(image3, b.x, b.y, 30, 30,this);
+			 }
+			 b.lifeDown();   //让B的生命值减少
+			 if(b.life==0)   //若炸弹的生命值为0，则将其去掉
+			 {
+				 vbs.remove(b);
+			 }
+		 }
+		 for(int i=0;i<vet.size();i++)  //用集合里面的元素个数计算敌方坦克的数量（敌方坦克数量会变化)
+		 {  EnemyTank et=vet.get(i);
+			 if(et.isLive&&tanke2.isStart)
+			 { this.drawTank(et.getX(), et.getY(), g, et.getDirect(), et.getColor());  //画出敌方坦克
+			      for(int j=0;j<et.es.size();j++)
+			      {
+			    	  Shot enemyShot=et.es.get(j);                  //该处可以改变子弹发射的时间间隔
+			    	  if(enemyShot.isLive)                         //判断敌方坦克子弹是否死亡
+			    	  {
+			    		  g.draw3DRect(enemyShot.x, enemyShot.y, 1, 1, false);
+			    	  }else                                                 //若子弹死亡
+			    	  {
+			    		  et.es.remove(enemyShot);                         //从集合中去掉敌人子弹
+			    	  }
+			      }
+			 
+			   }
+		 }
+	 }
+   //用一个单独的函判断是否击中坦克
+    public void hitTank(Shot s,Tank t)  //需要子弹的位置和坦克的位置
+    {
+	   switch(t.getDirect())  //判断坦克的位置
+	   {  //向上向下的范围大小是一样的
+	     case KeyEvent.VK_UP:
+	     case KeyEvent.VK_DOWN:
+	    	 if(s.x>=t.x&&s.x<=t.x+20&&s.y>=t.y&&s.y<=t.y+30) //击中
+	    	 {
+	    		 s.isLive=false;  //子弹死亡
+	    		 t.isLive=false; //坦克死亡
+	    		 //创建一个炸弹放入集合
+	    		 Bomb b=new Bomb(t.x,t.y); //将坦克的坐标给图片
+	    		 vbs.add(b);
+	    	 }
+	     case KeyEvent.VK_LEFT:
+	     case KeyEvent.VK_RIGHT:
+	    	 if(s.x>=t.x&&s.x<=t.x+30&&s.y>=t.y&&s.y<=t.y+20) //击中
+	    	 {   
+	    		 s.isLive=false;  //子弹死亡
+	    		 t.isLive=false; //坦克死亡
+	    		//创建一个炸弹放入集合
+	    		 Bomb b=new Bomb(t.x,t.y); //将坦克的坐标给图片
+	    		 vbs.add(b);
+	    	 }
+	   }
+	  
+    }
+    
+	 public void drawTank(int x,int y,Graphics g,int direct,int type)
+	 {
+		 switch(type)                                 //敌我坦克
+		 { case 0:
+			  g.setColor(Color.CYAN);break;
+		   case 1:
+			  g.setColor(Color.RED);break;
+		 
+		 }
+		 switch(direct)                          //坦克朝向的四个方向
+		 { case KeyEvent.VK_UP:                    //炮朝上 做完
+			 g.fill3DRect(x, y, 5, 30,false);
+			 g.fill3DRect(x+15, y, 5, 30,false);
+			 g.fill3DRect(x+5,y+5,10,20,false);
+			 g.fillOval(x+5,y+10, 10, 10);
+			 g.drawLine(x+10,y+15, x+10, y);break;
+			
+		   case KeyEvent.VK_DOWN:                  //炮朝下         做完
+			 g.fill3DRect(x, y, 5, 30,false);
+		     g.fill3DRect(x+15, y, 5, 30,false);
+			 g.fill3DRect(x+5,y+5,10,20,false);
+			 g.fillOval(x+5,y+10, 10, 10);
+			 g.drawLine(x+10,y+15, x+10, y+30);break;
+		   case KeyEvent.VK_LEFT:                   //炮朝左  做完
+			 g.fill3DRect(x, y+5, 30, 5,false);
+			 g.fill3DRect(x, y+20, 30, 5,false);
+			 g.fill3DRect(x+5,y+10,20,10,false);
+			 g.fillOval(x+10,y+10, 10, 10);
+			 g.drawLine(x+15,y+15, x, y+15); break;
+		   case KeyEvent.VK_RIGHT:                 //炮朝右  做完
+			 g.fill3DRect(x, y+5, 30, 5,false);
+			 g.fill3DRect(x, y+20, 30, 5,false);
+			 g.fill3DRect(x+5,y+10,20,10,false);
+			 g.fillOval(x+10,y+10, 10, 10);
+			 g.drawLine(x+15,y+15, x+30, y+15); break;
+		 }
+	 }
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		 
+		 if(tanke2.isStart)
+		{if(e.getKeyCode()==KeyEvent.VK_DOWN)
+		{   this.hero.movedown();
+			hero.setDirect(KeyEvent.VK_DOWN);
+		}
+		if(e.getKeyCode()==KeyEvent.VK_UP)
+		{   this.hero.moveup();
+			hero.setDirect(KeyEvent.VK_UP);
+		}
+		if(e.getKeyCode()==KeyEvent.VK_LEFT)
+		{   this.hero.moveleft();
+			hero.setDirect(KeyEvent.VK_LEFT);
+		}
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT)
+		{   this.hero.moveright();
+			hero.setDirect(KeyEvent.VK_RIGHT);
+		}
+		if(e.getKeyCode()==KeyEvent.VK_J)   //判断玩家是否按下j键（发射子弹）
+		{  
+			if (this.hero.vs.size()<=4)   //控制子弹个数（5颗）
+			{this.hero.shotEnemy();}
+		}
+		
+		this.repaint();
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void hitMe()           //判断敌方坦克是否击中我
+	{
+		 for(int i=0;i<this.vet.size();i++)  //取出敌方坦克
+		 {
+			 EnemyTank et=vet.get(i);
+			   for(int j=0;j<et.es.size();j++)
+			   {
+				   Shot enemyShot=et.es.get(j);  //取出敌方子弹
+				   this.hitTank(enemyShot, hero);
+			   }
+		 }
+		
+	}
+	public void hitEnemy()                  //判断是否击中敌人坦克(取出每颗子弹与每辆坦克进行判断)
+	{
+		for(int i=0;i<hero.vs.size();i++)  //判断是否击中敌人坦克(取出每颗子弹与每辆坦克进行判断)
+		 {
+			 Shot Myshot=hero.vs.get(i);  //取出子弹
+			  if(Myshot.isLive==true)      //判断子弹是否死亡
+			 {    for(int j=0;j<this.vet.size();j++)
+			     {
+				   EnemyTank et=this.vet.get(j);  //取出坦克 
+				     if(et.isLive==true)
+				     {
+				    	 this.hitTank(Myshot, et/*,hero*/);
+		     }
+			     }
+			 }
+		  }
+	}
+	@Override
+	public void run() {      //使画板也成为一个多线程，自动刷新（重画）
+		// TODO Auto-generated method stub
+		while(true)
+		{ try 
+		{
+			Thread.sleep(100);    //每隔100毫秒重画（启动前最好给一个停顿时间，不然可能动不起来)
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+			if(tanke2.isStart)
+			{try 
+			{
+				Thread.sleep(100);    //每隔100毫秒重画（启动前最好给一个停顿时间，不然可能动不起来)
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		  this.hitEnemy();   //击中敌方坦克
+		  this.hitMe();       //击中我方坦克
+		  this.repaint();    //调用重画方法
+		}}
+	}
+	
+}
+class Bomb   //炸弹类
+{ int x,y;  //定义炸弹的坐标
+  int life=9;  //炸弹的生命
+  boolean isLive=true;  //炸弹是否死亡
+ public Bomb(int x,int y) //初始化
+ {
+	 this.x=x;
+	 this.y=y;
+ }
+ public void lifeDown()
+ {
+	 if (life>0)     //如果生命大于0，则生命--
+	 {
+		 life--;
+	 }else{                 //否则炸弹死亡
+		this.isLive=false; 
+	 }
+ }
+	
+}
+class Shot implements Runnable{  //子弹类(多线程)
+	int x;
+	int y;  
+	int direct;    //子弹的方向
+	int speed=2;  //子弹的速度
+	boolean isLive=true; //子弹是否死亡（默认活的）
+	public Shot(int x,int y,int direct)
+	{
+		this.x=x;
+		this.y=y;
+		this.direct=direct;
+	}
+	@Override
+	public void run() {    //定义子弹的轨迹
+		// TODO Auto-generated method stub
+		while(true)
+		{   try 
+		    {Thread.sleep(50);}catch(Exception e)  //让子弹停顿50毫秒再动（不然可能动不了)，减小cpu压力
+		{
+		    	e.printStackTrace();
+		}
+			switch(direct)
+			{ 
+			  case KeyEvent.VK_UP:
+				  y-=speed; break;
+			  case KeyEvent.VK_DOWN:
+				  y+=speed; break;
+			  case KeyEvent.VK_LEFT:
+				  x-=speed; break;
+			  case KeyEvent.VK_RIGHT:
+				  x+=speed; break;
+			}
+			//子弹何时死亡？
+			
+			//判断子弹是否碰到边界,碰到就死亡
+			if(x<0||x>400||y<0||y>300)     //可以改进（不要固定400，300）
+			{
+				this.isLive=false;break;
+			}
+		}
+	}
+}
+class Tank   //坦克类
+{  //坦克的横纵坐标，方向，移动速度
+	int x=0;  int y=0; //初始位置的定义
+	int direct;//定义方向
+	int speed=1;//方便后期修改
+	int color;
+	boolean isLive=true;
+	
+	public Tank(int x, int y)  //给初始位置
+	{
+		this.x=x;
+		this.y=y;
+		
+	}
+	public int getSpeed()
+	{
+		return this.speed;
+	}
+	public void setSpeed(int speed)
+	{
+		this.speed=speed;
+	}
+	public int getX()
+	{
+		return this.x ;
+	}
+	public int getY()
+	{
+		return this.y ;
+	}
+	public int getDirect()
+	{
+		return this.direct;
+	}
+	public void setX(int x)
+	{
+		this.x=x ;
+	}
+	public void setY(int y)
+	{
+		this.y=y ;
+	}
+	public void setDirect(int direct)
+	{
+		this.direct=direct;
+	}
+	public int getColor()
+	{
+		return this.color;
+	}
+	public void setColor(int color)
+	{
+		this.color=color;
+	}
+}
+class Hero extends Tank   //我的坦克
+{    
+	//定义子弹的集合（使用vector保证线程安全
+	Vector<Shot> vs=new Vector<>();
+	Shot s=null;
+	
+	//坦克的初始位置
+	public Hero(int x,int y)
+	{
+		super(x, y);
+	}
+	public void shotEnemy()     //发射子弹ing
+	{   
+		
+		switch(this.direct)
+		 {case KeyEvent.VK_UP:
+			 s=new Shot(x+10, y,KeyEvent.VK_UP);
+			 vs.add(s);
+			 break;
+		  case KeyEvent.VK_DOWN:
+			 s=new Shot(x+10, y+30,KeyEvent.VK_DOWN);
+			 vs.add(s);
+			 
+			 break;
+		  case KeyEvent.VK_LEFT:
+			 s=new Shot(x, y+15,KeyEvent.VK_LEFT);
+			 vs.add(s);
+			 break;
+		  case KeyEvent.VK_RIGHT:
+			 s=new Shot(x+30, y+15,KeyEvent.VK_RIGHT);
+			 vs.add(s);
+			 break;
+		}
+		Thread t=new Thread(s);  //启动子弹（多线程)
+		t.start();
+	}
+	//坦克的移动
+	public void moveup()     //我方坦克的移动
+	{  if(y>0)                //控制范围
+		{y-=speed;}
+	}
+	public void movedown()
+	{   if(y<270)
+		{y+=speed;}
+	}
+	public void moveleft()
+	{   if(x>0)
+		{x-=speed;}
+	}
+	public void moveright()
+	{   if(x<370)
+		{x+=speed;
+		}
+	}
+	
+}
+class EnemyTank extends Tank implements Runnable //敌方坦克多线程
+{   
+      int times=0;
+     Vector<Shot> es=new Vector<>();        //定义一个集合存放敌人的子弹
+	public EnemyTank(int x,int y)
+	{
+		super(x,y);
+	}
+	@Override
+	public void run() {       //坐标变化
+		// TODO Auto-generated method stub
+		while (true)
+		{
+			
+			switch(this.direct)    //判断移动方向
+			{
+			case KeyEvent.VK_UP:
+				for(int i=0;i<30;i++)  //使其平滑的移动
+				{  if(y>0)                //控制范围
+					{this.y-=this.speed;}
+				try {
+					Thread.sleep(50);     //延迟一会
+				}catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				  }
+				break;
+			case KeyEvent.VK_DOWN:
+				for(int i=0;i<30;i++)   //使其平滑的移动
+				{   if(y<270)            //控制范围
+				  {
+					this.y+=this.speed;}
+				try {
+					Thread.sleep(50);     //延迟一会
+				}catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				  }
+				break;
+			case KeyEvent.VK_LEFT:
+				for(int i=0;i<30;i++)    //使其平滑的移动
+				{  if(x>0)                  //控制范围
+					{this.x-=this.speed;}
+				try {
+					Thread.sleep(50);     //延迟一会
+				}catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				  }
+				break;
+			case KeyEvent.VK_RIGHT:
+				for(int i=0;i<30;i++)      //使其平滑的移动
+				{  if(x<370)                  //控制范围
+					{this.x+=this.speed;}
+				try {
+					Thread.sleep(50);     //延迟一会
+				}catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				  }
+				break;
+			}
+			times++;                                //控制时间，防止子弹都画在同一个地方
+			if(times%2==0)
+			{
+				 if(isLive)
+				   {
+					   if(es.size()<4)             //改变该值可以控制敌方坦克子弹是否连发
+					   {   Shot s=null;
+						   switch(direct)
+						  {
+						      case KeyEvent.VK_UP:
+								 s=new Shot(x+10, y,KeyEvent.VK_UP);
+								 es.add(s);
+								 break;
+							  case KeyEvent.VK_DOWN:
+								 s=new Shot(x+10, y+30,KeyEvent.VK_DOWN);
+								 es.add(s);
+								 
+								 break;
+							  case KeyEvent.VK_LEFT:
+								 s=new Shot(x, y+15,KeyEvent.VK_LEFT);
+								 es.add(s);
+								 break;
+							  case KeyEvent.VK_RIGHT:
+								 s=new Shot(x+30, y+15,KeyEvent.VK_RIGHT);
+								 es.add(s);
+								 break;
+						   }
+						   Thread threadsh=new Thread(s);
+						   threadsh.start();
+					   }
+				   }
+			}
+			this.direct=(int)(Math.random()*4+37);   //随机产生37《direct<41的数
+			if(this.isLive==false)    //判断敌方坦克是否死亡
+			{
+				break;
+			}
+		}
+	}
+}

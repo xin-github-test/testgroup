@@ -1,0 +1,66 @@
+#include<stdio.h>
+#define maxsize 100
+typedef int keytype;
+typedef int othertype;
+typedef struct 
+{
+   keytype key;
+   othertype otherkey;/*没有可以不写*/
+}recordtype;
+typedef struct
+{
+   recordtype list[maxsize];
+   int len;
+}recordlist;
+int find1(recordlist *s,keytype key)
+{
+   int i;
+   if(s->len==0)
+    {
+      printf("list is null");
+      return -1;
+    }
+   for(i=0;i<s->len;i++)
+     if(s->list[i].key==key) return i;
+   return -1;
+}
+监视哨算法
+int find2(recordlist *s,keytype key)
+{
+   int i;
+   if(s->len==0) 
+    {printf("list is null");
+      return -1;}
+  s->list[s->len].key=key;
+  for(i=0;s->list[i].key!=key;i++);
+  if(i==s->len) return -1;
+  else return i;
+}
+
+折半查找
+从小到大
+int zhebanfind(recordlist *s,keytype key)
+{
+  int low=0,high=s->len-1,mid;
+  if(s->len==0) 
+    {printf("list is null");
+      return -1;}
+  while(low<=high)
+  {
+    mid=(low+high)/2;
+    if(s->list[mid].key==key) return mid;
+    else if(s->list[mid].key<key) low=mid+1;
+    else high=mid-1;
+   }
+  return -1;
+}
+
+
+      18,19,7,3,15,17,4,28,12,20
+
+
+
+
+     13,10,12,7,14,7,19
+
+

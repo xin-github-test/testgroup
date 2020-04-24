@@ -1,0 +1,168 @@
+/*约瑟夫问题：设编号为1，2，3.....n个人围坐在一起，约定编号为k（1<=k<=n)的人从1开始报数，
+   数到m的那个人出列，他的下一位又从1开始报数，数到m的那个人又出列，依次类推，
+   直到所有人都出列为止，由此产生一个出队序列*/
+#include<stdio.h>
+#include<stdlib.h>
+#define null 0
+typedef int elemtype;
+typedef struct node
+{
+  elemtype data;
+  elemtype key;
+  struct node *next;
+} list;
+
+list *create(int sum)      //循环链表的创建 
+{ int i,j=0;
+	list *head=null,*p=null,*q;
+  p=(list *)malloc(sizeof(list));
+	  p->data=1;
+   p->next=null;
+   for(i=2;i<=sum;i++)
+   { 
+	if(head==null)
+	{head=p;}
+	else
+	{ q->next=p;}
+	q=p;
+	p=(list *)malloc(sizeof(list));
+	 p->data=i;
+	 p->next=null;
+   }
+   q->next=p;
+   p->next=head;
+   
+   return head;
+}
+void createkey(list *head,int sum)    //给每个队员给予一个密码  
+{  
+	list *p=head;
+	printf("请依次输入人员持有的密码:\n");
+	do
+	{
+		scanf("%d",&p->key);
+		p=p->next;
+	}while(p!=head);
+}
+
+int length(list *head)  //链表的长度 
+{ int i=0;list *p=head;
+  
+  do
+  {
+  	i++;
+  	p=p->next;
+  }while(p!=head);
+  
+  return i;
+}
+
+
+void display(list *head)  //链表的遍历 
+{  if(head==null)
+{
+	printf("null");
+}
+	list *p=head;
+   do
+   {
+   	printf("编号:%d 密码:%d\n",p->data,p->key);
+   	p=p->next;
+   }while(p!=head);
+	
+	 printf("\n");
+	
+}
+
+void  start(list *head,int firstno) //开始 (任意指定开始的编号) 
+{   list *p=head,*q;
+    int i,m;
+    int len=length(head);
+  
+  do
+ {if(p->data==firstno)   //找到开始编号的位置 ,并用q标记 
+ {  q=p;
+    m=q->key;
+ 	break;
+ }
+ 	p=p->next;
+ }while(p!=head);
+ 
+  while(len!=0)      //一直出队，直到没人出为止 
+ {
+ 
+ for (i=1;i<m;i++)
+ {  p=q;
+ 	q=q->next; 
+ }
+ printf("%5d",q->data);
+ m=q->key;              //将该值作为下一个m的值 
+ p->next=q->next;     //去掉该人
+ q=q->next; 
+ len--;
+}
+}
+
+
+void start1(list *head,int m)   //开始 （从第一个人开始)
+{ list *p=head,*q=head;         //q指向第一个开始的人 
+    int i;
+    int len=length(head);
+  
+  
+  while(len!=0)      //一直出队，直到没人出为止 
+ {
+ 
+ for (i=1;i<m;i++)
+ {  p=q;
+ 	q=q->next; 
+ }
+ printf("%5d",q->data);
+ m=q->key;              //将该值作为下一个m的值 
+ p->next=q->next;     //去掉该人
+ q=q->next; 
+ len--;
+}
+	
+ } 
+
+int main()
+{ list *head;
+  int firstno,m,sum;
+  int c,type;
+printf("约瑟夫环问题:\n");
+printf("输入1开始，0取消:\n");
+scanf("%d",&c);
+while(c)
+{
+ 	
+printf("请输入参与的人数：\n");
+scanf("%d",&sum);
+head=create(sum);
+createkey(head,sum);
+printf("所有人员的编号及密码依次为:\n");
+display(head);
+printf("输入1:任选一个编号开始；输入2:任选一个值作为报数上限\n");
+scanf("%d",&type);
+switch(type)
+{  case 1:
+    printf("请输入开始报数人员的编号k:\n");
+    scanf("%d",&firstno);
+    printf("出队的序号为:");
+    start(head,firstno);
+    printf("\n"); break;
+   case 2:
+    printf("请输入开始的报数上限m:\n");
+    scanf("%d",&m);
+    printf("出队的序号为:");
+    start1(head,m);
+    printf("\n");break;
+}
+   printf("输入1继续，0取消:\n");
+   scanf("%d",&c);
+}
+
+
+	return 0;
+}
+

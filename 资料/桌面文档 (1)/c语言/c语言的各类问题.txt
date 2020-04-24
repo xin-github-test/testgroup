@@ -1,0 +1,45 @@
+//腾讯面试题，快速找出一个未知长度的链表的中间结点   
+#include<stdio.h>
+#include<stdlib.h>                 //该链表引用了创建链表的malloc，所以需要引用该头文件
+#define null 0                                //c语言中的null值并不是0，需要自己定义
+typedef int elemtype;
+typedef struct node                      //确定一个链表中的结构，需要包含什么数据
+{
+  elemtype data;
+   struct node *next;} list;
+    list *create()            //尾插法(将第一个链表的next指向下一个链表的数据体(data)
+    {list *head=null,*p,*q;
+   p=(list *)malloc(sizeof(list));      //创建一个链表，将其的头指针给p
+      scanf("%d",&p->data);       //给链表中的data赋值
+  p->next=null;                           //将链表中的next指向空
+     while(p->data!=1000)        //给出一个停止连接的条件（只要输入的值不是1000就可以一直创建下去，所以不需要判满）
+{  if (head==null)                       //判断该链表是否是第一个，若是则将该链表的头指针给head
+    head=p;                      
+else {q->next=p;}                      //若不是第一个，则将上一个的链表（头指针为q）的next部分指向下一个链表，实现俩个链表之间的连接
+ q=p;                                         /*创建一个指针q，让q一直跟着p但却一直在p的后面一个（当下一步创建新链表完成后，此时p相当于上一个链表的头指针，从而实现q一直跟在p后面）*/
+p=(list *)malloc(sizeof(list));      //创建下一个需要连接的链表，并将其的头指针给p（此时将p指向新的链表）
+      scanf("%d",&p->data);    //给链表中的data赋值
+  p->next=null;}                        //创建一个链表，其里面的next指针需要指向一个空值(因为此时next还不需要用）
+return head;}
+
+int getmid(list *head)
+{  list *f,*l;
+  f=l=head;
+  
+ while (f->next!=null)         //设置快慢指针，f的速度是l 的两倍，当f到达最后时,l就到了中间
+{ 
+   if(f->next->next!=null)
+ { l=l->next;
+  f=f->next->next;}
+else
+  { f=f->next;}}
+return l->data;}
+ int main()                         //创建主函数，然后调用
+{list *head=null;int i,key;
+ printf("请输入创建的数据\n");
+head=create();
+display(head);
+printf("中间结点为%d",getmid(head));
+
+
+return 0;}

@@ -1,0 +1,49 @@
+#define maxsize 100
+typedef int elemtype;
+typedef struct
+{
+  elemtype list[maxsize];
+  int front,rear;
+}seqqueue;
+void initqueue(seqqueue *q)
+{
+   q->front=q->rear=0;
+}
+int isnull(seqqueue *q)
+{
+   if(q->front==q->rear) return 1;
+   else return 0;
+}
+int isfull(seqqueue *q)
+{
+ if((q->rear+1)%maxsize==front) 
+    return 1;
+ else return 0; 
+}
+void push(seqqueue *q,elemtype key)
+{
+   if(isfull(q)) printf("queue is full");
+   else
+     {q->list[q->rear]=key;
+q->rear=(q->rear+1)%maxsize;}
+}
+void pop(seqqueue *q)
+{
+  if(isnull(q)) printf("queue is null");
+  else
+    q->front=(q->front+1)%maxsize;
+
+}
+int queuelength(seqqueue *q)
+{
+ return  (q->rear-q->front+maxsize)%maxsize;
+}
+void display(seqqueue *q)
+{
+   int i=q->front;
+   while(i!=q->rear)
+   {
+      printf("%5d",q->list[i]);
+      i=(i+1)%maxsize;
+    }
+}

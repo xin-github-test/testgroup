@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<conio.h>
+int main()
+{int m,n,num,sum=0;char ch;
+int huan(int a);
+do
+  {
+    printf("请输入范围\n");
+   printf("请输入范围内最小值:");
+   scanf("%d",&m);
+   printf("请输入范围内最大值:"); 
+     scanf("%d",&n);
+printf("该范围内的回文数为: ");
+ for(num=m;num<=n;num++)
+   if(num==huan(num))
+   {printf("%d,",num);sum++;}
+   printf("\n");
+   printf("回文数的个数为:%d",sum); 
+   printf("\n");
+   printf("输入y或Y继续");
+   ch=getch();
+   printf("\n");}while(ch=='y'||ch=='Y');
+ 
+ return 0;
+ } 
+int huan(int a)
+{int w,w1=0;
+    while(a!=0)
+    {w=a%10;
+     w1= w1*10+w;
+     a=a/10;}
+            
+return w1;
+}

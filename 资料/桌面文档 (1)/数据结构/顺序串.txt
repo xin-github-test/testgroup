@@ -1,0 +1,81 @@
+#define maxsize 100
+typedef struct 
+{
+   char list[maxsize];
+   int len;
+}sstring;
+void create(sstring *s)
+{
+   int i;
+   printf("please input string length");
+   scanf("%d",&s->len);
+   for(i=0;i<s->len;i++)
+    scanf("%c",&s->list[i]);
+}
+void create2(sstring *s)
+{
+   int i=0;
+   char c;
+   while((c=getchar())!='\n')
+     {s->list[i]=c;i++;}
+   s->len=i;
+}
+void display(sstring *s)
+{
+   int i;
+   for(i=0;i<s->len;i++)
+    printf("%c",s->list[i]);
+   printf("\n");
+}
+void strcopy(sstring *s,sstring *t)
+{
+  int i;
+  for(i=0;i<=s->len;i++)
+   s->list[i]=t->list[i];
+  //s->list[i]='\0';
+  s->len=t->len;
+}
+int strcompare(sstring *s,sstring *t)
+{
+   int i=0;
+   while(i<=s->len&&i<=t->len)
+     {if(s->list[i]!=t->list[i]) break;
+       i++;}
+   if(i==s->len+1&&i==t->len+1) return 0;
+   return s->list[i]-t->list[i];     
+}
+void strcat(sstring *s,sstring *t)
+{
+  int i;
+  if(s->len+t->len<=maxsize-1)
+  {for(i=0;i<t->len;i++)
+    s->list[s->len+i]=t->list[i];
+   s->list[s->len+i]='\0';
+   s->len=s->len+t->len;
+  }
+  else if(s->len<maxsize-1)
+  {  
+     for(i=0;i<maxsize-1-s->len;i++)
+       s->list[s->len+i]=t->list[i];  
+     s->list[maxsize-1]='\0'
+     s->len=maxsize-1; 
+   }
+  else
+     printf("s if full");
+}
+void substring(sstring *t,sstring *s,int pos,int len)
+{  int i;
+   if(pos<0||pos>s->len)
+     printf("pos is error");
+   else
+     if(len<0||pos+len>maxsize-1)
+      printf("len is error");
+   else
+     {
+       for(i=pos;i<pos+len;i++)
+        t->list[i-pos]=s->list[i]; 
+       t->list[i-pos]='\0';
+       t->len=len;
+     }
+     
+}

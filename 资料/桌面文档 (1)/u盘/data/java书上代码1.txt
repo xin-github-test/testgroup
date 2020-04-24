@@ -1,0 +1,764 @@
+对于java ，有许多类可以不用自己去写，有写类别人已经写好了，你只需要自己去用就行了，因为这种类写起来非常复杂，所以就有专门的写好的类，你只需要了解怎么去用就行，而且这种类就在安装的时候就已经存在了，只是缺少一个调用的方法而已
+import java.util.Scanner; //引用赋值语句
+Scanner sc = new Scanner(System.in);
+	     int i = sc.nextInt(); //赋值给i
+************************************************
+import java.io.*;//赋值字符语句
+InputStreamRead isr=new InputStreamRead(System.in)
+BuffereReader br=new BuffereReader(isr)
+String name=br.readLine();//给name 赋值
+将该赋值字符串类型改为float
+String weight=br.readLine();
+float weight=Float.parseFloat(weight);//将字符型转为浮点型
+********************************************************
+import java.util.*;  //里面有calendar(日历）的类，可以查看系统时间
+ Calendar cal=Calendar.getInstance(); 
+ System.out.println(cal.getTime()) //打印时间，还会有日期
+（若需要打印两遍时间，则需要重新去建立一个对象，不然日期会一直不变）
+****************************************************************************
+产生一个随机数
+  int j=(int )Math.random()*10000// 随机产生一个0到10000的数，并将其转化为 int 型，
+  其中,Math.random()产生的是一个0到1的随机数，但将其乘了10000后，就会产生0到10000的随机数
+而且可以将该数移给数组
+for (i=0;i<10000;i++) 
+  arr[i]=j;//将随机生成的数赋值给数组
+***************************************************************
+插入排序法
+ arr[i]=insertvalue
+ index=i-1
+while(index>=0&&insertvalue<arr[index])
+ { arr[index+1]=arr[index];
+   index--;}
+ arr[index+1]=insertvalue;
+***************************************************************
+快速排序
+public void sort(int left,int right,int []arr)
+{ int l=left;
+  int r=right;
+  int pivot=arr[(left+right)/2];
+  int temp=0;
+  while(l<r)
+{ while(arr[l]<pivot) l++;
+  while(arr[r]>pivot) r--;
+    if(l>=r)  break;
+   temp=arr[l];
+   arr[l]=arr[r];
+   arr[r]=temp;
+   if(arr[l]==pivot)   --r;
+   if(arr[r]==pivot)   ++l;}
+ if (l==r){l++;r--;}
+ if(left<r) sort(left,r,arr);
+ if(right>l) sort(l,right,arr);
+
+******************************************************************
+{public static void main (String[]args){
+	int []a=new int[10];
+	int i,j,t;
+	for(i=0;i<10;i++)
+	a[i]=i+1;
+	System.out.println("pai xu qian de shuzhu :");
+	for(i=0;i<10;i++)
+		System.out.print(" a[i]="+a[i]);
+	System.out.println();
+	for(i=0;i<10;i++)
+		for(j=0;j<9;j++)
+			if(a[j]<a[j+1])
+			{t=a[j];a[j]=a[j+1];a[j+1]=t;}
+	System.out.println("pai xu hou de shuzhu :");
+	for(i=0;i<10;i++)
+		System.out.print(" a[i]="+a[i]);
+	
+}
+
+}
+***********************************
+public static void main (String[]args){
+	int [][]a=new int[3][];int i,j;
+	a[0]=new int[]{1,2};
+	a[1]=new int[]{3,4};
+	a[2]=new int[]{5,6,7};
+	for(j=0;j<3;j++)
+	 {for(i=0;i<a[j].length;i++)
+		System.out.print(a[j][i]+" ");
+		System.out.println();
+		}
+*************************************************************
+package k;
+
+public class l {
+	public l() {
+		System.out.println("构造方法一被调用了");
+	}
+	public l(int x) {
+		this();
+		System.out.println("构造方法二被调用了");
+	}
+	public l(boolean b) {
+		this(1);
+		System.out.println("构造方法三被调用了");
+	}
+public static void main(String[] args) {
+	l test=new l (true);
+}
+}
+**************************************************************
+
+
+
+
+　
+package lxy.xg1;
+public class Hi {
+	public static void main(String[] args) {
+		int [][]a;
+		a=new int[10][];
+		for(int i=0; i<10; i++)
+			a[i]=new int[i+1];
+		for(int i=0; i<10; i++) {
+			a[i][0]=1;
+			a[i][i]=1;			
+		}
+		for(int hang=2; hang<10; hang++) {
+			for(int lie=1;lie<hang; lie++) {
+				a[hang][lie]=a[hang-1][lie-1]+a[hang-1][lie];
+			}
+		}	
+		for(int hang=0; hang<10; hang++) {
+for(int lie=0;lie<=hang; lie++) {
+				if(a[hang][lie]<10)
+					System.out.print(a[hang][lie]+"   ");
+				else if(a[hang][lie]<100)
+					System.out.print(a[hang][lie]+"  ");
+				else
+					System.out.print(a[hang][lie]+" ");
+			}
+			System.out.println();
+		}		
+	}
+}
+***************************************************************************
+package lxy.xg1;
+
+public class Student {
+	private int age;
+	private String name;
+	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age=age;
+	}
+	public static void main(String []args) {
+		Student stu=new Student();
+		
+		stu.getAge();
+	}
+	
+}
+**********************************************************************
+//抽象类和接口
+interface animal {
+	int id=1;                  //默认 public static final,只能赋值一次，抽象方法没有方法体
+	void breathe();             //默认 public abstract
+	default void gettype(String type) {        //当方法类型为default或static时，则需要写出
+		System.out.println("该动物属于："+type);
+	}
+   static int getid() {
+	   return animal.id;
+   }
+}
+public class dog implements animal {
+	public void breathe() {
+		System.out.println("狗在呼吸");//必须实现接口的所有方法
+	}
+	
+
+}
+public class shuchu {public static void main(String[]args) {
+	System.out.println(animal.getid());  //getid()方法为static类型，可以直接通过类名调用
+
+    dog d=new dog();                //创建dog的实例对象
+    System.out.println(dog.id);     //通过实现类调用接口的全局变量
+    d.breathe();                    //通过对象调用方法
+    d.gettype("犬科");              //通过实现animal的类直接调用接口的方法
+    
+    
+    		
+}}
+*************************************************************************************
+//多态、向上转型//继承时，子类在重写父类的方法时，不能缩小父类方法的访问权限，但是可以扩大其访问权限
+abstract  class animal {                 //定义一个抽象类和一个抽象方法
+	abstract void shout();
+
+}
+class cat extends animal{                //定义一个cat类继承animal，同时实现抽象类中的方法
+	public void shout() {
+		System.out.println("喵喵......");
+	}
+	public void catchmouse()             //定义一个cat类特有的方法
+	{System.out.println("抓老鼠");
+		
+	}
+}
+class dog extends animal{                    //定义一个dog类继承animal，同时实现抽象类中的方法
+	public void shout() {
+		System.out.println("汪汪......");    
+	}
+}
+class shuchu{
+	public static void main(String[]args) {
+		animal p=new cat();              //创建cat对象，并指向animal，将子类对象当作父类对象（此时子类特有方法将消失;不能通过p.catchmouse()调用该方法）
+		animal p1=new dog();             //创建dog对象，并指向animal，将子类对象当作父类对象（也称“向上转型')
+		p.shout();
+		p1.shout();                     //俩个子类同时指向同一个父类，程序会自动识别具体的子类对象（多态）
+	}
+}
+
+********************************************************************************************************
+//成员内部类（外部类需要通过对象调用内部类的成员变量和方法）内部类可以访问外部类所有成员）
+（并且在外部类中调用内部类时创建的对象与在main方法中创建的对象不是一样的，在main方法中需要先创建外部类的对象，再通过外部类创建内部类的对象）
+ class outer {                              //定义一个外部类
+	 int m=0;                               //外部类的全局变量              
+	 public void test1() {                  //外部类的方法
+		 System.out.println("外部类成员方法");  
+	 }
+	 class inner {                         //在外部类里面建一个内部类
+		 int n=1;                        //内部类的全局变量
+		 public void show1() {             //内部类的方法
+			 System.out.println("外部类成员变量M="+m);
+			 test1();                  //内部类直接调用外部类的方法
+		 }
+		 void show2() {                 //定义内部类的方法
+			 System.out.println("内部类成员方法");
+		 }
+	 }
+ void test2() {                         //定义外部类的方法
+	 inner in=new inner();             //外部类方法中创建内部类的对象(外部类调用内部类成员和方法需要创建对象）
+	 System.out.println("内部类成员变量n="+in.n);//外部类中通过内部类对象调用内部类成员变量
+	 in.show2();                                 //外部类中通过内部类对象调用内部类方法                             
+ }
+}
+class shuchu {public static void main(String[]args) {
+	outer ou=new outer();              //创建外部类对象（先创建外部类对象，在通过外部类创建内部类对象）
+	outer.inner in=ou.new inner();      //通过外部类对象，创建内部类对象，此时内部类对象与上面不一样
+	in.show1();                        //用内部类对象调用外部类方法和变量
+	ou.test2();                       //在外部类中调用内部类方法和变量
+	
+
+	
+}}
+*******************************************************************
+//局部内部类（在一个外部类的方法中建立一个内部类，局部内部类可以直接调用外部类的所有成员，而在该方法内调用该类的成员必须创建内部类的对象，再通过对象调用内部类成员）
+ //并且局部内部类在调用局部变量时，局部变量必须是final的，但jdk8以上就不需要声明，因为会自动为其加上final
+ class outer {                              //定义一个外部类
+	 int m=0;                               //外部类的全局变量              
+	 public void test1() {                  //外部类的方法
+		 System.out.println("外部类成员方法");  
+	 }
+	 public void test2() {
+	 class inner {                         //在外部类方法里面建一个局部内部类
+		 int n=1;                          //局部内部类的全局变量
+		 public void show() {             //局部内部类的方法
+			 System.out.println("外部类成员变量M="+m);
+			 test1();                     //局部内部类直接调用外部类的方法
+		 }}
+	 inner in=new inner();                //外部类方法中创建内部类的对象（必须）
+	 System.out.println("局部内部类变量n="+in.n);//通过对象调用内部类成员
+	 in.show();}}
+	 
+class shuchu{public static void main(String[]args){
+	outer ou=new outer();  //创建外部类的对象
+	ou.test2();             //通过外部类对象调用外部类方法
+}
+	
+}
+*****************************************************************************************
+//静态内部类（可以直接访问外部类的静态成员，并且在main函数中可以不用先创建外部类的对象，可以直接通过外部类创建内部类对象，而且在外部类中可以直接通过静态内部类名直接访问静态内部类的静态成员）
+ class outer {                              //定义一个外部类
+	  static int m=0;                               //外部类的静态全局变量              
+	
+	  static class inner {  
+		   static int n=1;                           //在外部类里面建一个静态内部类
+		                          //局部内部类的全局变量
+		 public void show() {             //内部类的方法
+			 System.out.println("外部类成员变量M="+m);
+			                    //静态内部类只能调用外部类的静态成员
+		 }}
+	  public void test() {               //创建外部类方法，通过静态内部类名直接调用静态内部类的静态成员，不用创建静态内部类对象
+		  System.out.println("调用静态内部类的成员n="+inner.n);
+	  }
+	  }
+	 
+class shuchu{public static void main(String[]args){
+	outer.inner in=new outer.inner();//可以直接通过外部类直接创建，不用先创建外部类，因为是static修饰的，在外部类加载的过程中直接被加载出来
+	in.show();
+	outer ou=new outer();              //创建外部类对象
+	ou.test();
+}
+	
+	
+}
+***********************************************************************************
+//匿名内部类（将一个子类作为参数传给另一个方法，通过该方法调用该子类实现父类的方法，该子类是匿名的）
+interface animal{              //定义一个接口
+	void shout();}
+
+class shuchu{
+	public static void main(String[]args) {
+		
+	String name="小花";
+	
+ animalshout(new animal() {                 //定义匿名内部类（new animal:创建子类实例，该子类为匿名的）作参数传参给animalshout，必须先定义
+	public void shout() {                   //实现接口方法
+		System.out.println(name+"喵喵..");}});  //全为参数
+ }
+	public static void animalshout(animal an) {  //参数传给该方法，必须先定义，再传参
+		  an.shout();}
+	}
+**********************************************************************************
+//lambda表达式（基于函数式接口）（其方法体可以从其他类中提取；但前提参数形式和接口是一样的 ）
+//对于lambda实现接口，可能就是通过其接口定义的规则，去类中寻找或创建可以实现它的方法，并将能实现它的方法实例成一个对象，在通过该对象实现接口
+
+interface animal {             //定义一个接口，里面一个抽象方法
+	void shout();
+}
+public class lizi{
+	public static void main(String[]args) {
+		String name="小花";                     //定义一个局部变量，并赋值
+		animalshout(new animal() {              //定义一个匿名内部类参数，并创建对象，该内部类实现接口的方法并调用局部变量
+			public void shout() {System.out.println("匿名内部类输出："+name+"喵喵..");}});
+	animalshout(()->System.out.println("lambda表达式输出："+name+"喵喵.."));}//定义一个lambda表达式做参数的方法，接口中的无参方法向其传参"（）","->"实现接口方法
+	public static void animalshout(animal an) { //接受上面匿名内部类传的参数，并调用匿名类中的shout实现接口，同时接受上面lambda的参数，使其调用接口的无参函数实现参数所指向的方法
+		an.shout();
+	}
+}
+****************************************************************************************
+//函数式接口（只有一个抽象方法）
+@FunctionalInterface        //表明为函数式接口
+interface animal{          
+	void shout();              //定义无参方法
+}
+
+interface calculate{          
+	int sum(int a,int b);      //另一个接口里定义一个有参方法（该接口也为函数式接口）
+}
+public class lizi{
+	public static void main(String[]args) {
+		animalshout(()->System.out.println("无参，无返回值的函数式接口调用"));//定义一个lambda表达式作参数传给aniamlshout，该表达式是先生成一个实现接口的类（里面有实现接口类的方法），然后形成其实例，再将实例传参给animalshout
+		showsum(10,20, (x,y)->x+y);   //定义一个lambda表达式作参数，将其传参给showsum，并通过其对象实现接口
+	}
+	private static void animalshout(animal an) {     //接收参数(实例),再通过实例调用其中实现接口的方法（shout)
+		an.shout();
+	}
+	private static void showsum(int x,int y,calculate ca) {//接受上面传的参数（x,y,实例）
+		                                                     //引用该实例中实现接口的sum(int a,int b)的方法,并将x,y的值传入其中，而该方法为求和
+		System.out.println(x+"+"+y+"的和为："+ca.sum(x, y));
+	}
+}
+************************************************************************
+//类名引用静态方法 （进一步简化lambda表达式）若实现接口的方法是通过寻找其他类中的方法来实现的话，并且该方法是静态的，则可以直接通过类名调用，“（参数）->”可以省略，写成类名::方法名（不用括号）
+@FunctionalInterface        //表明为函数式接口
+interface calcable{          
+	int calc(int num );      
+}
+
+class math {                               //创建一个类
+	public static int abs(int num) {       //定义一个静态方法（返回值为整型）（通过类加载）
+		if(num<0) {return -num;}
+		else {
+			return num;}
+		}
+	}
+
+public class lizi{
+	private static void printabs(int num,calcable ca) {  //定义一个静态的private权限的方法，并接受lambda传入的实例参数和其他参数
+		System.out.println(ca.calc(num));               //通过实例调用lambda中实现接口的方法并将num传入其中
+	}
+	public static void main(String[]args) {
+		printabs(-10,n->math.abs(n));  //  （从其他类中提取实现接口的方法）形成一个实现接口的方法为math类中的abs方法的实例作为参数（因为其方法为静态的所以可以直接通过类名调用），并将整型n传入其中
+		printabs(-10,math::abs);         //进一步简化lambda表达式，通过::引用方法
+		
+	}
+		
+	}
+********************************************************************
+//对象名引用    //若该方法不是静态的，则可以通过构建该方法所在类的对象，然后通过对象名::方法（不用括号）调用该实现接口的方法
+@FunctionalInterface        //表明为函数式接口
+interface printable{          
+	void print(String str);    //定义一个抽象方法  参数为字符型
+}
+
+class StringUtils {                               //创建一个类
+	public void printuppercase(String str) {     //定义一个参数为字符的方法
+		 System.out.println(str.toUpperCase());  //该方法用于实现大小写转换                                      
+	}
+		}
+	
+public class lizi{
+	private static void printupper(String text,printable pt) { //接受参数（字符，实例），定义该实例为pt
+	pt.print(text);                                  //将上面穿的参数传给是实现接口的方法中，就是将hello传给StringUtils类中printuppercase方法
+	}
+	public static void main(String[]args) {
+		StringUtils stu=new StringUtils(); //建立类的对象
+		printupper("hello",t->stu.printuppercase(t));  //传参，并生成一个调用StringUtils类中printuppercase方法来实现接口方法的实例，t是字符型，是lambda中实现接口的参数类型
+		printupper("hello",stu::printuppercase);   //另一种方法的引用，通过类的对象直接调用方法，省去lambda中需要参数指向的一步（t->),并且只需写方法名，不用带参数 
+	}
+		
+	}
+*******************************************************************************
+//构造器（构造方法）引用方法，若该接口包含有构造方法的类，则在实现该节口时，需要创建这个类的对象，然后在对象创建完成后会调用相应的构造方法，从而实现接口。此时可以通过类名::new来构造对象并同时实现构造方法
+@FunctionalInterface        //表明为函数式接口
+interface PersonBuilder{          
+	  Person buildPerson(String name);      //定义一个有构造方法的类（Person）的接口，实际就是实现该类的构造方法
+}
+
+class Person {                            //创建一个类
+	private String name;                    //设置权限 为private（只能在本类中访问）的变量
+	public Person(String name) {            //创建一个有参（参数为字符型）的构造方法
+		this.name=name;                      //为变量赋值
+	}
+	 public String getname() {             //创建一个有返回值（返回值为字符型）的方法
+		 return name;
+	 }
+	
+}
+public class lizi{
+	 
+	 public static void printname(String name,PersonBuilder bu) { //接受参数，同时将接受的实例定义为bu
+		 System.out.println(bu.buildPerson(name).getname());//通过类的实例bu调用有参构造方法，实现接口，再调用其中的getname方法
+	 }
+	 public void main(String[]args) {
+		 printname("赵丽颖",name->new Person(name));  //lambda表达式传参(参数为类的实例），通过先创建Person类的对象同时调用其中参数为字符的构造方法，该构造方法为实现接口的方法
+		 printname("赵丽颖",Person::new);  //直接引用，简化了
+	 }
+}
+****************************************************************************
+//类名引用普通方法，（只是形式上，一般只有静态方法才能使用类名直接调用） 若接口中有一个包含普通方法的类，此时可以通过其类名::方法名（不用括号）调用该类中实现接口的方法
+@FunctionalInterface                   //函数式接口
+interface printable{           
+	void print(StringUtils su,String str);        //定义一个方法（俩个参数）实际就是通过类的对象调用该类的方法来实现接口
+}
+class StringUtils{                                   //创建一个类
+	public void printUpperCase(String str) {                //建立一个有参的（参数为字符型）方法
+		System.out.println(str.toUpperCase());  //英文大小写转换
+	}
+}
+public class lizi{
+	private static void printupper(StringUtils su,String text,printable pt) {  //接受参数，（StringUtils的对象，字符，接口的实例）
+		pt.print(su, text);
+	}
+	public void mian(String[]args) {
+		printupper(new StringUtils(),"Hello",(object,t)->object.printUpperCase(t)); //传参，生成StringUtils的实例，传入字符hello，提取StringUtils中的printUpperCase方法用于实现接口并生成实例传入
+		printupper(new StringUtils(),"Hello",StringUtils::printUpperCase);         //传参，通过类名直接引用该方法
+	}
+}	
+*************************************************************************
+/*约瑟夫问题：设编号为1，2，3.....n个人围坐在一起，约定编号为k（1<=k<=n)的人从1开始报数，
+   数到m的那个人出列，他的下一位又从1开始报数，数到m的那个人又出列，依次类推，
+   直到所有人都出列为止，由此产生一个出队序列*/
+public class li {
+	public static void main(String[]args) {       //主函数
+		cycle list=new cycle();
+		 list.setlen(7);                           //设置人员个数（编号个数）
+		 list.create();
+		 list.setk(2);                               //设置从那个编号开始
+		 list.setm(2);
+		 System.out.println("人数编号为；");
+		 list.show();                                           //输出所有人的编号
+		 System.out.println();
+		 System.out.println("出队顺序为:");
+		 list.play();                                               //输出游戏结束后的出队序列
+	}
+
+}
+class child{                                                    //创建一个类，包含编号，和一个类似指针的变量
+	 int no;
+	 child next;
+	 public child(int no) {                 //创建一个设置编号的构造方法
+		 this.no=no;
+	 }
+}
+
+class cycle{
+	int len=0;child head=null;child p=null;
+	int k=0,m=0;
+	public void setk(int k) {                          //设置从编号几开始
+		this.k=k;
+	}
+	public void setm(int m) {                     //设置数几个数
+		this.m=m;
+	}
+	public void play() {                               //游戏开始
+		child p=this.head;                //设置一个变量，将链表的头给他
+		child q=null;                        //设置一个q紧跟p
+		while(this.len!=0) {               //当链对里面的人都出来后，就结束
+		for(int i=1;i<k;i++) {            //找到开始数数的人的编号
+			p=p.next;
+		}
+		for(int i=1;i<m;i++) {                //找到需要出列的人的位置
+			q=p;
+			p=p.next;
+		}
+		System.out.print(p.no+" ");
+		q.next=p.next;                       //出列
+		this.len--;                                 //每当一个人出列后，人员数减一
+	}}
+	public void setlen(int len)                      //设置人员数量
+	{this.len=len;}
+	public void create() {                                //创建一个循环链表
+		
+		for(int i=1;i<=len;i++)
+		{  if(i==1)                                         //若为第一个，则将head给他
+		   {
+			child stu=new child(i);
+			this.head=stu;
+			 this.p=stu;
+		   }
+		else {if (i==len)                                //若为最后一个，将其的next指向头，是实现首尾相连
+		       {child stu=new child(i);
+		         p.next=stu;
+		         p=stu;
+		         p.next=head;
+			
+		        }
+		else {child stu=new child(i);
+		      p.next=stu;
+		      p=stu;
+		      
+			
+		}
+			
+		}
+		}
+	}
+	public void show()                                   //输出所有人的编号
+	{ child p=this.head;
+	  do {
+		  System.out.print(p.no+" ");
+		  p=p.next;
+	  }while (p!=this.head);
+		
+	}
+************************************************************************************************
+//异常
+ 
+public class li{
+	public static int divide(int x,int y) {  //定义一个方法
+		int result=x/y;             //俩数相除
+		return result;
+	}
+	 public static void main(String []args) {
+		 int result=divide(4,0);                //当除数为0时，不报错
+		 System.out.println(result);
+	 }
+}
+}
+*************************************************************************************
+//捕获异常
+public class li{
+	public static int divide(int x,int y) {  //定义一个方法
+	try {	int result=x/y;             //俩数相除,并捕获异常，若异常，则执行下面的语句
+		return result;}catch(Exception e) {
+			System.out.println("捕获的异常信息为："+e.getMessage());
+		}
+	return -1;
+	}
+	 public static void main(String []args) {
+		 int result=divide(4,0);
+	if (result==-1) { System.out.println("程序出现异常");//判断是否出现异常
+		
+	}
+	else
+		 {System.out.println(result);}
+	 }
+}
+******************************************************************************************
+//finally关键字（不管是否发生异常，该语句都会执行）
+public class li{
+	public static int divide(int x,int y) {  //定义一个方法
+	try {	int result=x/y;             //俩数相除,并捕获异常，若异常，则执行下面的语句
+		return result;}catch(Exception e) {
+			System.out.println("捕获的异常信息为："+e.getMessage());
+		}finally {System.out.println("不管程序是否异常，该语句都会执行");}
+	return -1;
+	}
+	 public static void main(String []args) {
+		 int result=divide(4,0);
+	if (result==-1) { System.out.println("程序出现异常");//判断是否出现异常
+		
+	}
+	else
+		 {System.out.println(result);}
+	 }
+}
+**************************************************************************************
+//throws关键字（将异常抛出，且必须处理，若不处理就会出错）也可以将该异常继续抛出，那样的话程序可以执行
+public class li{
+	public static int divide(int x,int y)throws Exception {  //定义一个方法,并检测异常，并将该异常抛出
+	 {	int result=x/y;             
+		return result;}
+
+	}
+	 public static void main(String []args) throws Exception{//继续将异常抛出，程序可以执行
+		int result=divide(4,0);
+	
+	System.out.println(result);
+	 }
+}
+*************************************************************************
+//throw关键字，也是抛出异常，但抛出的是异常的对象
+public class li{
+	public static void printage(int age) throws Exception{
+		if (age<=0) {
+			throw new Exception("输入的年龄有误，必须为正整数");//抛出异常
+		}
+		else {
+			System.out.println("此人年龄为："+age);
+		}
+	}
+	public void main(String[]args) {
+		int age=-1;
+		try {printage(age);     //处理异常
+		
+		}catch(Exception e) {
+			System.out.println("捕获的异常信息为"+e.getMessage());
+		}
+	}
+}
+******************************************************************************************
+//自定义异常
+class divideby extends Exception{          //创建一个子类继承Exception
+	public divideby() {
+		super();                    //调用父类的构造方法
+	}
+	public divideby(String message) {      //调用父类有参的构造方法
+		super(message);
+	}
+}
+public class li{
+	public static int divide(int x,int y)throws divideby{
+		if(y==0) {
+			throw new divideby("除数是0");   //调用自定义的方法，并将参数传上去
+		}
+		int result=x/y;
+		return result;
+	}
+	public static void main(String []args) {
+		try {
+			int result=divide(4,0);
+			System.out.println(result);
+		}catch (divideby e) {System.out.println("捕获的异常信息为;"+e.getMessage());  //使用自定义的方法
+			
+		}
+	}
+}
+****************************************************************************************************
+//求面积
+import java.util.Scanner;
+public class qiumianji{
+  public static void main(String []args){
+  Scanner sc=new Scanner(System.in);
+  float pi=3.1415f;
+System.out.println("输入1开始：");
+int n=sc.nextInt();
+while(n==1){
+ System.out.println("请输入序号求面积：1、正方形的面积 2、矩形的面积 3、圆的面积 4、三角形的面积");
+   int i=sc.nextInt();
+ switch(i)
+      {
+            case 1: //正方形
+                     System.out.println("请输入边长:");
+                       int b=sc.nextInt();
+                     System.out.println("该正方形的面积为:"+b*b);break;
+            case 2://矩形
+                     System.out.println("请输入矩形的长和宽:");
+                    int a=sc.nextInt();int c=sc.nextInt();
+                    System.out.println("该矩形的面积为:"+a*c);break;
+            case 3://圆
+                     System.out.println("请输入圆的半径:");
+                    float r=sc.nextFloat();
+                    System.out.println("该矩形的面积为:"+(pi*r*r));break;
+            case 4://三角形
+                     System.out.println("请输入矩形的底和高:");
+                    int d=sc.nextInt();int h=sc.nextInt();
+                    System.out.println("该矩形的面积为:"+((d*h)/2));break; }}}}
+***************************************************************************************************
+//买车（有待改进）
+import java.util.Scanner;
+interface Car{
+   public String getName();
+   public int getPrice();}
+
+ class Bwm implements Car{
+   public  String getName()
+ {return "BWM";}
+   public  int getPrice()
+ {return 3200;}
+}
+ class Ben implements Car{
+   public String getName()
+ {return "BEN";}
+   public  int getPrice()
+ {return 5200;}
+}
+ class Qq implements Car{
+   public  String getName()
+ {return "QQ";}
+   public  int getPrice()
+ {return 6800;}
+}
+     
+ class CarShoper{
+       Scanner sc=new Scanner(System.in);
+       
+        int a=0,m=0;int sum=0;
+       public  CarShoper (Car type){
+    	  
+      System.out.println("车名："+type.getName()+"  价钱:"+type.getPrice());
+      System.out.println("请输入购买的数量:");
+       this.a=sc.nextInt();
+        this.m=a*type.getPrice();
+        }
+      
+      
+   }
+ 
+public class maiche{
+  public static void main(String []args){
+	 
+	     CarShoper cars1=new CarShoper( new Bwm());
+	     CarShoper cars2=new CarShoper( new Ben());
+	     CarShoper cars3=new CarShoper( new Qq());
+	     System.out.println("总共需要花费的钱:"+(cars1.m+cars2.m+cars3.m));
+  }
+	  
+}
+**************************************************************************************
+//游戏机问题
+import java.util.Scanner;
+class Toy{
+   private int price;
+   private String name;
+public Toy(int price,String name)
+{ this.price=price;
+ this.name=name;}
+ public int getPrice()
+ { return this.price;}
+ public String  getName()
+{ return this.name;}
+}
+public class youxiji{
+ public static void main(String []args){
+  Scanner sc=new Scanner(System.in);
+  Toy toy1=new Toy(320,"手掌游戏机");
+  Toy toy2=new Toy(260,"mp3");
+  System.out.println("请输入需要购买的手掌游戏机的数量:");
+      int m=sc.nextInt();
+ System.out.println("请输入需要购买的mp3的数量:");
+      int n=sc.nextInt();
+ System.out.println("总共花费的钱为:"+(m*toy1.getPrice()+n*toy2.getPrice()));
+ System.out.println("请输入公司人员数量:");
+      int total=sc.nextInt();
+      
+ System.out.println("平均每人花费的钱为:"+((float)(m*toy1.getPrice()+n*toy2.getPrice())/(float)total));}}

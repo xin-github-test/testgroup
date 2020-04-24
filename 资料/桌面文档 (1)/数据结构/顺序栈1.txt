@@ -1,0 +1,67 @@
+//顺序栈（先进先出）
+#include<stdio.h>
+#define  maxsize 5
+typedef int elemtype;
+typedef struct                //创建一个结构体，里面创建一个数组
+{ elemtype list [maxsize];
+ int top;} seq;
+   void initseqstack(seq *s)  //将空表的第一个top赋予值-1
+     {s->top=-1;}
+      int isfull(seq *s)          //判满
+      {if(s->top==maxsize-1) return 1;  
+            else return 0;}
+      int isnull(seq *s)           //判空              
+   { if(s->top==-1) return 1;
+     else return 0;}
+ void push(seq *s,int key)     //进栈
+{if (isfull(s))  printf("栈已满");  //判满
+ else
+  s->list[++s->top]=key;}      //将top先指向后一个元素的位置，然后将要进栈的元素赋值给top指向的位置
+void pop(seq *s)    //出栈
+ {if (isnull(s))  printf("空栈"); //判空
+else
+  s->top--;}                           //直接将top指向前一个元素，后一个元素就相当于出去了
+elemtype pop1(seq *s)       //将需要出栈的元素的值求出来
+ {int key;
+if (isnull(s))  {printf("空栈"); return 100000;}//判空
+else 
+ {key=s->list[s->top--];        //将需要出栈的元素的值赋给key，再将top指向前一个元素
+
+return key;}}
+
+ int seqlength(seq *s)   //求栈长度
+{return s->top+1;}       //top指向的就是最后一个元素的下标，直接加一就是长度
+
+  void display(seq *s)    //用于演示的函数
+{int i;
+ for (i=0;i<=s->top;i++)
+ printf("%5d",s->list[i]);
+printf("\n");}
+
+
+int main()     //主函数
+{seq s;int key,i,a,b;
+initseqstack(&s);
+printf("请输入需要进栈的元素的个数：\n");
+scanf("%d",&b);
+for(i=0;i<b;i++)
+{
+scanf("%d",&key);
+push(&s,key);}
+ display(&s); 
+ printf("请输入需要出栈的元素的个数:\n");
+ scanf("%d",&a);
+ printf("元素出栈顺序为\n");
+for(i=0;i<a;i++)
+{printf("%5d",pop1(&s));
+
+}
+printf("\n");
+printf("剩下的元素为：\n");
+ 
+display(&s); 
+
+printf("此时栈的长度为：%d",seqlength(&s));
+
+return 0;}
+   

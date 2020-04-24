@@ -1,0 +1,97 @@
+
+import java.util.*;
+import java.io.*;  //引入io流（从控制台读取一个值）
+//雇员类
+class  Emp{
+  private String empNo;
+  private String name;
+  private float sal;
+    public Emp(String empNo,String name,float sal)
+  {   this.empNo=empNo;
+      this.nam=nam;
+      this.sal=sal;}
+   public String getEmpno()
+{  return this.empNo;}
+   public void setEmpno(String empNo)
+{   this.empNo=empNo;}
+   public String getName() 
+{  return this.name;}
+   public void setName(String name) 
+{  this.name=name;}
+   public float getSal()
+{  return this.sal;}
+   public void setSal(float sal)
+{  this.sal=sal;}
+}
+//雇员管理类
+class EmpManage{
+ private ArrayList al =null;
+ public EmpManage()
+{  al=new ArrayList();}  
+  public addEmp(Emp emp)   //初始化，添加一个员工
+{  al.add(emp);}
+}
+  public void showInfor(String empNo)     //查找该编号的员工并显示其信息
+{  for(int i=0;i<al.size();i++)
+    {   Emp emp= (Emp)al.get(i);
+           if(emp.empNo.equals(empNo))
+           {System.out.println("找到该员工,该员工的信息为：");
+           System.out.println("该员工的编号为："+empNo);
+           System.out.println("该员工的名字为："+emp.getName());
+           System.out.println("该员工的薪水为："+emp.getSal());
+           System.out.println("该员工的名字为："+emp.getName());}}
+}
+   public void updataSal(String empNo,float newsal)  //修改指定编号员工的薪水
+ {      for(int i=0;i<al.size();i++)
+    {   Emp emp= (Emp)al.get(i);
+           if(emp.empNo.equals(empNo))
+              {emp.setSal(newsal);}}
+ }
+ public void deleteEmp(String empNo)           //删除指定编号的员工
+ {  for(int i=0;i<al.size();i++)
+    {   Emp emp= (Emp)al.get(i);
+           if(emp.empNo.equals(empNo))
+           {al.remove(i);    }   }                       //或者al.remve(emp)都行
+}      
+  public class yuangong
+{
+     public static vodi main (String []args) throws Exception
+{
+         EmpManage em=new EmpManage();
+         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+         while (true)
+   {     System.out.println("请输入对应的数字完成相应的操作");
+         System.out.println("1:添加一个员工");
+         System.out.println("2:输入编号查找相应的员工信息");
+         System.out.println("3:输入编号并修改该编号的员工的薪水");
+         System.out.println("4:输入编号并删除该编号的员工");
+           String ope=br.readline();   //读取控制台上的值,且该值为String 类型（但该处会有异常，现在不不了解，可以将其先抛出）
+           if (ope.equals.("1"))
+                  {  System.out.println("请输入编号：");
+                          String empNo=br.readline();
+                      System.out.println("请输入名字：");    
+                           String name=br.readline();
+                      System.out.println("请输入薪水：");     
+                           float sal=Float.parseFloat(br.readline());      //强制将String 转为float
+                               Emp emp=new Emp(empNo,name,sal);
+                                 em.addEmp(emp); } 
+             else  if (ope.equals.("2"))
+                       {     System.out.println("请输入编号：");
+                          String empNo=br.readline();
+                                  em.showInfor(ampNo);           } 
+                    else  if (ope.equals.("3"))
+                              {   System.out.println("请输入编号：");
+                          String empNo=br.readline(); 
+                                 System.out.println("请输入改后的薪水：");     
+                           float newsal=Float.parseFloat(br.readline());  
+                                  em.updataSal(empNo,newsal);         } 
+                            else if (ope.equals.("4"))
+                                      {    System.out.println("请输入编号：");
+                                              String empNo=br.readline(); 
+                                                 em.deleteEmp(empNo);    } 
+    }
+}
+}
+                                         
+                       
+

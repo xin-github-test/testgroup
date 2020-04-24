@@ -1,0 +1,80 @@
+//链队（一开始建造俩个结构体，一个存放链表数据和指针域，另一个存放队头与队尾指针）队头不动，队尾指向最后一个链表
+#include<stdio.h>
+#include<stdlib.h>
+#define null 0
+typedef int elemtype;
+typedef struct node{
+ elemtype data;
+ struct node *next;}seq;
+typedef struct{
+seq *front;
+seq *rear;}sq;
+          seq  *inits(sq *s)               //先将队头和队尾指向一个空的数据链表（无数据，但其指针域必须指向空） 
+{ seq *head=null;
+s->front=(seq *)malloc(sizeof(seq)); //将队头指向一个空的链表
+if (s->front!=null)
+{s->rear=s->front;                            //将队头队尾同时指向同一个空链表
+s->front->next=null;
+head=s->front;return head;}                       //空链表的指针域指向空
+ else
+{printf("error");return head;}}
+
+ void push(sq *s,elemtype key)        //进队 （给进队的值和存放队头队尾的空间的地址）
+{ seq *q;
+  q=(seq *)malloc(sizeof(seq));   //创建一个链表，将其地址给向q
+   if(q!=null)
+{q->data=key;                            //给链表赋值
+ q->next=null;                             //该链表域指向空
+s->rear->next=q;                        //将一开始创建的空链表的指针域指向刚刚建造的实际有数据的链表，实现第一个链表的连接
+s->rear=q;}                                 //队尾指向该链表
+else
+{printf("error");}}
+
+  int pop(sq *s,seq *head)             //出队，并将其出队的值储存再key的空间里
+{seq *p;int key; 
+if (s->front==s->rear)
+ {printf("null");return -1;}                           
+ else
+ {p=s->front->next;                        //设置一个p指针，使其指向将要出队的链表
+  s->front->next=p->next; 
+                                  //将一开始的空链表的指针域指向出队链表的后一个链表(此时实际去除了俩个链表，一个是空链表，一个是实际存储数据的链表） 
+if(s->rear==p)                             //若只有一个链表（即一个空链表，和一个存有数据的有效链表）则将front的值赋给rear,使rear指向原来的空链表，使其成为空链表
+{
+s->front=s->rear;
+head=null;return s->rear->data;}
+key=p->data;
+head=s->front->next;                                  //通过p访问出队的链表的值，并将其赋值给key
+free(p);return key;} }                                         //free()函数，针对malloc创造空间后对其所创造空间的释放，头文件(stdlib.h)
+
+ void display(sq *s,seq *head)          //演示（输出）
+{seq *q=head->next; 
+if (s->front==s->rear)
+ {printf("null");}                      //此处的head为第一个空链表，里面没有数据 ，head指向的下一个链表才是实际有效的链表 
+
+     while(q!=null)
+  { printf("%5d",q->data);
+   q=q->next;}printf("\n");}
+  
+  int main()                                //主函数
+{seq *head=null; sq *s;int i,m,key,n;
+s=(sq *)malloc(sizeof(sq));
+head=inits(s) ;
+printf("请输入需要创建的链表的个数：\n");
+scanf("%d",&m);
+printf("请输入需要进队的值：\n");
+ for(i=1;i<=m;i++)
+{ scanf("%d",&key);
+   push(s, key);}
+ display(s,head);
+ printf("请输入需要出队的元素的个数：\n");
+ scanf("%d",&n);
+ printf("出队的元素为：\n");
+ for(i=1;i<=n;i++)
+ {printf("%5d",pop(s,head));
+ }
+ printf("\n");
+ printf("出队后剩余的元素为：\n");
+ display(s,head);
+
+
+return 0;}

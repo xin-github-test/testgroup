@@ -1,0 +1,293 @@
+/*约瑟夫问题：设编号为1，2，3.....n个人围坐在一起，约定编号为k（1<=k<=n)的人从1开始报数，
+   数到m的那个人出列，他的下一位又从1开始报数，数到m的那个人又出列，依次类推，
+   直到所有人都出列为止，由此产生一个出队序列*/
+public class li {
+	public static void main(String[]args) {       //主函数
+		cycle list=new cycle();
+		 list.setlen(7);                           //设置人员个数（编号个数）
+		 list.create();
+		 list.setk(2);                               //设置从那个编号开始
+		 list.setm(2);
+		 System.out.println("人数编号为；");
+		 list.show();                                           //输出所有人的编号
+		 System.out.println();
+		 System.out.println("出队顺序为:");
+		 list.play();                                               //输出游戏结束后的出队序列
+	}
+
+}
+class child{                                                    //创建一个类，包含编号，和一个类似指针的变量
+	 int no;
+	 child next;
+	 public child(int no) {                 //创建一个设置编号的构造方法
+		 this.no=no;
+	 }
+}
+
+class cycle{
+	int len=0;child head=null;child p=null;
+	int k=0,m=0;
+	public void setk(int k) {                          //设置从编号几开始
+		this.k=k;
+	}
+	public void setm(int m) {                     //设置数几个数
+		this.m=m;
+	}
+	public void play() {                               //游戏开始
+		child p=this.head;                //设置一个变量，将链表的头给他
+		child q=null;                        //设置一个q紧跟p
+		while(this.len!=0) {               //当链对里面的人都出来后，就结束
+		for(int i=1;i<k;i++) {            //找到开始数数的人的编号
+			p=p.next;
+		}
+		for(int i=1;i<m;i++) {                //找到需要出列的人的位置
+			q=p;
+			p=p.next;
+		}
+		System.out.print(p.no+" ");
+		q.next=p.next;                       //出列
+		this.len--;                                 //每当一个人出列后，人员数减一
+	}}
+	public void setlen(int len)                      //设置人员数量
+	{this.len=len;}
+	public void create() {                                //创建一个循环链表
+		
+		for(int i=1;i<=len;i++)
+		{  if(i==1)                                         //若为第一个，则将head给他
+		   {
+			child stu=new child(i);
+			this.head=stu;
+			 this.p=stu;
+		   }
+		else {if (i==len)                                //若为最后一个，将其的next指向头，是实现首尾相连
+		       {child stu=new child(i);
+		         p.next=stu;
+		         p=stu;
+		         p.next=head;
+			
+		        }
+		else {child stu=new child(i);
+		      p.next=stu;
+		      p=stu;
+		      
+			
+		}
+			
+		}
+		}
+	}
+	public void show()                                   //输出所有人的编号
+	{ child p=this.head;
+	  do {
+		  System.out.print(p.no+" ");
+		  p=p.next;
+	  }while (p!=this.head);
+		
+	}
+}
+***********************************************************************************************************
+//巴里面试题   猪
+import java.util.*;
+public class lizi1 {
+ public static void main(String []args) {
+	 Scanner sc=new Scanner(System.in);
+	 while (true)
+	 {System.out.println("请输入需要查找第几只猪的编号：");
+	 int m=sc.nextInt();
+	 Pigno pn=new Pigno(m);
+	 System.out.println("第"+m+"只猪的编号为："+pn.getNo(m)+",它是"+pn.getYear(m)+"年出生的。");
+	 System.out.println("请输入k值查看获奖的猪：");
+	  int k=sc.nextInt();
+	  System.out.println("获奖的猪的编号为:"+pn.getAward(k));}
+	  
+	  
+ }
+}
+class Pig                                   //创建一个pig类，存放猪的编号，并可以获取其编号
+{  private int no;
+   public Pig(int no)                    
+   {
+	   this.no=no;
+   }
+   public int getNo()
+   {
+	   return this.no;
+   }
+}
+class ClassifyPig{                                     //创建数组 存放的是 每个年份出生的猪的总数
+	private int sum; 
+	public ClassifyPig(int sum)
+	{
+		this.sum=sum;
+	}
+	public int getSum()
+	{
+		return this.sum;
+	}
+}
+class Pigno{
+	 public  ArrayList<Pig> al=null;
+	
+	 public Pigno(int m)                                             //对al进行初始化（将猪进行编号，0号位位主人)
+	   {  al=new ArrayList<Pig>();
+	      int i;
+		  for (i=0;i<=m;i++)
+	     { 
+		     if (i==0||i==1||i==2||i==3) {al.add(new Pig(i+1));}
+		     else
+	       al.add(new Pig(al.get(i-2).getNo()+al.get(i-3).getNo()));
+	    }
+	   }
+	 public int getNo(int m)                                                         //得到具体某只猪的编号
+	 {
+		 return al.get(m).getNo();
+	 }
+	
+	  public int getYear(int m)                                                       //得到具体猪的出生年份
+	  {  int i,sum=0,Sum=0,j;
+	     ArrayList<ClassifyPig> a2=new ArrayList<>() ;
+	   for (i=0;Sum<=m;i++)
+	   {  if(i==0)  {a2.add(new ClassifyPig(2));Sum=2;}
+	      if(i==1)  {a2.add(new ClassifyPig(1));Sum=3;}
+	      if(i==2)  {a2.add(new ClassifyPig(2));Sum=5;}
+	       for (j=0;j<i-1;j++)
+	       {sum+=a2.get(j).getSum();
+	    	a2.add(new ClassifyPig(sum));
+	    	Sum+=sum;
+	       }      
+	   }
+	   return (2019+i);
+	  }
+	  
+	  public int  huan(int no)                                               //将编号进行反转
+	  { int w,w1=0;
+	     while (no!=0)
+		  {  w=no%10;
+		     w1=w1*10+w;
+		     no=no/10;		  
+		  }
+		 return w1;
+	  }
+	  public int getAward(int k)                                           //算出哪知猪获奖
+	  {  ArrayList<Integer> a=new ArrayList<Integer>();
+	     
+	   int i;
+		  for (i=1;i<al.size();i++)
+		  {
+			  a.add(huan(getNo(i)));   
+		  }
+		  a.sort((x,y)->y-x); 
+		  int j=a.get(k-1);
+		  int l=huan(j);
+		  for (i=1;i<al.size();i++)
+		  {
+			  if (al.get(i).getNo()==l) break;
+		  }
+		  return i;
+	  }
+	    
+		  
+	  }
+***************************************************************************************
+import java.util.*;
+import java.io.*;  //引入io流（从控制台读取一个值）
+class Emp{
+	 private String empNo;
+	 private String name;
+	 private float sal;
+	  public Emp(String empNo,String name,float sal){
+		  this.empNo=empNo;
+		  this.name=name;
+		  this.sal=sal;
+	  }
+	 public String  getEmpno()
+	 {return this.empNo;}
+	 public void setEmpno(String empNo)
+	 {  this.empNo=empNo;}
+	 public String getName()
+	 {return this.name;}
+	 public void setName(String name)
+	 {this.name=name;}
+	 public float getSal()
+	 { return this.sal;}
+	 public void setSal(float sal)
+	 { this.sal=sal;}
+}
+class Em{
+	private ArrayList al=null;
+	public Em()
+	{al=new ArrayList();}
+	public void addEmp(Emp emp)
+	{ al.add(emp);}
+	public void updataSal(String empNo,float newsal)
+	{ for(int i=0;i<al.size();i++)
+	    { Emp emp=(Emp)al.get(i);
+	         if(emp.getEmpno().equals(empNo))
+	         {emp.setSal(newsal);}
+	    }
+		
+	}
+	public void showIn(String empNo)
+	{ for (int i=0;i<al.size();i++)
+	     {Emp emp= (Emp)al.get(i);
+	        if(emp.getEmpno().equals(empNo))
+	        {  System.out.println("找到该员工，该员工的信息如下：");
+	           System.out.println("该员工编号为："+emp.getEmpno());
+	           System.out.println("该员工名字为："+emp.getName());
+	           System.out.println("该员工的薪水为："+emp.getSal());
+	        }
+	     }
+	}
+	public void deleteEmp(String empNo)
+	{   for(int i=0;i<al.size();i++)
+	    {Emp emp=(Emp)al.get(i);
+	       if (emp.getEmpno().equals(empNo))
+	       { al.remove(i);}
+	    }
+	}
+	 
+	
+}
+public class yuangong{
+	public static void main (String []args)throws Exception{
+		Em em=new Em();
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		while(true)
+		{  System.out.println("请输入序号进行操作");
+		   System.out.println("1:进行员工的添加");
+		   System.out.println("2:对员工信息进行查看");
+		   System.out.println("3:对员工工资进行修改");
+		   System.out.println("4:进行员工的删除");
+		    String a=br.readLine();
+		     if(a.equals("1"))
+		     {  
+		        System.out.println("请输入编号：");
+		          String empNo=br.readLine();
+		          System.out.println("请输入名字：");
+		          String name=br.readLine();
+		          System.out.println("请输入薪水：");
+		          float sal=Float.parseFloat(br.readLine());
+		          Emp emp=new Emp(empNo,name,sal);
+		          em.addEmp(emp);
+		    	 
+		     }
+		     else if(a.equals("2"))
+		     {System.out.println("请输入需要查看的员工的编号：");
+		        String empNo=br.readLine();
+		        em.showIn(empNo);
+		     }
+		     else if(a.equals("3"))
+		     { System.out.println("请输入需要修改的员工的编号：");
+		        String empNo=br.readLine();
+		       System.out.println("请输入修改后的薪水：");
+		        float newsal=Float.parseFloat(br.readLine());
+		        em.updataSal(empNo, newsal);
+		     }
+		     else if(a.equals("4"))
+		     { System.out.println("请输入需要删除的员工的编号：");
+		        String empNo=br.readLine();
+		        em.deleteEmp(empNo);
+		     }
+		}
+	}
+}

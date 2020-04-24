@@ -1,0 +1,788 @@
+//单链表
+#include<stdio.h>
+#include<stdlib.h>                 //该链表引用了创建链表的malloc，所以需要引用该头文件
+#define null 0                                //c语言中的null值并不是0，需要自己定义
+typedef int elemtype;
+typedef struct node                      //确定一个链表中的结构，需要包含什么数据
+{
+  elemtype data;
+   struct node *next;} list;
+    list *create()            //尾插法(将第一个链表的next指向下一个链表的数据体(data)
+    {list *head=null,*p,*q;
+   p=(list *)malloc(sizeof(list));      //创建一个链表，将其的头指针给p
+      scanf("%d",&p->data);       //给链表中的data赋值
+  p->next=null;                           //将链表中的next指向空
+     while(p->data!=1000)        //给出一个停止连接的条件（只要输入的值不是1000就可以一直创建下去，所以不需要判满）
+{  if (head==null)                       //判断该链表是否是第一个，若是则将该链表的头指针给head
+    head=p;                      
+else {q->next=p;}                      //若不是第一个，则将上一个的链表（头指针为q）的next部分指向下一个链表，实现俩个链表之间的连接
+ q=p;                                         /*创建一个指针q，让q一直跟着p但却一直在p的后面一个（当下一步创建新链表完成后，此时p相当于上一个链表的头指针，从而实现q一直跟在p后面）*/
+p=(list *)malloc(sizeof(list));      //创建下一个需要连接的链表，并将其的头指针给p（此时将p指向新的链表）
+      scanf("%d",&p->data);    //给链表中的data赋值
+  p->next=null;}                        //创建一个链表，其里面的next指针需要指向一个空值(因为此时next还不需要用）
+return head;}
+  list *create2()          // 头插法(通过将下一个链表的next指向上一个的头（data)部分
+{   list *head=null,*p;                   //创建一个头指针和一个指针p
+   p=(list *)malloc(sizeof(list));     //同上
+   scanf("%d",&p->data);
+  while(p->data!=1000)
+   {p->next=head;                       //若是第一个链表则将空值给p，若不是则将后一个链表的next连接到前一个链表的头部实现俩个链表之间的连接
+     head=p;                                //将head指针指向到下一个链表
+     p=(list *)malloc(sizeof(list));   //创建下一个连接的链表
+     scanf("%d",&p->data);}          
+return head;}
+   void display(list *head)      //用于演示，判断各个函数是否正确
+{
+list *p=head;
+    if (head==null)                  //判空
+  printf("该表为空");
+  else
+   {while(p!=null)
+    {printf("%5d",p->data);
+     p=p->next;}}printf("\n");}     
+   elemtype findbyi(list *head,int i)        //通过下标来查找值
+   { list *p=head; int j=1;                             //将表的头指针给p
+   if(i<0){printf("error");return 1000;}    //判断 i 值是否合法
+       else
+         if(p==null)                                    //判空
+   {printf("该表为空");return 1000;}
+   else
+ {while (p!=null&&j<i)                          //通过下标找出该值
+    {p=p->next;j++;}
+    if(p!=null) return p->data;             //若p不等于空，则找到了该值；若p等于空，要么给的i超过了范围，要么刚好最后一个元素的后一个
+  else                                                   //若p等于空，则该下标不合法
+  { printf("erroe"); return 1000;}}}
+   int findbykey(list *head,elemtype key)   //通过值来找该值对应的位置
+  { list *p=head;
+    int n=1;                                                    //n用来记下标
+    if(p==null) {printf("该表为空");}          //判空
+   else
+  { while (p!=null&&p->data!=key)
+      {p=p->next;n++;}
+      if (p=null)                                        //若p为空则该值不存在，其余情况返回n(该值对应的下标)
+    {printf("该值不存在"); return 1000;}
+     return n;}}
+     list *insertbyi( list *head,elemtype i,int key)  //通过输入插入的位置将一个值插入该链表中
+   { list *p=head, *s,*q=p; int j=1;                  //设置一个q让其一直跟在p的后面
+    if(i<0) {printf("error");return head;}          //判断 i 的合法性
+    s=(list *)malloc(sizeof(list));s->data=key;  //将key 的值给到要插入的list 中，之后进行插入
+    while (p!=null&&j<i)
+  {q=p;p=p->next;j++;}                                //找到插入的位置
+  if(p==null&&j<i) {printf("error");}               //满足该情况的时候i 不合法
+else                                                               //其余情况i 是存在的
+ {s->next=p;q->next=s;}                          //s 的next 的部分指向p,将p前一个q的next部分指向s
+ return head;              
+}
+list *insertbykey(list *head,elemtype key) //按值插入，但输入的数据需要一定的规律，此处从小到大  
+ {list *p=head,*q,*s; 
+   s=(list *)malloc(sizeof(list));
+   s->next=null;
+   s->data=key;
+	 if(key==1000) {printf("error"); return head;}
+   else
+	   if(p->data>key)
+	   {head=s;s->next=p;return head;}
+	   else
+	    while(p!=null&&p->data<key)
+		{q=p;p=p->next;}
+	   if(p==null)
+	   {q->next=s;return head;}
+	   else
+	   
+	   {s->next=p;q->next=s;}
+	   return head;}
+  list *deletebyi( list *head,int i)               //按照下标来删除数据
+{ list *p=head,*q=head;int j=1;              //设置一个q跟在p的后面一个
+  if(head==null) {printf("表为空");return head;}  //判空
+  if(i<=0){ printf("error");return head;}              //判断i 的合法性
+  if(i==1){head=head->next;return head;}    //判断删除的是不是第一个表
+  while(p!=null&&j<i)
+{q=p;p=p->next;j++;}                                     
+ if(j==i){q->next=p->next;return head;}   //当i 等于j 时，找到了需要删除的位置
+ printf("error");return head;}
+  int listlength(list *head)                   //计算链表的长度
+ { list *p=head;
+  int n=0;
+  while (p!=null)
+ {n++;p=p->next;}
+return n;}
+ int main()                         //创建主函数，然后调用
+{list *head=null;int i,key;
+ printf("请输入创建的数据\n");
+head=create2();
+display(head);
+printf("请输入需要找的值的位置下标\n") ;
+scanf("%d",&i);
+ printf("%d\n",findbyi(head,i));
+ printf("请输入需要找的值\n");
+ scanf("%d",&key);
+  printf("%d\n",findbykey(head,key));
+  printf("请输入需要插入的位置和值\n");
+  scanf("%d,%d",&i,&key);
+  head=insertbyi(head,i,key);
+  display(head);
+ printf("请输入需要删除的值的位置\n");
+ scanf("%d",&i);
+ head=deletebyi(head,i);
+ display(head);
+ printf("此时的数组的长度为:%d",listlength(head));
+
+
+return 0;}
+**********************************************************************
+   //线性表
+#include<stdio.h>
+#define maxsize 100
+typedef int elemtype;
+typedef struct
+{elemtype list[maxsize];
+ int last;}seq;   //创建一个数组
+
+   void create(seq *s)   //   给结构体中的数组定义长度并且给其赋值
+{  int i;
+    printf("请输入想创建的数组的最大下标");
+    scanf("%d",&s->last);
+      if(s->last<0||s->last>maxsize-1)  //判断输入下标是否合法
+       printf("error");
+     else
+  {for(i=0;i<=s->last;i++)
+scanf("%d",&s->list[i]);}
+}
+   elemtype findbyi(seq *s,int i) //按照下标 i 的值查询元素的值
+  {
+    if(i<0||i>s->last)                  //判断输入下标是否合法
+     {printf("erroe");return -1;}
+   else 
+  return s->list[i];}
+  elemtype findbykey(seq *s,int key) //按照所输入的值查询元素所对应的下标
+  {int i;
+    for (i=0;i<=s->last;i++)
+   if(s->list[i]==key)
+  return i;
+  return -1;}
+   void insertbyi(seq *s,int i,int key) //通过下标来插入一个值
+  {int j;
+  if(s->last==maxsize-1)
+  printf("该数组已满");            //判满
+    else
+     if(i<0||i>s->last+1)          //判断输入下标是否合法
+  printf("error");
+    else
+  for(j=s->last;j>=i;j--)
+  s->list[j+1]=s->list[j];  //从后往前依次将前一个值赋值给后一个
+ s->list[i]=key;               //将需要插入的值插入该位置
+ s->last++;}                   // 插入一个值后，该数组的长度加了一个，其最大下标需要加一
+  void insertbykey(seq *s,int key) /*输入一个值，将该值插入数组中，前提是数组有一定规律（此处是数组按从小到大排序）*/
+   {int i,j;
+    if(s->last==maxsize-1)
+  printf("该数组已满");       //判满
+    else
+        for(i=0;i<=s->last;i++)
+     if(s->list[i]>key)  break;
+       for(j=s->last;j>=i;j--)
+      s->list[j+1]=s->list[j];
+         s->list[i]=key;
+        s->last++;}
+   void deletebyi(seq *s,int i) //通过输入一个下标来删除该下标对应的元素
+  { int j;
+    if(s->last==-1)
+    printf("该数组为空");   //判空
+   else
+       if(s->last<0||s->last>maxsize-1)   //判断输入下标是否合法
+     printf("error");
+  else
+      {for(j=i;j<=s->last;j++)
+    s->list[j]=s->list[j+1];
+     s->last--;}}
+   void deletebykey(seq *s,int key)  //通过输入值，找到该值的位置，然后删除
+ {  int i,j;
+   if(s->last==-1)
+   printf("该数组为空");
+  else
+   { i=findbykey(s,key);
+    if (i==-1)
+  printf("该数不存在");
+   else
+  {for(j=i;j<=s->last-1;j++)
+  s->list[j]=s->list[j+1];
+ s->last--;}}}
+    void display(seq *s)  //输出该数组的值，在每次调用函数改变数组结构后可以调用该函数，检函数是否出错
+  {int i;
+  for(i=0;i<=s->last;i++)
+  printf("%5d",s->list[i]);
+   printf("\n");}
+    int main()
+{seq s; int i;elemtype key;
+ create(&s);
+ display(&s);
+ printf("请输入需要查找的元素下标i");
+scanf("%d",&i);
+printf("%d",findbyi(&s,i));
+printf("\n");
+ printf("请输入要查找的元素的值");
+ scanf("%d",&key); 
+printf("%d",findbykey(&s,key));
+printf("\n");
+printf("请输入要插入的元素的位置下标和值");
+scanf("%d,%d",&i,&key);
+insertbyi(&s,i,key); 
+display(&s);
+printf("请输入要插入的元素的值");
+scanf("%d",&key);
+insertbykey(&s,key);
+display(&s);
+printf("请输入需要删除的值的下标");
+scanf("%d",&i);
+deletebyi(&s,i);
+display(&s);
+printf("请输入需要删除的值");
+scanf("%d",&key);
+deletebykey(&s,key);
+ display(&s);
+
+return 0;}
+*******************************************************************
+//顺序栈（后进先出）
+#include<stdio.h>
+#define  maxsize 5
+typedef int elemtype;
+typedef struct                //创建一个结构体，里面创建一个数组
+{ elemtype list [maxsize];
+ int top;} seq;
+   void initseqstack(seq *s)  //将空表的第一个top赋予值-1
+     {s->top=-1;}
+      int isfull(seq *s)          //判满
+      {if(s->top==maxsize-1) return 1;  
+            else return 0;}
+      int isnull(seq *s)           //判空              
+   { if(s->top==-1) return 1;
+     else return 0;}
+ void push(seq *s,int key)     //进栈
+{if (isfull(s))  printf("栈已满");  //判满
+ else
+  s->list[++s->top]=key;}      //将top先指向后一个元素的位置，然后将要进栈的元素赋值给top指向的位置
+void pop(seq *s)         //出栈，但不会将出栈的元素输出
+ {if (isnull(s))  printf("空栈"); //判空
+else
+  s->top--;}                           //直接将top指向前一个元素，后一个元素就相当于出去了
+elemtype pop1(seq *s)       //出栈，并将出栈的元素顺序输出
+ {int key;
+if (isnull(s))  {printf("空栈"); return 100000;}//判空
+else 
+ {key=s->list[s->top--];        //将需要出栈的元素的值赋给key，再将top指向前一个元素
+
+return key;}}
+
+ int seqlength(seq *s)   //求栈长度
+{return s->top+1;}       //top指向的就是最后一个元素的下标，直接加一就是长度
+
+  void display(seq *s)    //用于演示的函数
+{int i;
+ for (i=0;i<=s->top;i++)
+ printf("%5d",s->list[i]);
+printf("\n");}
+
+
+int main()     //主函数
+{seq s;int key,i,a,b;
+initseqstack(&s);
+printf("请输入需要进栈的元素的个数：\n");
+scanf("%d",&b);
+for(i=0;i<b;i++)
+{
+scanf("%d",&key);
+push(&s,key);}
+ display(&s); 
+ printf("请输入需要出栈的元素的个数:\n");
+ scanf("%d",&a);
+ printf("元素出栈顺序为\n");
+for(i=0;i<a;i++)
+{printf("%5d",pop1(&s));
+
+}
+printf("\n");
+printf("剩下的元素为：\n");
+ 
+display(&s); 
+
+printf("此时栈的长度为：%d",seqlength(&s));
+
+return 0;}
+   *********************************************************************
+//循环队列 先进先出（当元素出队后，该元素的位置将无法调用，而循环队列将实现重新调用该位置）
+#include<stdio.h>
+#define maxsize 100          // 实际只有5个元素，有一个耗损，用于区分队空和队满
+typedef int elemtype;
+typedef struct{                     //创建一个结构体，并创建俩个指针，一个队头front,一个队尾rear
+elemtype list[maxsize];
+int front,rear;}seq;
+ void initqueue(seq *q)       
+ {q->front=q->rear=0;}              //将队头和队尾的值初始化为0
+ int isnull(seq *q)                           //判空
+{if(q->front==q->rear) return 1;
+ return 0;}
+ int isfull(seq *q)                        //判满
+{ if((q->rear+1)%maxsize==q->front)        //因为队列的满与空的条件都为q->front==q->rear，所以为了区分就将最后一个元素损失掉，此时（rear+1）才与队头重合，若rear+1为最后一个元素，而队头front为1，此时需要将(rear+1)除以队长才能使队尾和队头相等 
+                                                                      
+return 1;
+return 0;}
+ void push(seq *q,elemtype key)      //进队
+{ if(isfull(q)) printf("队满");
+ else 
+{ q->list[q->rear]=key;                    //将需要进队的值给队尾
+ q->rear=(q->rear+1)%maxsize;}}   //若进队的为最后一个元素，而此时队头的元素出队了，空了一个位置，此时还是能将值插入，但rear的下一个为一开始的队头，所以表达式需要兼顾这种情况， 
+void pop(seq *q)                            //出队
+{if(isnull(q)) printf("队空");
+else 
+  q->front=(q->front+1)%maxsize;}   //因为出队是直接将队头往下移，所以会出现队头移到了最后一个元素，此时为空表，但又让元素进队，然后再出队，此时队头又需要往下移，而此时队头需要移到第一个位置，所以表达式也要考虑该情况 
+ int seqlength(seq *q)                             //计算此时队长
+{return (q->rear-q->front+maxsize)%maxsize;}
+int pop1(seq *q)                     //出队并将返回值带回
+{ int key;
+   if(isnull(q)) {printf("null"); return 0;}
+ else
+  { q->list[q->front]=key;
+    q->front=(q->front+1)%maxsize;
+      return key;}}
+void display(seq *q)            //演示
+{int i=q->front;
+while(i!=q->rear)
+{printf("%5d",q->list[i]);
+i=(i+1)%maxsize;}
+printf("\n");}
+  
+
+   int main()     //主函数
+{seq s,*q;int key,i,a,b;
+q=&s;
+initqueue(q);
+
+printf("需要进队的元素的个数：\n");
+scanf("%d",&a);
+printf("请输入需要进队的元素的值：\n");
+for (i=1;i<=a;i++)
+{scanf("%d",&key);
+push(q, key);}
+display(q);
+printf("请输入需要出队的元素的个数：\n");
+scanf("%d",&a);
+for(i=1;i<=a;i++)
+{pop(q);
+}
+printf("元素出队后剩余的数：\n");display(q);
+
+printf("需要进队的元素的个数：\n");
+scanf("%d",&a);
+printf("请输入需要进队的元素的值：\n");
+for (i=1;i<=a;i++)
+{scanf("%d",&key);
+push(q, key);}
+display(q);
+printf("输出此时队长：");
+ printf ("%d",seqlength(q));
+
+
+return 0;}
+*********************************************************************************
+//杨辉三角（使用循环队列做出）输出不能像书上一样前面有空格，只能分行输出，即输出的元素为1
+                                                                                                                                                  11
+                                                                                                                                                  121.....
+
+#include<stdio.h>
+#define maxsize 1000          
+typedef int elemtype;
+typedef struct{                     
+int front,rear;}seq;
+ void initqueue(seq *q)       
+ {q->front=q->rear=0;}            
+ int isnull(seq *q)                           
+{if(q->front==q->rear) return 1;
+ return 0;}
+ int isfull(seq *q)                       
+{ if((q->rear+1)%maxsize==q->front)       
+                                                                      
+return 1;
+return 0;}
+ void push(seq *q,elemtype key)      
+{ if(isfull(q)) printf("队满");
+ else 
+{ q->list[q->rear]=key;                    
+ q->rear=(q->rear+1)%maxsize;}}   
+
+  
+  int popkey(seq *q)  //将出队的值返回到该函数 
+  { int key,i;
+  if(isnull(q)) printf("队空");
+  else
+     {
+	 key=q->list[q->front];
+     q->front=(q->front+1)%maxsize;}
+     
+     return key;
+  }
+  
+
+   int main()     //主函数
+{seq s,*q;int key,i,j,m,k=2;
+q=&s;
+initqueue(q);
+printf("请输入需要创建的三角形的行数：\n");
+scanf("%d",&m);                                           //输出m行的元素
+push(q,1);
+
+for(i=2;i<=m+1;i++)       //输出是输出上一行的元素，下一行的元素计算出来但不输出，该行元素是等再下一行的元素计算出后输出，所以若要输出m行的元素，则必须计算m+1行的元素，所以该处为m=1
+{push(q,1);
+  for(j=1;j<=i-2;j++)
+  {q->list[q->rear]=q->list[q->front]+q->list[(q->front+1)%maxsize];
+   q->rear=(q->rear+1)%maxsize;
+   
+   printf("%5d",popkey(q));
+   k++;
+  }
+  
+ printf("%5d\n",popkey(q));
+ 
+ push(q,1);
+}
+
+
+return 0;} 
+*****************************************************************************************************
+//链队 （可能会有错，但可以输出）（一开始建造俩个结构体，一个存放链表数据和指针域，另一个存放队头与队尾指针）队头不动，队尾指向最后一个链表，其中俩个结构体通过一个节点连接在一起，该节点为一个空链表
+#include<stdio.h>
+#include<stdlib.h>
+#define null 0
+typedef int elemtype;
+typedef struct node{
+ elemtype data;
+ struct node *next;}seq;
+typedef struct{
+seq *front;
+seq *rear;}sq;
+          seq  *inits(sq *s)               //先将队头和队尾指向一个空的数据链表（无数据，但其指针域必须指向空） 
+{ seq *head=null;
+s->front=(seq *)malloc(sizeof(seq)); //将队头指向一个空的链表
+if (s->front!=null)
+{s->rear=s->front;                            //将队头队尾同时指向同一个空链表
+s->front->next=null;
+head=s->front;return head;}                       //空链表的指针域指向空
+ else
+{printf("error");return head;}}
+
+ void push(sq *s,elemtype key)        //进队 （给进队的值和存放队头队尾的空间的地址）
+{ seq *q;
+  q=(seq *)malloc(sizeof(seq));   //创建一个链表，将其地址给向q
+   if(q!=null)
+{q->data=key;                            //给链表赋值
+ q->next=null;                             //该链表域指向空
+s->rear->next=q;                        //将一开始创建的空链表的指针域指向刚刚建造的实际有数据的链表，实现第一个链表的连接
+s->rear=q;}                                 //队尾指向该链表
+else
+{printf("error");}}
+
+  int pop(sq *s,seq *head)             //出队，并将其出队的值储存再key的空间里
+{seq *p;int key; 
+if (s->front==s->rear)
+ {printf("null");return -1;}                           
+ else
+ {p=s->front->next;                        //设置一个p指针，使其指向将要出队的链表
+  s->front->next=p->next; 
+                                  //将一开始的空链表的指针域指向出队链表的后一个链表(此时实际去除了俩个链表，一个是空链表，一个是实际存储数据的链表） 
+if(s->rear==p)                             //若只有一个链表（即一个空链表，和一个存有数据的有效链表）则将front的值赋给rear,使rear指向原来的空链表，使其成为空链表
+{
+s->front=s->rear;
+head=null;return s->rear->data;}//若出队后只有最后一个数了，就要返回最后一个数的值，而此时s->rear指向该链表的数据，所以返回其数据
+key=p->data;
+head=s->front->next;                                  //通过p访问出队的链表的值，并将其赋值给key
+free(p);return key;} }                                         //free()函数，针对malloc创造空间后对其所创造空间的释放，头文件(stdlib.h)
+
+ void display(sq *s,seq *head)          //演示（输出）
+{seq *q=head->next; 
+if (s->front==s->rear)
+ {printf("null");}                      //此处的head为第一个空链表，里面没有数据 ，head指向的下一个链表才是实际有效的链表 
+
+     while(q!=null)
+  { printf("%5d",q->data);
+   q=q->next;}printf("\n");}
+  
+  int main()                                //主函数
+{seq *head=null; sq *s;int i,m,key,n;
+s=(sq *)malloc(sizeof(sq));
+head=inits(s) ;
+printf("请输入需要创建的链表的个数：\n");
+scanf("%d",&m);
+printf("请输入需要进队的值：\n");
+ for(i=1;i<=m;i++)
+{ scanf("%d",&key);
+   push(s, key);}
+ display(s,head);
+ printf("请输入需要出队的元素的个数：\n");
+ scanf("%d",&n);
+ printf("出队的元素为：\n");
+ for(i=1;i<=n;i++)
+ {printf("%5d",pop(s,head));
+ }
+ printf("\n");
+ printf("出队后剩余的元素为：\n");
+ display(s,head);
+
+
+return 0;}
+***************************************************************************************************
+//顺序串，将字符串储存在一个数组中，然后实现插入，取子串等操作   （该代码里面代表位置的pos 表示的是下标，并不是第几个)
+#include<stdio.h>
+
+#define maxsize 100                 //定义数组的长度
+typedef struct{                            //创建一个结构体，里面有一个数组，和字符串的长度
+  char list[maxsize];
+  int len;} sstring;
+
+ void create1(sstring *s)               // 第一种创建方法  创建一个字符串
+{int i;
+   printf("请输入串的长度\n");
+scanf("%d",&s->len);                  //输入字符串的长度
+getchar();                             //用getchar()吸收掉上面打的回车，若不用会导致下面个给字符数组赋值时将该空格算进去，导致输出结果少了一个字符 
+printf("请输入该串的字符:");
+ for (i=0;i<s->len;i++)
+scanf("%c",&s->list[i]);
+getchar();}               //为该字符串赋值
+ 
+ void create2(sstring *s)               //第二种方法创建  使用getchar 函数给字符串赋值，可以一直打，可输完用回车结束
+{ int i=0;
+ char c;
+ 
+ while((c=getchar())!='\n')                 //输入字符，当输入回车时结束
+{ s->list[i]=c;i++;
+   s->len=i;}  }                       //计算字符长度
+void display(sstring *s)
+{int i;
+  for(i=0;i<s->len;i++)
+printf("%c",s->list[i]);
+  printf("\n");}
+ void strcopy(sstring *s,sstring *t)  //将另一个字符串覆盖原来的字符串
+{ int i;
+  for(i=0;i<s->len;i++)
+ s->list[i]=t->list[i];
+s->len=t->len;}        
+ int  strcompare(sstring *s,sstring *t)    //将俩个字符串进行比较（一个一个字符的比较ASC码值）
+{int i=0;
+ while (i<=s->len&&i<=t->len)
+ {if (s->list[i]!=t->list[i]) break;            //一个一个比较，遇到不一样的就停止，然后比较来个不同的字符的ASC码值的大小
+    i++;}
+ if(i==s->len+1&&i==t->len+1) return 0;
+ return s->list[i]-t->list[i];}
+
+void strcat(sstring *s,sstring *t)    //在串s后面插入一串字符
+{int i;
+ if (s->len+t->len<=maxsize-1)      //若俩个串的长度加起来都不会超过最大长度，则执行下面语句
+  {for (i=0;i<t->len;i++)
+     s->list[s->len+i]=t->list[i];       //将t加入到s后面的数组空间当中
+    s->list[s->len+i]='\0';               //当最后一个字符加入后，将其后面的一个空间的值赋值为\0
+   s->len=s->len+t->len;}              //重新定义数组长度
+else if(s->len<maxsize-1)                //若两个字符串的长度大于最大的长度，但原串的长度小于最大长度
+{for (i=0;i<maxsize-1-s->len;i++)
+  s->list[s->len+i]=t->list[i];            //将t的字符一个一个的赋值给s后面到最大长度的空间
+  s->list[maxsize-1]='\0';                 //将最后的一个空间赋值\0
+ s->len=maxsize-1;}                           //此时串的长度为最大长度减一，最后一个空间存了\0
+else
+ printf("full");}                    //该种情况则表示s已经满了，不能插入别的串
+void substring (sstring *t,sstring *s,int pos,int len)  //在指定的位置，取出s在该位置后面长度为len的一个子串,将该子串存放在t中
+{int i;
+  if (pos<0||pos>s->len)
+ printf("error");
+ else
+ if(len<0||pos+len>maxsize-1)            //俩个都是用来判断非法的位置和长度
+ printf("error");
+ else
+ {for (i=pos;i<pos+len;i++)              //从pos位置开始，将s在该后面到指定长度的字符都赋给t
+   t->list[i-pos]=s->list[i];
+ t->list[i-pos]='\0';                            //最后一个字符存放完成后，将其后一个空间赋值为\0；
+ t->len=len;}}                                   //字串长度就为len
+
+int main()                  //主函数
+{ sstring s; sstring t;int pos,len;          //这里创建的s为前面创建的结构体，并不是该结构体的地址，不能直接创建*s,因为*s只是指向该种类型的指针，在没有给其赋值地址时，没有指向
+
+
+  create1(&s);
+  printf("输出：\n");
+  display(&s);
+printf("请输入需要覆盖的字符串\n");
+create1(&t);
+strcopy(&s,&t);
+printf("覆盖后的字符串为：\n");
+display(&s);
+printf("请输入需要比较的字符t\n");
+create1(&t);
+if(strcompare(&s,&t)>0)
+ printf("字符串s比较大\n");
+else if(strcompare(&s,&t)<0)
+ printf("字符串t比较大\n");
+else printf("俩个字符串一样大\n");
+printf("请输入需要在s后面插入的字符串\n");
+create1(&t);
+strcat(&s,&t);
+printf("插入后的字符串为：\n");
+display(&s);
+printf("请输入需要取出子串的位置和长度：\n");
+scanf("%d,%d",&pos,&len);
+substring (&t,&s,pos,len);
+printf("该子串为：\n");
+display(&t);
+
+return 0;}
+*****************************************************************************************************
+//二叉树的三种遍历，及其的创建    （其中递归的思想和将一个指针化为俩个 分工指向的思想非常好）
+#include<stdio.h>
+#include<stdlib.h>
+#define null 0
+typedef char elemtype;
+typedef struct bit
+{
+	elemtype data;
+	struct bit *lchild;
+	struct bit *rchild;
+}  tree,*bitree;                       //创建一个结构体，并创建一个指向该结构体的指针bitree,主函数里将其定为t 好处：相当于设置了两个指针，t指向最开始的根节点一直不变，*t是可以移动的根节点
+
+
+void createtree(bitree *t)  //创建树    并创建一个指向t指针的*t指针  好处：当*t移动时，t不会移动，这样就可以将最开始的根节点的地址给t，然后*t可以移动去访问各层的根节点
+{  char a;
+    scanf("%c",&a);
+    if(' '==a)
+    { 
+        *t=null;
+	}
+	else
+    { *t=(tree *)malloc(sizeof(tree));   //不打括号相当于将创建的结构体的地址给向t，此时t指向最开始的结点
+      (*t)->data=a;                              //*t开始移动，遍历
+      createtree(&(*t)->lchild);
+      createtree(&(*t)->rchild);
+	}
+	
+}
+void visit(char a)
+{
+	printf("%5c",a);
+}
+pre(bitree t,int level)                          //遍历时将最开始的根结点作为参数进行传递
+{   if(t!=null)
+	{  visit(t->data);
+	   pre(t->lchild,level+1);
+	   pre(t->rchild,level+1);
+	}
+}
+ void mid(bitree t,int level)
+ {
+ 	 if(t!=null)
+	{  
+	   mid(t->lchild,level+1);
+	   visit(t->data);
+	   mid(t->rchild,level+1);
+	}
+ }
+ void post(bitree t,int level)
+ {
+ 	 if(t!=null)
+	{  
+	  post(t->lchild,level+1);
+	   
+	   post(t->rchild,level+1);
+	   visit(t->data);
+	}
+ }
+int main()
+{
+	int level=1;
+	bitree t=null;                   //将一开始的根节点的地址设为空
+	printf("请先用前序遍历输入（空子树用空格代替）:\n");
+	createtree(&t);
+    printf("先序遍历为：\n");
+	pre(t,level);
+	printf("\n");
+	level=1;
+	printf("中序遍历为：\n"); 
+	mid(t,level);
+	printf("\n");
+	level=1;
+	printf("后序遍历为：\n"); 
+	post(t,level);
+	printf("\n");
+	return 0;
+}
+*******************************************************************************************
+//二叉树的三种遍历，及其的创建    （其中递归的思想和将一个指针化为俩个 分工指向的思想非常好）
+#include<stdio.h>
+#include<stdlib.h>
+#define null 0
+typedef char elemtype;
+typedef struct bit
+{
+	elemtype data;
+	struct bit *lchild;
+	struct bit *rchild;
+}  tree,*bitree;                       //创建一个结构体，并创建一个指向该结构体的指针bitree,主函数里将其定为t 好处：相当于设置了两个指针，t指向最开始的根节点一直不变，*t是可以移动的根节点
+
+
+void createtree(bitree *t)  //创建树    并创建一个指向t指针的*t指针  好处：当*t移动时，t不会移动，这样就可以将最开始的根节点的地址给t，然后*t可以移动去访问各层的根节点
+{  char a;
+    scanf("%c",&a);
+    if(' '==a)
+    { 
+        *t=null;
+	}
+	else
+    { *t=(tree *)malloc(sizeof(tree));   //不打括号相当于将创建的结构体的地址给向t，此时t指向最开始的结点
+      (*t)->data=a;                              //*t开始移动，遍历
+      createtree(&(*t)->lchild);
+      createtree(&(*t)->rchild);
+	}
+	
+}
+void visit(char a)
+{
+	printf("%5c",a);
+}
+pre(bitree t,int level)                          //遍历时将最开始的根结点作为参数进行传递
+{   if(t!=null)
+	{  visit(t->data);
+	   pre(t->lchild,level+1);
+	   pre(t->rchild,level+1);
+	}
+}
+ void mid(bitree t,int level)
+ {
+ 	 if(t!=null)
+	{  
+	   mid(t->lchild,level+1);
+	   visit(t->data);
+	   mid(t->rchild,level+1);
+	}
+ }
+ void post(bitree t,int level)
+ {
+ 	 if(t!=null)
+	{  
+	  post(t->lchild,level+1);
+	   
+	   post(t->rchild,level+1);
+	   visit(t->data);
+	}
+ }
+int main()
+{
+	int level=1;
+	bitree t=null;                   //将一开始的根节点的地址设为空
+	printf("请先用前序遍历输入（空子树用空格代替）:\n");
+	createtree(&t);
+    printf("先序遍历为：\n");
+	pre(t,level);
+	printf("\n");
+	level=1;
+	printf("中序遍历为：\n"); 
+	mid(t,level);
+	printf("\n");
+	level=1;
+	printf("后序遍历为：\n"); 
+	post(t,level);
+	printf("\n");
+	return 0;
+}

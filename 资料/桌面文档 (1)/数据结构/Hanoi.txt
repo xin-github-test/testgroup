@@ -1,0 +1,176 @@
+//copy right 
+//The program 
+#include<stdio.h>
+//下面的宏定义，N代表我们一次性地要输出的字符数目；
+//M代表我们要移动多少个盘子，其他的都是字符
+#define K ' ' //表示空格，免得用的时候输入3个字符，		K、kong的拼音首字母
+#define L 'L' //L代表左边的柱子，输出的时候，输出L，	L、left
+#define C 'C' //代表中间的柱子，	C、center
+#define R 'R' //代表右边的柱子		R、right
+#define H '-'  //代表中间的柱子		H、Heng的首字母
+#define D '>'	//输出---->的箭头，	D、DaYu拼音的首字母
+#define X '<'	//	X、XiaoYu拼音首字母
+#define N 17	//	一行，从左到右，有多少个字符；一般我们定义成奇数，会整齐些
+#define M 3  //想移动多少个盘子。别太大了，当心死机。
+void output(char c,int n){	//输出n个字符c
+	for(int i=1; i<=n; i++)
+			putchar(c);
+}
+void move(char begin,char end,int nth){	//从begin柱子上，移动第nth个盘子，
+//到end柱子上
+	if(begin==L && end==R){	//如果开始是L，结束是R
+		putchar(begin);		//先输出begin代表的字符
+		output(H,N);			//再输出N个H，
+		printf("%d",nth);		//再输出nth，代表我们移动的盘子号
+		output(H,N-1);		//再输出N-1个H
+		putchar(D);		//再输出字符D，也就是>
+		putchar(end);		//再输出参数end代表的字符
+	}
+	else if(begin==L && end==C){
+		putchar(begin);
+		output(H,N/2);
+		printf("%d",nth);
+		output(H,N/2-1);
+		putchar(D);
+		putchar(end);
+	}
+	else if(begin==C && end==R){		
+		output(K,N+1);
+		putchar(begin);
+		output(H,N/2);
+		printf("%d",nth);
+		output(H,N/2-1);
+		putchar(D);
+		putchar(end);
+	}
+	else if(begin==R && end==L){
+		putchar(end);
+		putchar(X);
+		output(H,N-1);
+		printf("%d",nth);
+		output(H,N);
+		putchar(begin);
+	}
+	else if(begin==C && end==L){
+		putchar(end);
+		putchar(X);
+		output(H,N/2-1);
+		printf("%d",nth);
+		output(H,N/2);
+		putchar(begin);
+	}
+	else if(begin==R && end==C){		
+		output(K,N+1);
+		putchar(end);
+		putchar(X);
+		output(H,N/2-1);
+		printf("%d",nth);
+		output(H,N/2);
+		putchar(begin);
+	}
+	printf("\n");
+}
+//下面函数，从begin柱子，移动n个盘子到end柱子，借助help柱子
+void hanoi(char begin,char end,char help,int n){
+	if(n==1)	//n==1的时候，直接拿过去就完了。
+		move(begin,end,n);
+	else{		//n！=1的时候，
+		hanoi(begin,help,end,n-1);		//begin上n-1个，借助end，移到help上
+		move(begin,end,n);
+		hanoi(help,end,begin,n-1);	//help上n-1个，借助begin，移动到end上
+	}
+
+}
+int main(){
+	hanoi(L,R,C,M);
+	return 0;
+}
+//如果你已经看到这里了，很不错，我奖励你，好好体验一下这段时间你的收获吧，
+//如果不看，那时间也未必就干了什么
+/*
+//copy right 
+//The program 
+#include<stdio.h>
+//下面的宏定义，N代表我们一次性地要输出的字符数目；
+//M代表我们要移动多少个盘子，其他的都是字符
+#define K ' '
+#define L 'L'
+#define C 'C'
+#define R 'R'
+#define H '-'
+#define D '>'
+#define X '<'
+#define N 17
+#define M 15
+void output(char c,int n){
+	for(int i=1; i<=n; i++)
+		putchar(c);
+}
+void move(char begin,char end,int nth){
+	if(begin==L && end==R){
+		putchar(begin);
+		output(H,N);
+		printf("%d",nth);
+		output(H,N-1);
+		putchar(D);
+		putchar(end);
+	}
+	else if(begin==L && end==C){
+		putchar(begin);
+		output(H,N/2);
+		printf("%d",nth);
+		output(H,N/2-1);
+		putchar(D);
+		putchar(end);
+	}
+	else if(begin==C && end==R){		
+		output(K,N+1);
+		putchar(begin);
+		output(H,N/2);
+		printf("%d",nth);
+		output(H,N/2-1);
+		putchar(D);
+		putchar(end);
+	}
+	else if(begin==R && end==L){
+		putchar(end);
+		putchar(X);
+		output(H,N-1);
+		printf("%d",nth);
+		output(H,N);
+		putchar(begin);
+	}
+	else if(begin==C && end==L){
+		putchar(end);
+		putchar(X);
+		output(H,N/2-1);
+		printf("%d",nth);
+		output(H,N/2);
+		putchar(begin);
+	}
+	else if(begin==R && end==C){		
+		output(K,N+1);
+		putchar(end);
+		putchar(X);
+		output(H,N/2-1);
+		printf("%d",nth);
+		output(H,N/2);
+		putchar(begin);
+	}
+	printf("\n");
+}
+void hanoi(char begin,char end,char help,int n){
+	if(n==1)
+		move(begin,end,n);
+	else{
+		hanoi(begin,help,end,n-1);
+		move(begin,end,n);
+		hanoi(help,end,begin,n-1);
+	}
+
+}
+int main(){
+	hanoi(L,R,C,M);
+	return 0;
+}
+*/

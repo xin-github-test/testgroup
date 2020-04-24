@@ -1,0 +1,123 @@
+#include <stdio.h>
+#define maxsize 100
+typedef int elemtype;
+typedef struct 
+{
+   elemtype list[maxsize];
+   int last;
+}seqlist;
+void create(seqlist *s)
+{  int i;
+   printf("please input s->last:");
+   scanf("%d",&s->last);
+   if(s->last<0||s->last>maxsize-1)
+     printf("last is error");
+   else 
+    {
+        for(i=0;i<=s->last;i++)
+            scanf("%d",&s->list[i]);
+    }
+}
+
+elemtype findbyi(seqlist *s,int i)
+{
+   if(i<0||i>s->last)
+     {printf("i is error");
+      return -1;}
+   return s->list[i];   
+}
+
+int findbykey(seqlist *s,elemtype key)
+{
+   int i;
+   for(i=0;i<=s->last;i++)
+     if(s->list[i]==key) return i;
+   return -1;
+}
+void insertbyi(seqlist *s,int i,elemtype key)
+{  int j;
+   if(s->last==maxsize-1)
+    printf("list is full");
+   else
+    if(i<0||i>s->last+1)
+    printf("i is error");
+   else
+    for(j=s->last;j>=i;j--)
+     s->list[j+1]=s->list[j];
+     s->list[i]=key;
+       s->last++;      
+}
+void insertbykey(seqlist *s,elemtype key)
+{
+   int i,j;
+   if(s->last==maxsize-1)
+    printf("list is full"); 
+   else{ 
+    for(i=0;i<=s->last;i++)
+     if(s->list[i]>key) break;
+   for(j=s->last;j>=i;j--)
+     s->list[j+1]=s->list[j];
+   s->list[i]=key;
+   s->last++;}
+}
+void deletebyi(seqlist *s,int i)
+{
+   int j;
+   if(s->last==-1)
+     printf("list is null");
+   else if(i<0||i>s->last)
+     printf("i is error");
+   else
+     {
+       for(j=i+1;j<=s->last;j++)
+        s->list[j-1]=s->list[j]; 
+       s->last--;
+     }
+}
+void deletebykey(seqlist *s,elemtype key)
+{
+   int i,j;
+   if(s->last==-1) 
+     printf("list is null");
+   else
+    {
+      i=findbykey(s,key);
+      if(i==-1)
+       printf("key is not exist");
+      else
+       {
+         for(j=i;j<=s->last-1;j++)
+           s->list[j]=s->list[j+1];
+         s->last--;
+       }
+    }
+}
+void display(sqlist *s)
+{
+   int i;
+   for(i=0;i<=s->last;i++)
+     printf("%5d",s->list[i]);
+   printf("\n");
+}
+int main()
+{
+   seqlist s;
+   int i;
+   elemtype key;
+   /*create(&s);
+   display(&s);*/
+   printf("please input i:");
+   scanf("%d",&i);
+   printf("%d",findbyi(&s,i));
+   printf("please input key:");
+   scanf("%d",&key);
+   printf("%d",findbyi(&s,key));
+   printf("please input insert by i and key:");
+   scanf("%d,%d",&i,&key);
+   insertbyi(&s,i,key);
+   display(&s);
+   printf("please input insert by key);
+   scanf("%d",&key);
+   insertbyi(&s,key);
+   display(&s);
+}

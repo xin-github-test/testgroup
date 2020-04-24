@@ -1,0 +1,128 @@
+1.配置docker的镜像加速
+  使用 vim /etc/docker/daemon.json文件，去官网将配置镜像加速器的文字复制进去就行了；
+  使用 docker info 查看是否配置成功（看register mirro 那一项）
+2.docker run hello-word 
+ 查看docker环境是否配置成功，同时pull第一个镜像文件
+ 出现 hello from docker 则配置和pull成功
+ 其中run 做的事：先在本地寻找是否有该镜像，没有就去相应的镜像上找，找到就将其pull下来，然后运行
+3.docker version 
+查看docker的版本
+一、镜像命令
+docker -help :查看帮助文档
+ 1.docker images 
+ 查看本地的镜像文件
+ 后面可带参数： -a:列出本地所有的镜像（含中间映像层）
+                         -q:只显示镜像
+                        --digests:显示镜像的摘要信息
+                        --no-trunc:显示完整的镜像信息
+ 2.docker search 镜像名称
+  在docker Hub上面寻找对应的镜像文件
+ 后面所带的参数：
+  -s 数字：点赞数超过数字的才显示出来
+--no-trunc:显示完整的镜像信息
+ --automated:只列出automated build 类型的镜像文件
+ 3.docker pull 
+ 下载镜像文件 例如 docker pull tomcat 等价于 docker pull tomcat:latest
+ docker pull tomcat:3.2  后面的相当于版本号
+4.docker rmi 文件名
+ 删除镜像文件，如果有多个版本的文件，就需要在文件名后面加上版本号，默认事latest
+ 带上参数 -f 强制删除
+ 后面带多个文件名就删除多个文件
+ 删除全部文件：docker rmi -f $(docker images -q)
+5.docker run [options] image [command] [args..]
+  新建并启动容器：前提是必须有镜像
+ 其中option的参数：
+  --name:容器新名字，为容器指定一个名称
+  -d:后台运行容器，并返回容器id,也即启动守护式容器（一般这样启动的话，启动后就会自己退出，这是docker的机制问题，容器后台运行，就必须要有一个前台进程）
+ -i:以交互模式运行容器，通常与-t同时使用
+ -t:为容器重新分配一个伪输入终端，通常与-i同时使用
+ -P:随机端口映射
+ -p:指定端口映射，有以下四种格式
+   ip:hostPort:containerPort
+   ip::containerPort
+   hostPort:containerPort
+   containerPort
+6.列出当前正在运行的容器 docker ps [options]
+ option说明：
+  -a :列出当前所有正在运行的容器+历史上运行过的
+ -l:显示最近创建的容器
+ -n:显示最近n个创建的容器
+ -q:静默模式，只显示容器编号
+ --no-trunc:不截断输出
+ 
+7.退出容器
+    1）exit  :容器停止退出
+    2）ctrl+P+Q :容器不停止退出
+8.启动容器
+ docker start 容器id 或容器名
+ 重启容器： docker restart 容器id或容器名
+ 停止容器：docker stop 容器id或容器名 （比较温和的停止，慢慢的停止）
+ 强制停止：docker kill  容器id或容器名 (直接断电）
+9.删除已停止的容器
+ docker rm 容器id 或容器名
+ 若要删除正在运行的容器，需要加上参数 -f 强制删除
+ 一次删除多个：docker rm -f $(docker pa -a -q) 或者 docker pa -a -q | xargs docker rm
+ 其中xargs 是一个给命令传递参数的命令
+10.docker logs -f -t --tail 容器id
+ 查看容器日志
+ 其中 -t是加入时间戳 -f 是跟随最新的日志打印 --tail 数字 显示最后多少条
+ 11.让容器在后台运行：
+ 因为docker的机制问题，要想容器在后台运行，就必须有一个前台的进程
+ 所以可以通过以下命令使得容器在后台运行：
+ docker run -d centos /bin/sh -c "while true ;do echo hello zzyy;sleep 2;done"
+12.docker inspect 容器id 
+ 查看容器内部的细节
+13.进入正在运行的容器并以命令进行交互
+ 1）docker exec -it 容器id bashShell
+ 2)重新进入 docker attach 容器id
+ 上诉的区别：attach 直接进入容器启动命令的终端，不会启动新的进程
+                     exec 是在容器中打开新的终端，并且可以启动新的进程（就是一个直接进了根目录，一个直接直接在命令后面接上名令）
+   如：docker exec -it 容器id ls -l  :浏览文件，直接在其后面加上命令，不需要进入一个命令控制台（需要进入的话，将命令换成/bin/bash就行了），而后面
+ 一种是直接进入了控制台，然后在里面输如命令
+14.从容器内拷贝文件到主机上 
+ docker cp:容器id  容器内路径 目的的主机路径
+15.docker commit
+ 将容器副本提交使之成为一个新的镜像
+docker commit -m="提交的信息描述" -a="作者" 容器id 要创建的目标镜像名:[标签名]
+例：运行tomcat docker run -it -p 8081:8080 tomcat
+15.添加数据卷
+  docker run -it -v /宿主机绝对路径目录:/容器内目录 镜像名
+如果操作的时候出现 cannot open directory.:Permission denied
+就在挂载的目录后面多加上一个参数 ： --privileged-true
+ 使得容器和主机之间的数据进行共享，就算容器已经停止运行，但是还是能进行共享
+16.添加数据卷（带权限）
+docker run -it -v /宿主机绝对路径目录:/容器内目录:ro 镜像名
+ 容器内的目录是只读的（read only）
+17.编写dockerFile
+ 开头：
+# volume test 
+FROM centos
+VOLUME ["/dataVolumeContainer1","/dataVolumeContainer2"]
+CMD echo "finished,-----------success1"
+CMD /bin/bash
+使用该种方法可以直接生成多个数据卷，不指定宿主机的路径的话，会有默认的路径，可以用 
+docker inspect id  查看
+18.使用 build 生成镜像 （dockerfile就是对镜像文件的一种描述）
+docker build -f /mydocker/Dockerfile -t xin/centos .
+19.当生成其它容器的时候，可以让其继承上一个容器使得数据卷也继承下来，以便数据之间的共享
+ docker run -it --name 容器别名 --volumes -from 继承的容器名 容器名
+20.dockerfile的保留字指令：
+ FROM :基础镜像，当前新镜像是基于哪个镜像的
+ MAINTAINER :镜像维护者的姓名和邮箱地址
+ RUN ：容器构建时需要运行的命令（在镜像构建的时候执行的命令）
+ EXPOSE ：当前容器对外暴露的端口号
+ WORKDIR:指定在创建容器后，终端默认登陆的进来的工作目录，一个落脚点
+ ENV：用来在构建镜像的过程中设置环境变量
+ ADD :将宿主机目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包
+ COPY:类似ADD，拷贝文件和目录到镜像中（COPY src dest)，将从构建上下文目录中<源路径>的文件/目录 复制到新的一层的镜像内的<目标路径>位置，但是不会自动解压tar包(COPY ["src"," dest"])
+ VOLUME:容器数据卷，用于数据保存和持久化工作
+ CMD:指定一个容器启动时要运行的命令，Dockerfile 中可以有多个CMD指令，但只有最后一个生效，CMD会被docker run之后的参数替换
+ ENTRYPOINT :指定一个容器启动时要运行的命令，他的目的和CMD是一样的，都是在指定容器启动程序和参数，这个不会被替换，而是追加
+ ONBUILD:当构建一个被继承的Dockerfile时运行命令，父镜像在被子继承后父镜像的onbuild被触发
+20、案例
+ base镜像（scratch) :docker hub中的99%的镜像都是通过在base  镜像中安装和配置需要的软件构建出来的	 
+ 构建一个dockerfile文件，然后用 docker build -f /mydocker/Dockerfile2 -t mycentos:1.3 . 创建镜像文件
+21.将本地镜像push到阿里云上
+ docker login --username= registry.cn-hangzhou.aliyuncs.com
+ docker tag [imageID] registry.cn-hangzhou.aliyuncs.com/命名空间/仓库名称:[镜像版本号]
+ docker push registry.cn-hangzhou.aliyuncs.com/命名空间/仓库名称:[镜像版本号]

@@ -1,0 +1,104 @@
+#include<stdio.h>
+#define maxsize 10                         //设置表长
+#define null 0
+typedef int elemtype; 
+typedef struct
+{ elemtype data;
+  int cursor;} component,staticlist[maxsize]; //创建一个结构体数组，每个数组里面有数据和一个游标
+ void initial(staticlist s,int *av)                         //将数组中的第一个空间用作结点，该空间不存数据，然后第一个数据的游标存放第二个元素的下标，以此类推，最后一个元素的游标存放-1，表示结束，设置一个备用游标**av指向第一个元素的下标
+{int k;
+s[0].cursor=1;
+ for(k=1;k<maxsize-1;k++)
+ s[k].cursor=k+1;
+ s[maxsize-1].cursor=-1;
+*av=1;}
+
+void  create (staticlist s,int m,int *av)          //返回空闲表的头结点
+{int i;
+     if (m<0||m>maxsize-1)
+       {printf("error");}
+else
+    {
+	  for (i=1;i<=m;i++)
+    {scanf("%d",&s[i].data);
+    (*av)=s[*av].cursor;
+      
+    }
+      
+      s[m].cursor=maxsize-1;
+	  }
+ 
+
+}
+void  insertbyi(staticlist s,int i,int *av,int key)        //给出要插入的下标和值，并将空闲表的头结点返回
+    { int j,l;
+	if(*av==maxsize||i>(*av)||i<=0)  {printf("error");}
+ else 
+  
+ {  s[*av].data=key;
+    l=s[*av].cursor;
+  
+    if(i==*av)
+  {
+  for(j=0;j<*av;j++)
+   { if(s[j].cursor==maxsize-1)
+     {
+	  s[j].cursor=*av;
+     
+       s[*av].cursor=maxsize-1;
+  
+	 } 
+ }}
+   
+   else 
+ {
+ for(j=0;j<*av;j++)
+  {  
+    if(s[j].cursor==i)
+     {  
+	  s[*av].cursor=s[j].cursor;
+	   s[j].cursor=*av;
+	   
+     
+	 }
+  }}}
+  *av=l;
+}
+
+
+ void deletebyi(staticlist s,int i,int *av)
+ { int j;
+ if(*av==maxsize||i>(*av)||i<=0)  {printf("error");}
+  else
+    { 
+   
+  
+  }
+  
+}
+ void display(staticlist s,int *av)
+{  int i=0;
+   i=s[i].cursor;
+   if (*av==1) printf("null");
+else                                            //此处的**av可能指向第一个元素的，所以一般判空无效，解决方法：若删除第一个元素时，不将**av指向第一个，或者别的方法
+    while(s[i].cursor!=-1)
+    {printf("%5d",s[i].data);
+      i=s[i].cursor;
+	}
+printf("\n");}
+   
+
+int main()
+{  int i,key;int av;int m;
+  staticlist s;
+initial(s,&av);
+printf("请输入需要创建的个数：");
+scanf("%d",&m);
+create (s,m,&av);
+display(s,&av);
+printf("请输入需要添加的元素的下标和值：\n");
+scanf("%d,%d",&i,&key);
+insertbyi(s,i,&av,key);
+display(s,&av);
+
+return 0;}
