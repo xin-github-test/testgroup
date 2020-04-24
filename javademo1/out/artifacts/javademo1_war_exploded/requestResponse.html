@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  重定向（response.sendRedirect("/requede"))和转发（request.getRequestDispatcher("/requede").forward(request,response);）的区别
+   1.重定向浏览器请求俩次，而转发只请求一次
+   2.重定向浏览器上的url会变，而转发不会
+   3.重定向无法实现数据的传送
+解决get方式乱码的问题：
+在输入的字符串前加上一段将该字符串转化成utf-8的语句： str=new String (str.getBytes("iso-8859-1"),"utf-8");将str的编码进行转换，注意每一条字符输出都要进行转化，所以比较麻烦
+
+
+</body>
+</html>

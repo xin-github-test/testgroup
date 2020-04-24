@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <script>
+          function ch()
+          {
+              var a = document.getElementsByTagName("img")[0];
+              a.src="/yzm?time="+new Date().getTime();
+
+          }
+        
+    </script>
+</head>
+<body>
+  <form name ="reg" action="/LoginServlet" method="post">
+       用户名:<input type="text" name="username"/> <br>
+       密&nbsp;&nbsp;&nbsp;码:<input type="text" name="password"/><br>
+      验证码:<input type="text" name="yzm"> <img src="/yzm" onclick="ch()"/> <a href="javascript:ch()" > 看不清？换一张 </a></a><br>
+
+      <input type="submit" value="登陆"/>
+
+  </form>
+</body>
+</html>

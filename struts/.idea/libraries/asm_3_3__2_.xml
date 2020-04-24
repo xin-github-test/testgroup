@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="asm-3.3 (2)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../struts2anli/web/WEB-INF/lib/asm-3.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

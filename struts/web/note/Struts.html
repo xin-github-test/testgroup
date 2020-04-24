@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Struts2</title>
+</head>
+<body>
+1.框架概述
+  （1）框架的意义和作用：所谓框架，就是把一些繁琐的重复性的代码封装起来，使程序员在编程的过程中把更多的精力放到业务需求的分析
+ 和理解上面
+  特点：封装了很多细节，程序员在使用的时候会非常简单
+  （2）三大框架
+   Struts2,Hibernate,Spring
+
+2.三层架构与Struts2
+    三层架构：表现层：M model V view C control
+              业务层：service
+              持久层：dao data access object
+   其中Struts2处于的位置是表现层（注意：他只是一个表现层框架），而Hibernate是持久层
+3.MVC与Struts2
+     控制器：Servlet
+               init()
+               destory()
+               service(ServletRequset,ServletResponse)
+     过滤器：Filter 它也可以作为控制器
+                init(FilerConfig)
+                destory()
+                doFilter(ServletRequset,ServletResponse,FilterChain)
+       Servlet能做的Filter都可以做，并且比servlet功能更大，它多了一个放行的功能
+4.案例中存在的一些问题
+5.Struts2简介
+6.搭建开发环境
+     1、下载开发包
+     2、搭建环境
+         a.导入所需的jar包
+         b.创建一个配置文件：在顶层类路径下，创建一个名称为struts.xml文件
+7.入门案例
+8.第一个案例的执行过程
+   servlet的执行过程：客户浏览器——tomcat服务器——我的应用——web.xml——Servlet——客户浏览器（第一次访问才实例化，后面再次访问就不会实例化了）
+   struts的执行过程——客户浏览器——tomcat服务器——web.xml——struts.xml——HelloAction——success.jsp（每次请求都实例化一个对象）
+9.Struts2配置文件
+   加载时机：服务器启动时就已经加载好了
+   加载顺序：default.properties--struts-default.xml--plugins配置--struts.xml--struts.properties--web.xml
+   如果遇到重名的，后一个覆盖前一个
+10.Struts2中的中的常量
+   struts.devMode
+11.Struts2配置文件元素的详解
+   package元素：
+          name属性
+          extends属性
+          abstrsct属性
+          namespace属性：如何查找名称空间和动作类的，必须掌握
+   action元素：
+          name属性
+          class属性
+          method属性
+12.Struts2中结果视图详解
+   result属性
+          name属性：如果不写name属性时默认值是success
+          type属性：以何种方式前往指定的视图或动作，默认值是dispatcher
+   自定义结果视图：
+         步骤：
+              1.创建类，继承StrutsResultSipport,重写doExcute()方法
+              2.在struts.xml中配置
+   全局视图和局部视图
+13.Struts2中调用ServletAPI
+   ServletAPI获取的俩种方式：
+              1.使用ServletActionContext
+              2.采取注入的方式，实现接口
+14.分文件编写Struts2的配置文件
+</body>
+</html>

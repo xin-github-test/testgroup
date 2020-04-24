@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+     <constant name="struts.devMode" value="true"/>
+    <package name="p1" extends="struts-default">
+          <!-- 声明拦截器-->
+        <interceptors>
+            <interceptor name="demo1interceptor" class="demo3.interceptor.Demo1Interceptor"></interceptor>
+            <interceptor name="demo2interceptor" class="demo3.interceptor.Demo2Interceptor"></interceptor>
+        </interceptors>
+        
+        <action name="action1" class="demo3.action.Demo1Action" method="save">
+              <!-- 使用自定义拦截器:当配置了任何一个拦截器，默认的拦截器栈就不会再工作了
+                当有多个拦截器时，拦截器执行的顺序是由配置的顺序执行的（与声明的顺序无关，与下面的配置有关）-->
+            <interceptor-ref name="demo1interceptor"></interceptor-ref>
+            <interceptor-ref name="demo2interceptor"></interceptor-ref>
+            <result name="success">/demo3/demo3.jsp</result>
+         </action>
+    </package>
+    <!-- 使用自定义拦截器，检查登陆，最基本的配置方式
+      其中存在的问题：
+         当我们使用自定义的拦截器之后，默认的拦截器就不再工作了
+           解决方式：将默认的拦截器也配置进来-->
+    <!--配置完默认的拦截器后还存在问题
+       如果需要拦截的动作很多时，就需要写很多，很繁琐
+         解决方式：直接配置一个自定义的拦截栈，将原有的默认的拦截器配置上去，再加上我们自定义的拦截器,然后直接在action中直接配置我们的拦截栈就行了
+         但是这种还是存在问题：还是得每一个都写上自定义的拦截栈-->
+    <!-- 解决方式：覆盖struts-default.xml配置文件中的默认拦截器栈，将我们自己的这个拦截器栈变成默认的
+    -->
+    <!--但是上面配置我们的为默认的还是有问题，因为所有的action都必须经过该拦截器，导致login的登陆操作都完成不了，其中的login方法永远不会执行
+      解决方式：在AbstractInterceptor的子类中，还有一个抽象类MethodFilterInterceptor,他里面提供了俩个属性
+          excludeMethods:哪些方法不需要拦截
+          includeMothods:哪些方法需要拦截
+          所以重写检查器，使其继承新的拦截器-->
+    <!-- 上面的还是有问题：我们在声明拦截器的时候可能根本不知道哪些方法不需要拦截
+       解决方式：在使用拦截器的时候再告诉拦截器哪些需要拦截哪些不需要（在相应的动作中注入参数）-->
+
+    <package name="p2" extends="struts-default">
+        <interceptors>
+            <interceptor name="checkLoginInterceptor1" class="demo4.interceptor.CheckLoginInterceptor1"></interceptor>
+            <interceptor-stack name="myDefaultStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="checkLoginInterceptor1">
+                    <param name="excludeMethods">login</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <!--将我们的拦截器栈变为默认的，所以action里面都可以不用写 -->
+        <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+        <global-results>
+            <result name="input">/demo4/login.jsp</result>
+        </global-results>
+        <action name="login" class="demo4.anli.Demo4Action" method="login">
+             <interceptor-ref name="myDefaultStack">
+                 <param name="checkLoginInterceptor1.excludeMethods">login</param>
+             </interceptor-ref>
+            <result type="redirectAction">showMain</result>
+        </action>
+        <action name="showMain" class="demo4.anli.Demo4Action">
+         <!--将默认的拦截器也配置上去 -->
+            <!--<interceptor-ref name="defaultStack"></interceptor-ref>-->
+            <!--<interceptor-ref name="checkLoginInterceptor"></interceptor-ref>-->
+           <!-- 直接配置自定义的拦截栈就行-->
+            <!--<interceptor-ref name="myDefaultStack"></interceptor-ref>-->
+            <result >/demo4/main.jsp</result>
+        </action>
+        <action name="showOther" class="demo4.anli.Demo4Action">
+            <!--<interceptor-ref name="defaultStack"></interceptor-ref>-->
+            <!--<interceptor-ref name="checkLoginInterceptor"></interceptor-ref>-->
+            <!--<interceptor-ref name="myDefaultStack"></interceptor-ref>-->
+            <result >/demo4/other.jsp</result>
+        </action>
+    </package>
+
+
+
+</struts>

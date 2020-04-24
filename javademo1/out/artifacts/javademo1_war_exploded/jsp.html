@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSP</title>
+</head>
+<body>
+    jsp:动态web资源的技术，实际就是servlet
+    是servlet+java
+jsp的最佳实践：
+  servlet：控制器。重点编写java的代码逻辑（获取表单数据，处理业务逻辑，分发转向）
+  JSP：代码显示模块，重点在于显示数据
+
+jsp的基本语法：
+  1.JSP模板元素
+     网页的静态内容。如：html标签和文本
+ 2.JSP的脚本
+    小脚本<% java代码 %>
+     表达式<%=  %> 等价于out.print(2+3);
+3.声明 <%! %> 表示在类中定义全局变量和静态块
+JSP注释：
+  <%--    --%>特点：安全，省流量
+  网页注释：<!--  -->特点 ：不安全，费流量
+jsp的三大指令：
+   jsp指令是为jsp引擎而设计的，他们并不直接产生任何可见的输出，而只是告诉引擎如何处理jsp页面中的其余部分
+    在jsp2.0规范中共定义了三个指令
+page指令
+include指令:将另一个页面包含进来：<%@include file="页面url"%>
+taglib指令：标签库的引入
+
+语法：
+  <%@ 指令名称 属性1="属性值"...%>
+或者
+    <%@ 指令名称 属性1="属性值"%>
+    <%@ 指令名称 属性2="属性值"%>  可以出现多次
+ 1.page指令
+  作用：用于定义jsp页面的各种属性
+属性
+ 1.1 import和java代码中的import是一样的
+   JSP会自动导入以下的包：import java.lang.*;
+                          import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.jsp.*;
+session=ture ;默认为true 代表创建session对象，设为false后不创建
+buffer:设置缓存区 默认大小为8kb，建议不改
+autoflush 默认为true 自动刷新
+
+jsp的六大动作：
+ <!--<jsp:include> 动态包含 -->
+    <!--<jsp:forward> 请求转发-->
+    <!--<jsp:param> 设置请求参数-->
+    <!--<jsp:useBean> 创建一个对象-->
+    <!--<jsp:setProperty>给指定的对象属性赋值-->
+    <!--<jsp:getProperty>取出指定的对象的属性值-->
+
+   九大内置对象
+   ：
+   request response session application exception page config out
+   pageContext
+
+   1.pageContext（重要）
+     本身也是一个域对象，可以操作其他三个域对象的数据，其中有一个很重要的方法为：findAttribute(),可以依次从page,request,session,application
+   依次查找，找到就取值，然后结束查找
+九、
+1.EL概述和基本语法
+简化jsp中的java代码，不是一种开发语言，是jsp中获取数据的一种规范
+作用：
+  1.获取数据  ${}
+  2.运算
+      属性：empty 判断null,空元素和没有元素的集合（即使集合本身不是null)都返回true
+${empty str}  判断str是否为空，是的话直接输出true
+${param.str}  获取表单数据
+${paramValue.hobby[0]} 获取爱好的值（多选框）
+${header["User-agent"]}  请求消息头
+${cookie.JSESSION.value} 取出session存储在cookie中的id
+十、JSTL ：jsp标准标签库
+作用：
+  使用jstl实现jsp页面中的逻辑处理，如判断、循环等
+核心标签库：
+   1.通用标签：set,out,remove
+   2.条件标签：if choose
+   3.迭代标签：foreach
+       （1）普通循环
+<a href="http://www.baidu.com/">baidu</a>
+<a >baidu</a>
+</body>
+</html>

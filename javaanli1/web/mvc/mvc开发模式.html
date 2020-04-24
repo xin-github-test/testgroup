@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mvc开发模式</title>
+</head>
+<body>
+一、java 的开发模式
+ c/s : 客户端/服务器 （胖客户端模式）
+ b/s : 浏览器/服务器 （廋客户端模式）
+ javaBean
+    就是一个普通类（实体bean),包含三样标准：一个无参构造、私有属性、公共的getter和setter方法
+ 1.Model1模式 (不常用）
+    java+javaBean
+  2.Model2(常用）
+   jsp+Servlet和javaBean
+   MVC：开发模式
+   M:model模型 javaBean四种作用域
+   V:view视图 JSP
+   C:controller 控制器 Servlet
+二、分层思想 强内聚，弱耦合
+浏览器-----》servlet(1.获取表单数据 2.调用业务逻辑 3.分发转向)--->service(login();register();)
+其中service 中的login()方法再分离出去，分离到 DAO（data Access Object)中,
+其中DAO中有 ：insert() update() select()等
+二DAO就负责与数据库进行交互
+其中还有javaBean（三个域对象），javaBean就是一个数据的封装类（从数据库中取出的数据就是封装在这个类中，然后将这个数据在传递出去），MVC中的M(model)
+其中的servlet就是MVC中的C(controller)，进行业务逻辑的处理
+其中jsp就是直接从servlet中获取数据并将其和html结合展示出来，是MVC中的V(view)
+而service和DAO体现的是分层思想（减轻servlet的任务（将servlet中的一些业务分离出去），同时降低耦合）
+
+其中servlet和jsp代表web层（表示层）
+service和javaBean代表业务层
+DAO代表数据访问层
+
+需要写的包
+ com.itheima.domain 实体类（javaBean)
+ com.itheima.dao  接口
+ com.itheima.impl 实现类
+ com.itheima.service 接口
+ com.itheima.service.impl 实现类
+ com.itheima.utils 工具类
+ com.itheima.exception 自定义异常类
+ com.itheima.web.servlet
+
+</body>
+</html>

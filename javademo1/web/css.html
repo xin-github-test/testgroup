@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>css的使用（与html结合)</title>
+  <style type="text/css">
+    @import "css/a.css";
+    #div1{
+     color:yellow;
+    }
+    .cls{
+       color:black;}
+       div p{
+       color:pink}
+  </style>
+  <!--  <link  rel="stylesheet" type="text/css" href="css/a.css">-->
+  
+
+
+</head>
+<body>
+ <h3>1.内联样式</h3> <!-- 在标签内使用style属性来控制样式(只在该标签内有效）  并不推荐使用-->
+ <div style="color:red;"> hello word</div> <br>
+ 
+ <h3>2.内部样式</h3> <!-- 在head 中定义一个style 的标签，标签的内容就是css代码 （在该页面有效）-->
+ <div> hello word</div><br>
+ <div> hello css</div> <!-- 在head里面定义了被div包裹的内容都会变成蓝色的 -->
+ <br>
+ <h3>3.外部样式</h3><!-- 先定义一个css的资源文件，然后在head里面定义link标签将写好的css资源文件引入到html中 ，在所有页面都有效-->
+ <div> hello word</div><br>
+ <div> hello css</div>
+ <h3>4.不通过link引入外部标签（了解）</h3>
+  <div>hello word aa</div> <br>
+  <p>呵呵</p>
+  <h2>css的语法格式</h2>
+     格式<br>
+      选择器{ <br>
+      属性名1:属性值;<br>
+      属性名2:属性值;<br>
+      ... <br>
+      } <br>
+     每一对属性必须用分号隔开，最后一对属性可以不加分号（一般会加，不加也行)<br>
+      基础选择器: <br>
+       1.id选择器<br> <!-- 语法格式:#id值{}如上，为某种id值做出样式  建议：id值最好唯一 -->
+       2.元素选择器<br><!-- 选择相同的标签名，id选择器的优先级高于元素选择器 -->
+       3.类选择器<br><!-- 类选择器的优先级高于元素选择器  -->
+       优先级：id>class>元素<br>
+       <div id="div1">传智播客</div> <br>
+       <div>黑马程序员</div>
+       <div class="cls">黑马学院</div>
+    <h3>扩展选择器</h3>
+    1.选择所有元素<br>
+      语法：*{}<br>
+    2.并集选择器: 俩个选择器都选<br>
+     语法：选择器1,选择器2{} <br>
+     3.子选择器:筛选选择器1下的选择器2<br>
+     语法:选择器1 选择器2{}<br>
+     4.父选择器：筛选选择器2的父选择器1<br>
+     语法:选择器1>选择器2{}<br>
+     5.属性选择器:选择元素名称,属性名=属性值的元素<br>
+     语法:元素名称[属性名="属性值"]{}<br>
+     6.伪类选择器:选择一些元素具有的状态
+     语法:元素:状态{}
+     如:a
+     状态:
+     link:初始化状态
+     visited:被访问过的状态
+     active:正在访问的状态
+     hover:鼠标悬浮状态
+     <div><p>小明</p></div>
+     <div>小红</div>
+    
+  
+  
+  
+</body>
+</html>

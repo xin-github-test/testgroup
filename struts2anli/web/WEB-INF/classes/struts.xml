@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+ <struts>
+   <constant name="struts.devMode" value="true"/>
+   <constant name="struts.ui.theme" value="simple"/> <!-- 修改主题-->
+   <!-- 开启静态方法调用-->
+   <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+    <!--设置拦截器，先设置一个抽象的包，需要拦截的动作方法就继承该包 -->
+    <package name="mydefault" extends="struts-default" abstract="true">
+        <interceptors>
+            <!--声明新的拦截器 -->
+            <interceptor name="CheckLoginInterceptor" class="com.itheima.web.interceptor.CheckLoginInterceptor"></interceptor>
+            <!--配置新的默认的拦截器栈，将自己的拦截器加入进去 -->
+            <interceptor-stack name="mydefaultStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="CheckLoginInterceptor"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+   <!--重置默认的拦截器 -->
+        <default-interceptor-ref name="mydefaultStack"></default-interceptor-ref>
+        <!--定义全局的结果视图 -->
+        <global-results>
+            <result name="login">/login/login.jsp</result>
+        </global-results>
+    </package>
+    <package name="p1" extends="struts-default">
+    <!-- 用户登陆的动作-->
+   <action name="login" class="com.itheima.web.action.UserAction" method="login">
+    <result>/login/home.jsp</result>
+    <!--登陆失败的回显数据 -->
+    <result name="input">/login/login.jsp</result>
+   </action>
+  </package>
+
+    <package name="user" extends="mydefault" namespace="/user">
+       <!-- 添加用户-->
+        <action name="add" class="com.itheima.web.action.UserAction" method="add">
+            <interceptor-ref name="defaultStack">
+                <!--限制文间上传的扩展名类型 -->
+                <param name="fileUpload.allowedExtensions">.doc,.docx</param>
+            </interceptor-ref>
+            <result >/user/list.jsp</result>
+            <result name="input">/user/add.jsp</result>
+        </action>
+        <!--查询所有用户 -->
+        <action name="findAll" class="com.itheima.web.action.UserAction" method="findAll">
+            <result >/user/list.jsp</result>
+        </action>
+        <!-- 查看用户详细信息-->
+        <action name="findUserById" class="com.itheima.web.action.UserAction" method="findUserById">
+            <result >/user/view.jsp</result>
+        </action>
+        <!-- 用户简介下载-->
+        <action name="download" class="com.itheima.web.action.UserAction" method="download">
+            <result type="stream">
+                <!--给stream的结果类型注入参数 -->
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename=${@java.net.URLEncoder@encode(oldFileName,"UTF-8")}</param>
+                <param name="contentType">application/octet-stream</param>
+
+            </result>
+        </action>
+        <!--删除用户 -->
+        <action name="delete" class="com.itheima.web.action.UserAction" method="delete">
+            <!-- 注意此处应该返回到一个动作，不然获取不到所有的用户的信息-->
+            <result type="redirectAction" >findAll</result>
+        </action>
+        <!--显示编辑用户信息页面 -->
+        <action name="editUI" class="com.itheima.web.action.UserAction" method="editUI">
+           <!--将用户的信息回显到该jsp页面 -->
+            <result >/user/edit.jsp</result>
+        </action>
+        <!--编辑用户信息-->
+        <action name="edit" class="com.itheima.web.action.UserAction" method="edit">
+            <!--显示编辑后的用户的信息 -->
+            <result type="redirectAction" >findAll</result>
+            <!--回显错误的信息 -->
+            <result name="input">/user/edit.jsp</result>
+        </action>
+        <!--按条件查询 -->
+        <action name="findUserByCondition" class="com.itheima.web.action.UserAction" method="findUserByCondition">
+           <!--显示查找到的用户,直接返回list的话就只显示一条信息 -->
+            <result >/user/list.jsp</result>
+        </action>
+    </package>
+   
+</struts>

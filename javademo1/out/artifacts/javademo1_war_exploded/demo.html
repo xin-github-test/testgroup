@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+<title>表单标签 </title> <!-- 用于采集用户的数据，用于和服务器进行交互  -->
+</head>
+<body>
+ <h3>表单标签 form</h3>  <!-- 用于定义表单，可以定义一个范围，范围指的是用户数据的范围 -->
+  <!-- 可以将用form 包裹的用户名和密码提交到服务器，只有被form 包裹的才可以被提交到服务器 -->
+ <form  action="#" method="post">     <!-- action属性用于指定提交数据的URL（位置），“#”代表提交到当前页面 ，还有一个method属性，作用尾指定提交方式，一共7中，其中get和post俩种比较常见-->
+  <!-- get ：1.请求参数会在地址栏中显示，2.请求参数大小有限制，3.不安全
+       post: 1.请求参数b不会在地址栏中显示，2.请求大小无限制，会封装在请求体(HTTP协议)中 ，3.较为安全
+       默认为get-->
+  <label for="usename">用户名</label>:<input type="text" name="usename" value="请输入用户名"> <br > <!-- value属性可以在txt选项框里显示的内容 -->
+     密码:<input type="password" name="password" placeholder="请输入密码"> <br >   <!-- 当增加name属性后才能提交成功 -->
+     <input type="submit" value="登陆"><br> <!-- 提交按钮 -->
+     性别:<input type="radio" name="gender" value="male" checked>  男
+        <input type="radio" name="gender" value="female">  女 <br>
+     爱好 :  <input type="checkbox" name"hobby" value="bsk" checked>打篮球
+     <input type="checkbox" name"hobby" value="game">打游戏
+     <input type="checkbox" name"hobby" value="book">看书
+      <br>
+      图片:<input type="file" name="file"><br> <!-- 文件选项 -->
+    隐藏域:<input type="hidden" name="id" value="aaa"> <!-- 隐藏域不会显示在页面内容中，但是会被提交 -->
+         <input type="button" value="按钮"> <!-- 无实质性用处，需要与javascrip结合使用 -->
+       <input type="image" src=" " alt="无法找到"> <!-- 按钮也可以是一张图片,该类型按钮可以提交数据 --><br>
+    取色器:<input type="color" name="color"  > <br>
+    生日 :<input type="date" name="data">
+    邮箱 :<input type="email" name="data"><br>
+    省份:<select name="province">
+            <option value="1"> 请选择</option>
+            <option value="2"> 上海</option>
+            <option value="3"> 北京</option>
+            <option value="4" selected> 江西</option>
+    
+    
+    </select> <br>
+    自我评价:<textarea cols='20' rows='5' name="des"></textarea>
+ </form>
+ <h3>表单项标签</h3>
+   input:可以通过type 属性改变元素展示的样式
+    *type属性:
+       *text:文本输入框(默认值)
+       *password:密码输入框 (不会显示内容)
+       *radio   :单选框 (若要实现多个选项的单选功能，name的属性必须一样)
+       *checkbox:复选框 (单选和复选都有checked属性，设置后可以设置默认属性)
+       *label标签包裹后会将用户名和input结合起来，当鼠标点击lable后，鼠标自动移动到后面的txt文本框（注意：里面的for 属性和input的name属性必须一样)
+ 
+</body>
+</html>

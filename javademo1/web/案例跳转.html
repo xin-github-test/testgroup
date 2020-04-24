@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>自动跳转</title>
+<style>
+ p
+ {text-align:center;
+ }
+span{
+color:red;
+
+}
+
+
+
+</style>
+
+</head>
+<body>
+
+ <p>
+      <span id="time">5</span>秒之后自动跳转到首页...<!-- 设置显示的内容，而秒数需要独立设置样式，所以用span标签独立封装 -->
+ </p>
+<script>
+var num=4;var time=document.getElementById("time"); //获取time 的对象
+function showtime()
+{
+ 
+ if(num>=0)
+ time.innerHTML=num--; //对time的内容进行修改
+ if(num==-1)
+ { location.href="http://www.itcast.cn";//当秒数到达一定的时候跳转页面
+ }
+}
+setInterval(showtime,1000);
+
+
+</script>
+
+</body>
+</html>

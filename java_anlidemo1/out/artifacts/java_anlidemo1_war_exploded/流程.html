@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   1.将DButils和配置文件写好，
+2.将dao的接口写好，然后写实现类
+3.然后写service接口和实现类
+4.然后写注册的html的页面,将其跳转到指定的jsp页面
+5.之后写业务处理的servlet
+   /*ConvertUtils.register(new Converter() {
+   @Override
+   public Object convert(Class aClass, Object o) {
+   Date date1=null;
+   if(o instanceof String)
+   {
+   String date=(String)o;
+   SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+   try {
+   date1=sdf.parse(date);
+   } catch (ParseException e) {
+   e.printStackTrace();
+   }
+   }
+   return date1;
+   }
+   },Date.class);*/  //BeanUtils里面没有转换日期的方法，但是自己可以注册一个，该方法做了解，实际已经写好了
+</body>
+</html>

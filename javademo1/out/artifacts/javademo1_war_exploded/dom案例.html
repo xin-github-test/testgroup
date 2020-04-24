@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>动态表格</title>
+ <link rel="stylesheet" type="text/css" href="css/dom案例.css">
+</head>
+<body>
+   
+ 
+  
+   <table border="1" id="table" >
+       <caption>学生信息表</caption>  
+   <tr > 
+      <td><input type="checkbox" name="cb" id="firstcb"></td>
+      <th>编号</th>
+      <th>姓名</th>
+      <th>性别</th>
+      <th> 操作</th>
+      
+   </tr>
+   
+   <tr id="tr1"> 
+      <td><input type="checkbox" name="cb"></td>
+      <td>1</td>
+      <td>小明</td>
+      <td>男</td>
+      <td><a href="javascript:void(0)" onclick="delTr(this);" id="a_value">删除</a></td>
+   
+   </tr>
+   
+   <tr id="tr2"> 
+       <td><input type="checkbox" name="cb"></td>
+      <td>2</td>
+      <td>小华</td>
+      <td>男</td>
+      <td><a href="javascript:void(0)" onclick="delTr(this);">删除</a></td>
+   
+   </tr>
+   
+   <tr id="tr3"> 
+      <td><input type="checkbox" name="cb"></td>
+      <td>3</td>
+      <td>小红</td>
+      <td>女</td>
+      <td><a href="javascript:void(0)" onclick="delTr(this);">删除</a></td>
+   
+   </tr>
+   <div> 
+      <input type="text" id="id" placeholder="请输入编号">
+      <input type="text" id="name" placeholder="请输入名字">
+      <input type="text" id="gender" placeholder="请输入性别">
+      <input type="button" value="添加" id="btn_add">
+   </div>
+  <div>
+   <input type="button" id="selectAll" value="全选">
+    <input type="button" id="unSelectAll" value="全不选">
+    <input type="button" id="selectRev" value="反选">
+   </div>
+   <script src="javaScript/javascript.js"></script>
+  
+   
+   
+   
+   
+   
+   
+   </table>
+   
+</body>
+</html>

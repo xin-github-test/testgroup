@@ -1,0 +1,37 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="goover:war exploded">
+    <output-path>$PROJECT_DIR$/../goover/out/artifacts/goover_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="goover/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="goover" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="commons-beanutils-1.8.3" />
+          <element id="library" level="project" name="commons-logging-1.1.1" />
+          <element id="library" level="project" name="commons-dbutils-1.4" />
+          <element id="library" level="project" name="commons-collections-3.2.2" />
+          <element id="library" level="project" name="jstl1" />
+          <element id="file-copy" path="$PROJECT_DIR$/../goover/web/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar" />
+          <element id="library" level="application" name="dom4j-1.6.1" />
+          <element id="library" level="application" name="jaxen-1.1-beta-6" />
+          <element id="library" level="application" name="commons-beanutils-1.8.3" />
+          <element id="library" level="application" name="commons-logging-1.1.1" />
+          <element id="file-copy" path="$PROJECT_DIR$/../goover/web/WEB-INF/lib/commons-logging-1.1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/../goover/web/WEB-INF/lib/commons-beanutils-1.8.3.jar" />
+          <element id="library" level="module" name="JUnit4" module-name="goover" />
+          <element id="library" level="project" name="commons-dbcp-1.4" />
+          <element id="library" level="project" name="commons-pool-1.5.6" />
+          <element id="library" level="project" name="c3p0-0.9.1.2" />
+          <element id="library" level="application" name="commons-dbutils-1.4" />
+          <element id="library" level="project" name="ezmorph-1.0.6" />
+          <element id="library" level="project" name="json-lib-2.4-jdk15" />
+          <element id="library" level="project" name="commons-lang-2.6" />
+          <element id="library" level="project" name="commons-fileupload-1.2.2" />
+          <element id="library" level="project" name="commons-io-2.2" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动作类的生命周期</title>
+</head>
+<body>
+明确：动作类是多例的，每次动作类访问，动作类都会实例化，所以现程是安全的，与struts1的区别是，struts1的动作类是单例的
+context Map是OGNL的上下文,其中ActionContext和value stack共同组成了Context Map
+1.ActionContext(本身就是一个map)
+     application 是一个map,封装这应用域的属性
+     session     是一个map,封装这会话域的属性
+     request     是一个map,封装的请求域的属性
+     parameters  是一个map,封装着参数
+     attr        是一个map,封装四个域中的所有属性
+
+ 2.value stack(root)
+
+ action (the current action)  当前动作的引用
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../goover/goover.iml" filepath="$PROJECT_DIR$/../goover/goover.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hibernate/hibernate.iml" filepath="$PROJECT_DIR$/../hibernate/hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/struts.iml" filepath="$PROJECT_DIR$/struts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../struts2anli/struts2anli.iml" filepath="$PROJECT_DIR$/../struts2anli/struts2anli.iml" />
+    </modules>
+  </component>
+</project>

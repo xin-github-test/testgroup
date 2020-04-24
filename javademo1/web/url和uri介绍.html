@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL和URI的介绍</title>
+
+
+</head>
+<body>
+<h3> URL:</h3> 统一资源定位符<br>
+<h3> URI:</h3> 统一资源标识符<br>
+
+
+http://localhost:8080/dom.html<br>
+http://: 协议<br>
+localhost:8080：主机IP（端口号）<br>
+dom.html：URI（当前应用的资源路径）<br>
+http://localhost:8080/dom.html：整个代表<br>
+
+
+深入了解tomcat服务器（了解）
+ 1.虚拟目录：（当存放项目的磁盘满了之后，将项目放入其他磁盘，此时就需要创建虚拟目录）
+      方式一：（不建议使用，因为需要重启服务器）
+        真实目录：E\MyApp
+        虚拟目录：http://localhost:8080/myapp
+
+       虚拟目录映射：
+         <Context path="/myapp" docBase="E\MyApp"/>
+docBase:代表的是应用的真实路径
+path:网络访问的虚拟目录名
+做法：去tomcat的安装目录下的conf目录下的server.xml里面在Engin标签下的host标签下加上上面的一句代码
+注：需要重启服务器
+       方式二:
+      新建myApp.xml文件，文件名就代表应用的虚拟目录名
+       将文件放在tomcat安装目录下的conf下的Catalina下的localhost目录下
+ <?xml version="1.0" encoding="utf-8"?>
+<Context dobase="E:\myAPP"/>
+ 访问 ：http://localhost:8080/myAPP
+
+http协议：
+  请求消息行
+请求消息头:从第二行到空行处都hi是消息头
+Accept:浏览器可以接受的MIME类型
+Accept-charset：浏览器告诉服务器支持什么字符编码
+Accept-encoding：浏览器能够进行的数据编码方式如gzip
+Accept-language：浏览器所希望的语言种类，可以在浏览器中进行设置
+Host：初始URL的主机和端口
+Referrer:包含一个URL，用户由该URL访问
+请求消息正文
+等等。。。。
+响应消息行，头，正文和上面的类似
+</body>
+</html>

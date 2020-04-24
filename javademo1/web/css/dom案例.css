@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+ 
+   div{
+     text-align:center;
+     margin:50px;
+   
+   
+   }
+ table
+ {  border:1px solid;
+    margin:0 auto;
+    width:500px;
+ 
+ }
+ td,th{
+  text-align:center;
+  border:1px solid;
+  
+ }
+ .out{
+ background:white;
+ 
+ }
+ .over{
+ 
+ background:pink;
+ }
+  
