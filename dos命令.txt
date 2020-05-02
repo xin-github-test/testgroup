@@ -27,3 +27,22 @@
  cls
 15.退出 
 exit
+16.ren 重命名 
+ren 旧名 新名
+17.type 查看文件中的内容
+18.对文件进行加权限处理
+ attrib 文件 +参数    H：为隐藏
+ 删除权限  用 - 就可以了
+19.查看端口等信息
+netstat -na
+20.关闭计算机
+ shutdown    -r 重启  -t 时间， 设置多久关机或重启
+21.任务管理器
+tasklist  列出后台任务
+taskkill  /pid  根据pid 删除后台任务
+22.net user 用户名 密码，可以设置密码
+23.磁盘管理
+defrag 磁盘名 加上-f可以对碎片进行整理
+24.net user 名字 密码 /add 添加用户
+   net localgroup 组名  查看改组中的成员
+ net localgroup 组名 用户名 /add 将成员加入某个组
